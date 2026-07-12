@@ -42,19 +42,45 @@
 
   <div class="row">
     <h2>Trending Movies</h2>
+
+    <button class="slider-btn left-btn" onclick="slideLeft('movies-list')">
+        ❮
+    </button>
+
     <div class="list" id="movies-list"></div>
-  </div>
+
+    <button class="slider-btn right-btn" onclick="slideRight('movies-list')">
+        ❯
+    </button>
+</div>
 
   <div class="row">
     <h2>Trending TV Shows</h2>
+
+    <button class="slider-btn left-btn" onclick="slideLeft('tvshows-list')">
+        ❮
+    </button>
+
     <div class="list" id="tvshows-list"></div>
-  </div>
+
+    <button class="slider-btn right-btn" onclick="slideRight('tvshows-list')">
+        ❯
+    </button>
+</div>
 
   <div class="row">
     <h2>Trending Anime</h2>
-    <div class="list" id="anime-list"></div>
-  </div>
 
+    <button class="slider-btn left-btn" onclick="slideLeft('anime-list')">
+        ❮
+    </button>
+
+    <div class="list" id="anime-list"></div>
+
+    <button class="slider-btn right-btn" onclick="slideRight('anime-list')">
+        ❯
+    </button>
+</div>
   <div class="modal" id="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
