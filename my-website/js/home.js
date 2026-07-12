@@ -121,3 +121,23 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     }
 
     init();
+// ===== NETFLIX SLIDER =====
+
+function slideLeft(id) {
+    const slider = document.getElementById(id);
+
+    slider.scrollBy({
+        left: -800,
+        behavior: "smooth"
+    });
+}
+
+function slideRight(id) {
+    const slider = document.getElementById(id);
+
+    slider.scrollBy({
+        left: 800,
+        behavior: "smooth"
+    });
+}
+
