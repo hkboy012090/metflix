@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>METFLIX Admin</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#111;
+color:white;
+padding:30px;
+}
+
+h1{
+color:#E50914;
+margin-bottom:20px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+form{
+background:#1b1b1b;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+input,select,textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+background:#222;
+border:none;
+color:white;
+border-radius:6px;
+}
+
+textarea{
+height:120px;
+resize:none;
+}
+
+button{
+background:#E50914;
+color:white;
+border:none;
+padding:12px 20px;
+cursor:pointer;
+border-radius:6px;
+font-size:16px;
+}
+
+button:hover{
+background:#b20710;
+}
+
+#movieList{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:20px;
+}
+
+.movie-card{
+background:#1d1d1d;
+padding:10px;
+border-radius:10px;
+}
+
+.movie-card img{
+width:100%;
+border-radius:8px;
+}
+
+.movie-card h3{
+margin:10px 0;
+font-size:16px;
+}
+
+.deleteBtn{
+background:red;
+margin-top:10px;
+width:100%;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎬 METFLIX ADMIN PANEL</h1>
+
+<form id="movieForm">
+
+<input type="text" id="title" placeholder="Movie Title" required>
+
+<input type="number" id="tmdbId" placeholder="TMDB ID" required>
+
+<select id="category">
+<option value="movie">Movie</option>
+<option value="tv">TV Show</option>
+<option value="anime">Anime</option>
+<option value="vivamax">Vivamax</option>
+</select>
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<button type="submit">
+Add Movie
+</button>
+
+</form>
+
+<div id="movieList"></div>
+
+</div>
+
+<script type="module" src="js/admin.js"></script>
+
+</body>
+</html>
