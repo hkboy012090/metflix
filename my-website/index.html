@@ -1,351 +1,84 @@
-  
-     
-<button class="menu-btn" onclick="toggleMenu()">  
-    <i class="fas fa-bars"></i>  
-</button>  
-
-<a href="index.html" class="logo">  
-    <img src="metflixlogo.png" alt="METFLIX LOGO">  
-</a>  
-
-<button class="search-btn" onclick="openSearchModal()">  
-    <i class="fas fa-search"></i>  
-</button>  
-
-
-
-  
-
-  
-  
-<h2>METFLIX</h2>  
-
-<a href="index.html">  
-    <i class="fas fa-house"></i> Home  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-fire"></i> Trending Movies  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-tv"></i> TV Shows  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-video"></i> VivaMax  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-dragon"></i> Anime  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-heart"></i> My List  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-clock"></i> History  
-</a>  
-
-<hr>  
-
-<a href="login.html" id="loginBtnMobile">  
-    <i class="fas fa-sign-in-alt"></i> Sign In  
-</a>  
-
-<a href="register.html" id="registerBtnMobile">  
-    <i class="fas fa-user-plus"></i> Register  
-</a>  
-
-<a href="#" id="logoutBtnMobile" style="display:none;">  
-    <i class="fas fa-right-from-bracket"></i> Logout  
-</a>  
-
-
-
-  
-    
-    
-  
-  
-  
-    
-    Trending Movies
-  
-<button class="slider-btn left-btn" onclick="slideLeft('movies-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="movies-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('movies-list')">  
-    ❯  
-</button>  
-
-
-
-  
-    
-    Trending TV Shows
-  
-<button class="slider-btn left-btn" onclick="slideLeft('tvshows-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="tvshows-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('tvshows-list')">  
-    ❯  
-</button>  
-
-
-
-  
-    
-    Trending Anime
-  
-<button class="slider-btn left-btn" onclick="slideLeft('anime-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="anime-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('anime-list')">  
-    ❯  
-</button>  
-
-
-
-  
-  
-    VivaMax
-  
-<button class="slider-btn left-btn" onclick="slideLeft('vivamax-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="vivamax-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('vivamax-list')">  
-    ❯  
-</button>  
-
-
-
-  
-    
-      
-      ×  
-        
-    
-    
-    
-  
-    
-  
-    
-  
-  
-  
-
-  
-  <div class="server-selector">  
-    <label for="server">Change Server:</label>  
-    <select id="server" onchange="changeServer()">  
-      <option value="vidsrc.cc">Vidsrc.cc</option>  
-      <option value="vidsrc.me">Vidsrc.me</option>  
-      <option value="player.videasy.net">Player.Videasy.net</option>  
-    </select>  
-  </div>  
-  <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>  
-</div>  
-
-
-  
-  
-    
-    ×  
-      
-    
-  
-  
-  
-  
-    
-    © 2025 My Website. All rights reserved.
-  
-      
-      Disclaimer  
-      About Us  
-      Contact Us  
-    
-  
-  
-  
-
-  
-
-  
-
-  
-
-
-ito ang index ko wala ako makita
-
-<html lang="en">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>METFLIX</title>  
-  <link rel="stylesheet" href="css/home.css">  
-  <link rel="preload" href="css/home.css" as="style">  
-  <link rel="preload" href="js/home.js" as="script">  
-  <link rel="manifest" href="manifest.json">  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">  
-  <script defer src="js/home.js"></script>  
-</head>  <body>  
-  <div class="navbar">  <button class="menu-btn" onclick="toggleMenu()">  
-    <i class="fas fa-bars"></i>  
-</button>  
-
-<a href="index.html" class="logo">  
-    <img src="metflixlogo.png" alt="METFLIX LOGO">  
-</a>  
-
-<button class="search-btn" onclick="openSearchModal()">  
-    <i class="fas fa-search"></i>  
-</button>
-
-</div>  <div class="overlay" id="overlay" onclick="toggleMenu()"></div>  <div class="sidebar" id="sidebar">  <h2>METFLIX</h2>  
-
-<a href="index.html">  
-    <i class="fas fa-house"></i> Home  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-fire"></i> Trending Movies  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-tv"></i> TV Shows  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-video"></i> VivaMax  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-dragon"></i> Anime  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-heart"></i> My List  
-</a>  
-
-<a href="#">  
-    <i class="fas fa-clock"></i> History  
-</a>  
-
-<hr>  
-
-<a href="login.html" id="loginBtnMobile">  
-    <i class="fas fa-sign-in-alt"></i> Sign In  
-</a>  
-
-<a href="register.html" id="registerBtnMobile">  
-    <i class="fas fa-user-plus"></i> Register  
-</a>  
-
-<a href="#" id="logoutBtnMobile" style="display:none;">  
-    <i class="fas fa-right-from-bracket"></i> Logout  
-</a>
-
-</div>    <div class="banner" id="banner">  
-    <h1 id="banner-title"></h1>  
-  </div>    <div class="row">  
-    <h2>Trending Movies</h2>  <button class="slider-btn left-btn" onclick="slideLeft('movies-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="movies-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('movies-list')">  
-    ❯  
-</button>
-
-</div>    <div class="row">  
-    <h2>Trending TV Shows</h2>  <button class="slider-btn left-btn" onclick="slideLeft('tvshows-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="tvshows-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('tvshows-list')">  
-    ❯  
-</button>
-
-</div>    <div class="row">  
-    <h2>Trending Anime</h2>  <button class="slider-btn left-btn" onclick="slideLeft('anime-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="anime-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('anime-list')">  
-    ❯  
-</button>
-
-</div>  
-<div class="row">  
-    <h2>VivaMax</h2>  <button class="slider-btn left-btn" onclick="slideLeft('vivamax-list')">  
-    ❮  
-</button>  
-
-<div class="list" id="vivamax-list"></div>  
-
-<button class="slider-btn right-btn" onclick="slideRight('vivamax-list')">  
-    ❯  
-</button>
-
-</div>    <div class="modal" id="modal">  
-    <div class="modal-content">  
-      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>  
-      <div class="modal-body">  
-  <img id="modal-image" src="" alt="" />  
-  <div class="modal-text">  
-    <h2 id="modal-title"></h2>  
-    <div class="stars" id="modal-rating"></div>  
-    <p id="modal-description"></p>  
-  </div>  
-</div>  <div class="server-selector">  
-    <label for="server">Change Server:</label>  
-    <select id="server" onchange="changeServer()">  
-      <option value="vidsrc.cc">Vidsrc.cc</option>  
-      <option value="vidsrc.me">Vidsrc.me</option>  
-      <option value="player.videasy.net">Player.Videasy.net</option>  
-    </select>  
-  </div>  
-  <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>  
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Website</title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="js/home.js"></script>
+</head>
+
+<body>
+  <div class="navbar">
+    <img src="logo.png" alt="LOGO HERE" />
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+    </div>
+  </div>
+
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
+  </div>
+
+  <div class="row">
+    <h2>Trending Movies</h2>
+    <div class="list" id="movies-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending TV Shows</h2>
+    <div class="list" id="tvshows-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending Anime</h2>
+    <div class="list" id="anime-list"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
+  </div>
 </div>
+      
+      <div class="server-selector">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Vidsrc.cc</option>
+          <option value="vidsrc.me">Vidsrc.me</option>
+          <option value="player.videasy.net">Player.Videasy.net</option>
+        </select>
+      </div>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 
-  </div>    <div class="search-modal" id="search-modal">  
-    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>  
-    <input  
-    type="text"  
-    id="search-input"  
-    placeholder="Search for a movie or show..."  
-/>  
-    <div class="results" id="search-results"></div>  
-  </div>  <footer class="footer">  
-  <div class="footer-content">  
-    <p>&copy; 2025 My Website. All rights reserved.</p>  
-    <div class="footer-links">  
-      <a href="#">Disclaimer</a>  
-      <a href="#">About Us</a>  
-      <a href="#">Contact Us</a>  
-    </div>  
-  </div>  
-</footer>  
-<script type="module" src="js/auth.js"></script>  </body>  
-</html>
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>&copy; 2025 My Website. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+</footer>
+
+  
+</body>
