@@ -122,20 +122,30 @@ async function fetchVivamax() {
     async function searchTMDB() {
     const query = document.getElementById("search-input").value.trim();
 
+    const container = document.getElementById("search-results");
+
     if (!query) {
-        document.getElementById("search-results").innerHTML = "";
+        container.innerHTML = "";
         return;
     }
 
     const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
     const data = await res.json();
 
-    const container = document.getElementById("search-results");
     container.innerHTML = "";
 
-    data.results.forEach(item => {
+    const results = data.results.filter(item => item.poster_path);
 
-        if (!item.poster_path) return;
+    if (results.length === 0) {
+        container.innerHTML = `
+            <p style="color:white;font-size:18px;">
+                No results found.
+            </p>
+        `;
+        return;
+    }
+
+    results.forEach(item => {
 
         const card = document.createElement("div");
         card.className = "search-item";
@@ -151,6 +161,7 @@ async function fetchVivamax() {
         };
 
         container.appendChild(card);
+
     });
 }
 
