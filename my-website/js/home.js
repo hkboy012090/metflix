@@ -24,7 +24,11 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
 
   return allResults;
 }
-
+async function fetchVivamax() {
+    const res = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_origin_country=PH&sort_by=popularity.desc`);
+    const data = await res.json();
+    return data.results;
+}
 
     function displayBanner(item) {
       document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
@@ -110,17 +114,19 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     }
 
     async function init() {
-      const movies = await fetchTrending('movie');
-      const tvShows = await fetchTrending('tv');
-      const anime = await fetchTrendingAnime();
+  const movies = await fetchTrending('movie');
+  const tvShows = await fetchTrending('tv');
+  const anime = await fetchTrendingAnime();
+  const vivamax = await fetchVivamax();
 
-      displayBanner(movies[Math.floor(Math.random() * movies.length)]);
-      displayList(movies, 'movies-list');
-      displayList(tvShows, 'tvshows-list');
-      displayList(anime, 'anime-list');
-    }
+  displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+  displayList(movies, 'movies-list');
+  displayList(tvShows, 'tvshows-list');
+  displayList(anime, 'anime-list');
+  displayList(vivamax, 'vivamax-list');
+}
 
-    init();
+init();
 // ===== NETFLIX SLIDER =====
 
 function slideLeft(id) {
