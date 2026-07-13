@@ -25,9 +25,40 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
   return allResults;
 }
 async function fetchVivamax() {
-    const res = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&with_origin_country=PH&sort_by=popularity.desc`);
-    const data = await res.json();
-    return data.results;
+
+    const ids = [
+        1122716,
+        1113612,
+        1104787,
+        1006911,
+        1044524,
+        1067623,
+        1015293,
+        1016452,
+        994108,
+        975937
+    ];
+
+    const movies = [];
+
+    for (const id of ids) {
+
+        try {
+
+            const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
+            const data = await res.json();
+
+            if (data.poster_path) {
+    movies.push(data);
+}
+
+        } catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    return movies;
 }
 
     function displayBanner(item) {
