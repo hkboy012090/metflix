@@ -2,6 +2,7 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     const BASE_URL = 'https://api.themoviedb.org/3';
     const IMG_URL = 'https://image.tmdb.org/t/p/original';
     let currentItem;
+    let searchTimeout;
 
     async function fetchTrending(type) {
       const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
@@ -110,9 +111,23 @@ async function fetchVivamax() {
     }
 
     function openSearchModal() {
-      document.getElementById('search-modal').style.display = 'flex';
-      document.getElementById('search-input').focus();
-    }
+    document.getElementById("search-modal").style.display = "flex";
+
+    const input = document.getElementById("search-input");
+
+    input.value = "";
+    document.getElementById("search-results").innerHTML = "";
+
+    input.focus();
+
+    input.oninput = () => {
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            searchTMDB();
+        }, 400);
+    };
+}
 
     function closeSearchModal() {
       document.getElementById('search-modal').style.display = 'none';
