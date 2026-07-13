@@ -13,22 +13,20 @@
 
 <body>
   <div class="navbar">
-    <button class="menu-btn" onclick="toggleMenu()">
-    <i class="fas fa-bars"></i>
-</button>
-    <a href="index.html">
-    <img src="metflixlogo.png" alt="METFLIX LOGO">
-</a>
-    <div class="nav-links">
-  <a href="index.html">Home</a>
 
-  
-  <input type="text"
-         class="search-bar"
-         placeholder="Search..."
-         onfocus="openSearchModal()" />
+    <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <a href="index.html" class="logo">
+        <img src="metflixlogo.png" alt="METFLIX LOGO">
+    </a>
+
+    <button class="search-btn" onclick="openSearchModal()">
+        <i class="fas fa-search"></i>
+    </button>
+
 </div>
-  </div>
   
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
