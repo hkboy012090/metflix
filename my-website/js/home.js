@@ -129,6 +129,11 @@ async function fetchVivamax() {
         return;
     }
 
+        container.innerHTML = `
+    <p style="color:white;font-size:18px;">
+        Searching...
+    </p>
+`;
     const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
     const data = await res.json();
 
