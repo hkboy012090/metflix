@@ -13,6 +13,9 @@
 
 <body>
   <div class="navbar">
+    <button class="menu-btn" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+</button>
     <img src="metflixlogo.png" alt="METFLIX LOGO" />
     <div class="nav-links">
   <a href="index.html">Home</a>
@@ -35,7 +38,28 @@
          onfocus="openSearchModal()" />
 </div>
   </div>
+  
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
+<div class="sidebar" id="sidebar">
+
+    <h2>METFLIX</h2>
+
+    <a href="#"><i class="fas fa-house"></i> Home</a>
+
+    <a href="#"><i class="fas fa-fire"></i> Trending Movies</a>
+
+    <a href="#"><i class="fas fa-tv"></i> TV Shows</a>
+
+    <a href="#"><i class="fas fa-video"></i> VivaMax</a>
+
+    <a href="#"><i class="fas fa-dragon"></i> Anime</a>
+
+    <a href="#"><i class="fas fa-heart"></i> My List</a>
+
+    <a href="#"><i class="fas fa-clock"></i> History</a>
+
+</div>
   <div class="banner" id="banner">
     <h1 id="banner-title"></h1>
   </div>
