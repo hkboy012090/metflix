@@ -96,19 +96,31 @@ const snapshot = await getDocs(collection(db, "movies"));
 
 const movies = [];  
 
-snapshot.forEach(doc => {  
+for (const doc of snapshot.docs) {  
 
     const movie = doc.data();  
 
-    if (movie.category === category) {  
-        movies.push({  
-            id: movie.tmdbId,  
-            title: movie.title,  
-            media_type: category === "movie" ? "movie" : "tv"  
-        });  
+    if (movie.category !== category) continue;  
+
+    try {  
+
+        const type = movie.category === "movie" ? "movie" : "tv";  
+
+        const res = await fetch(  
+            `${BASE_URL}/${type}/${movie.tmdbId}?api_key=${API_KEY}`  
+        );  
+
+        const data = await res.json();  
+
+        if (data.poster_path) {  
+            movies.push(data);  
+        }  
+
+    } catch (err) {  
+        console.log(err);  
     }  
 
-});  
+}  
 
 return movies;  
 
