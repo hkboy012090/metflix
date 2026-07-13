@@ -11,10 +11,15 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     let searchTimeout;
 
     async function fetchTrending(type) {
-      const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
-      const data = await res.json();
-      return data.results;
-    }
+    const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
+    const data = await res.json();
+
+    data.results.forEach(item => {
+        item.media_type = type;
+    });
+
+    return data.results;
+}
 
     async function fetchTrendingAnime() {
   let allResults = [];
@@ -53,9 +58,10 @@ async function fetchVivamax() {
         try {
 
             const res = await fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`);
-            const data = await res.json();
+const data = await res.json();
 
-            if (data.poster_path) {
+if (data.poster_path) {
+    data.media_type = "movie";
     movies.push(data);
 }
 
@@ -68,6 +74,48 @@ async function fetchVivamax() {
     return movies;
 }
 
+async function fetchMoviesFromFirebase(category) {
+
+    const snapshot = await getDocs(collection(db, "movies"));
+
+    const movies = [];
+
+    for (const doc of snapshot.docs) {
+
+        const movie = doc.data();
+
+        if (movie.category !== category) continue;
+
+        try {
+
+            let type;
+
+if (movie.category === "movie" || movie.category === "vivamax") {
+    type = "movie";
+} else {
+    type = "tv";
+}
+
+            const res = await fetch(
+                `${BASE_URL}/${type}/${movie.tmdbId}?api_key=${API_KEY}`
+            );
+
+
+const data = await res.json();
+
+if (data.poster_path) {
+    data.media_type = type;
+    movies.push(data);
+}
+
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
+
+    return movies;
+}
     function displayBanner(item) {
       document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
       document.getElementById('banner-title').textContent = item.title || item.name;
@@ -192,16 +240,21 @@ async function fetchVivamax() {
 }
 
     async function init() {
-  const movies = await fetchTrending('movie');
-  const tvShows = await fetchTrending('tv');
-  const anime = await fetchTrendingAnime();
-  const vivamax = await fetchVivamax();
 
-  displayBanner(movies[Math.floor(Math.random() * movies.length)]);
-  displayList(movies, 'movies-list');
-  displayList(tvShows, 'tvshows-list');
-  displayList(anime, 'anime-list');
-  displayList(vivamax, 'vivamax-list');
+    const movies = await fetchMoviesFromFirebase("movie");
+    const tvShows = await fetchMoviesFromFirebase("tv");
+    const anime = await fetchMoviesFromFirebase("anime");
+    const vivamax = await fetchMoviesFromFirebase("vivamax");
+
+    if (movies.length > 0) {
+        displayBanner(movies[Math.floor(Math.random() * movies.length)]);
+    }
+
+    displayList(movies, "movies-list");
+    displayList(tvShows, "tvshows-list");
+    displayList(anime, "anime-list");
+    displayList(vivamax, "vivamax-list");
+
 }
 
 init();
