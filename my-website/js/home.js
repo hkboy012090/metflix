@@ -1,20 +1,3 @@
-
-import { auth } from "./firebase-config.js";
-
-import {
-
-onAuthStateChanged
-
-} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-
-let currentUser = null;
-
-onAuthStateChanged(auth,(user)=>{
-
-currentUser=user;
-
-});
-
 const API_KEY = 'a1e72fd93ed59f56e6332813b9f8dcae';
     const BASE_URL = 'https://api.themoviedb.org/3';
     const IMG_URL = 'https://image.tmdb.org/t/p/original';
