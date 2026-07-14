@@ -5,7 +5,8 @@ import {
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
+console.log("AUTH.JS LOADED");
+alert("AUTH.JS LOADED");
 // REGISTER
 const registerBtn = document.getElementById("registerBtn");
 
