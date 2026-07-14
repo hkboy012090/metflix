@@ -30,23 +30,21 @@ if (registerBtn) {
 const loginBtn = document.getElementById("loginBtn");
 
 if (loginBtn) {
-  loginBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
+  loginBtn.onclick = async function () {
     alert("Login button clicked");
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert("Login successful!");
-        window.location.href = "index.html";
-      })
-      .catch((error) => {
-        alert(error.code + "\n" + error.message);
-      });
-  });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert("Login successful!");
+      console.log(userCredential.user);
+      window.location.href = "index.html";
+    } catch (error) {
+      alert("ERROR:\n" + error.code + "\n" + error.message);
+    }
+  };
 }
 // LOGOUT
 const logoutBtn = document.getElementById("logoutBtn");
@@ -63,11 +61,4 @@ if (logoutBtn) {
       });
   });
 }
-// Check if user is logged in
-onAuthStateChanged(auth, (user) => {
-  if (!user &&
-      !window.location.pathname.includes("login.html") &&
-      !window.location.pathname.includes("register.html")) {
-    window.location.href = "login.html";
-  }
-});
+
