@@ -1,4 +1,4 @@
-import { auth } from "./firebase-config.js";
+import { auth } from "../firebase-config.js";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -58,3 +58,11 @@ if (logoutBtn) {
       });
   });
 }
+// Check if user is logged in
+onAuthStateChanged(auth, (user) => {
+  if (!user &&
+      !window.location.pathname.includes("login.html") &&
+      !window.location.pathname.includes("register.html")) {
+    window.location.href = "login.html";
+  }
+});
