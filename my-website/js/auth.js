@@ -30,7 +30,11 @@ if (registerBtn) {
 const loginBtn = document.getElementById("loginBtn");
 
 if (loginBtn) {
-  loginBtn.addEventListener("click", () => {
+  loginBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    alert("Login button clicked");
+
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -40,7 +44,7 @@ if (loginBtn) {
         window.location.href = "index.html";
       })
       .catch((error) => {
-        alert(error.message);
+        alert(error.code + "\n" + error.message);
       });
   });
 }
