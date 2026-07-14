@@ -19,9 +19,12 @@ if (loginBtn) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      alert("Login Successful!");
 
-      window.location.href = "index.html";
+localStorage.setItem("loggedIn", "true");
+
+alert("Login Successful!");
+
+window.location.href = "index.html";
 
     } catch (error) {
       alert(error.message);
@@ -60,8 +63,13 @@ if (registerBtn) {
 
 // -------------------- LOGOUT --------------------
 export async function logout() {
-  await signOut(auth);
+    await signOut(auth);
+
+    localStorage.removeItem("loggedIn");
+
+    window.location.href = "login.html";
 }
+
 
 // -------------------- CHECK LOGIN --------------------
 export function checkAuth(callback) {
