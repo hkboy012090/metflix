@@ -134,18 +134,23 @@ const API_KEY = 'a1e72fd93ed59f56e6332813b9f8dcae';
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
-if (localStorage.getItem("loggedIn")) {
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-} else {
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
+if (loginBtn && logoutBtn) {
+
+    if (localStorage.getItem("loggedIn")) {
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+    } else {
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+    }
+
+    logoutBtn.addEventListener("click", logout);
 }
 
-logoutBtn.addEventListener("click", logout);
 const savedMovie = sessionStorage.getItem("selectedMovie");
 
 if (savedMovie && localStorage.getItem("loggedIn")) {
     sessionStorage.removeItem("selectedMovie");
     showDetails(JSON.parse(savedMovie));
 }
+
