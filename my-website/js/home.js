@@ -159,3 +159,8 @@ checkAuth((user) => {
     }
 });
 
+window.closeModal = closeModal;
+window.changeServer = changeServer;
+window.openSearchModal = openSearchModal;
+window.closeSearchModal = closeSearchModal;
+window.searchTMDB = searchTMDB;
