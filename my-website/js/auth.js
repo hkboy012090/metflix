@@ -20,7 +20,6 @@ if (loginBtn) {
       await signInWithEmailAndPassword(auth, email, password);
 
 
-localStorage.setItem("loggedIn", "true");
 
 alert("Login Successful!");
 
@@ -65,7 +64,6 @@ if (registerBtn) {
 export async function logout() {
     await signOut(auth);
 
-    localStorage.removeItem("loggedIn");
 
     window.location.href = "index.html";
 }
