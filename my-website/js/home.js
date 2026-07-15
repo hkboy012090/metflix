@@ -137,21 +137,25 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 if (loginBtn && logoutBtn) {
 
-    if (localStorage.getItem("loggedIn")) {
+    checkAuth((user) => {
+    if (user) {
         loginBtn.style.display = "none";
         logoutBtn.style.display = "inline-block";
     } else {
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
     }
+});
 
     logoutBtn.addEventListener("click", logout);
 }
 
 const savedMovie = sessionStorage.getItem("selectedMovie");
 
-if (savedMovie && localStorage.getItem("loggedIn")) {
-    sessionStorage.removeItem("selectedMovie");
-    showDetails(JSON.parse(savedMovie));
-}
+checkAuth((user) => {
+    if (user && savedMovie) {
+        sessionStorage.removeItem("selectedMovie");
+        showDetails(JSON.parse(savedMovie));
+    }
+});
 
