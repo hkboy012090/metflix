@@ -1,4 +1,4 @@
-import { logout } from "./auth.js";
+import { logout, checkAuth } from "./auth.js";
 const API_KEY = 'a1e72fd93ed59f56e6332813b9f8dcae';
     const BASE_URL = 'https://api.themoviedb.org/3';
     const IMG_URL = 'https://image.tmdb.org/t/p/original';
@@ -46,23 +46,24 @@ const API_KEY = 'a1e72fd93ed59f56e6332813b9f8dcae';
 
    function showDetails(item) {
 
-  if (!localStorage.getItem("loggedIn")) {
-    sessionStorage.setItem("selectedMovie", JSON.stringify(item));
-    window.location.href = "login.html";
-    return;
-  }
+    checkAuth((user) => {
+        if (!user) {
+            sessionStorage.setItem("selectedMovie", JSON.stringify(item));
+            window.location.href = "login.html";
+            return;
+        }
 
-  currentItem = item;
-  document.getElementById("modal-title").textContent = item.title || item.name;
-  document.getElementById("modal-description").textContent = item.overview;
-  document.getElementById("modal-image").src = `${IMG_URL}${item.poster_path}`;
-  document.getElementById("modal-rating").innerHTML =
-    "★".repeat(Math.round(item.vote_average / 2));
+        currentItem = item;
+        document.getElementById("modal-title").textContent = item.title || item.name;
+        document.getElementById("modal-description").textContent = item.overview;
+        document.getElementById("modal-image").src = `${IMG_URL}${item.poster_path}`;
+        document.getElementById("modal-rating").innerHTML =
+            "★".repeat(Math.round(item.vote_average / 2));
 
-  changeServer();
-  document.getElementById("modal").style.display = "flex";
-}
-
+        changeServer();
+        document.getElementById("modal").style.display = "flex";
+    });
+   }
     function changeServer() {
       const server = document.getElementById('server').value;
       const type = currentItem.media_type === "movie" ? "movie" : "tv";
