@@ -101,11 +101,11 @@ async function loadMovie() {
 
         const url = `${BASE_URL}/${mediaType}/${movieId}?api_key=${API_KEY}&append_to_response=credits,recommendations`;
 
-alert(url);
+
 
 const response = await fetch(url);
 
-alert("Status: " + response.status);
+
 
         if (!response.ok) {
 
@@ -115,7 +115,7 @@ alert("Status: " + response.status);
 
         const movie = await response.json();
 
-        alert(movie.title || movie.name);
+        
         currentMovie = movie;
 
         // Backdrop
@@ -216,7 +216,7 @@ alert("Status: " + response.status);
 
     } catch (err) {
 
-    alert(err);
+    
 
     console.error(err);
 
