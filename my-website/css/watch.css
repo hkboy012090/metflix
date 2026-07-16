@@ -598,3 +598,89 @@ body{
 }
 
 }
+
+/* ===========================
+   LOADING SCREEN
+=========================== */
+
+.loading-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#0b0b0b;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+}
+
+.loading-content{
+
+    text-align:center;
+
+}
+
+.loading-logo{
+
+    width:220px;
+
+    margin-bottom:30px;
+
+}
+
+.loading-spinner{
+
+    width:65px;
+
+    height:65px;
+
+    border:6px solid rgba(255,255,255,.15);
+
+    border-top:6px solid #e50914;
+
+    border-radius:50%;
+
+    margin:auto;
+
+    animation:spin 1s linear infinite;
+
+}
+
+.loading-content h2{
+
+    margin-top:25px;
+
+    font-size:28px;
+
+}
+
+.loading-content p{
+
+    margin-top:10px;
+
+    color:#aaa;
+
+}
+
+@keyframes spin{
+
+    0%{
+
+        transform:rotate(0deg);
+
+    }
+
+    100%{
+
+        transform:rotate(360deg);
+
+    }
+
+}
