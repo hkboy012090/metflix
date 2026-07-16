@@ -47,23 +47,22 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
    function showDetails(item) {
 
     checkAuth((user) => {
+
         if (!user) {
+
             sessionStorage.setItem("selectedMovie", JSON.stringify(item));
             window.location.href = "login.html";
             return;
+
         }
 
-        currentItem = item;
-        document.getElementById("modal-title").textContent = item.title || item.name;
-        document.getElementById("modal-description").textContent = item.overview;
-        document.getElementById("modal-image").src = `${IMG_URL}${item.poster_path}`;
-        document.getElementById("modal-rating").innerHTML =
-            "★".repeat(Math.round(item.vote_average / 2));
+        const type = item.media_type || (item.title ? "movie" : "tv");
 
-        changeServer();
-        document.getElementById("modal").style.display = "flex";
+        window.location.href = `watch.html?id=${item.id}&type=${type}`;
+
     });
-   }
+
+}
     function changeServer() {
       const server = document.getElementById('server').value;
       const type = currentItem.media_type === "movie" ? "movie" : "tv";
