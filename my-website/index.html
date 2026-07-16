@@ -1,55 +1,95 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>METFLIX</title>
-<link rel="stylesheet" href="css/home.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Website</title>
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="preload" href="css/home.css" as="style">
+  <link rel="preload" href="js/home.js" as="script">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ <script type="module" src="js/home.js"></script>
 </head>
+
 <body>
-<div class="navbar">
-  <img src="metflixlogo.png" alt="METFLIX">
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="login.html" id="loginBtn">Login</a>
-    <button id="logoutBtn">Logout</button>
-    <input type="text" class="search-bar" placeholder="Search...">
+  <div class="navbar">
+    <img src="metflixlogo.png" alt="LOGO HERE" />
+    <div class="nav-links">
+  <a href="index.html">Home</a>
+
+  <a href="login.html" id="loginBtn">Login</a>
+<button id="logoutBtn">Logout</button>
+
+  <input type="text" class="search-bar" placeholder="Search..." onfocus="openSearchModal()" />
+</div>
+  </div>
+
+  <div class="banner" id="banner">
+    <h1 id="banner-title"></h1>
+  </div>
+
+  <div class="row">
+    <h2>Trending Movies</h2>
+    <div class="list" id="movies-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending TV Shows</h2>
+    <div class="list" id="tvshows-list"></div>
+  </div>
+
+  <div class="row">
+    <h2>Trending Anime</h2>
+    <div class="list" id="anime-list"></div>
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()" style="color: red;">&times;</span>
+      <div class="modal-body">
+  <img id="modal-image" src="" alt="" />
+  <div class="modal-text">
+    <h2 id="modal-title"></h2>
+    <div class="stars" id="modal-rating"></div>
+    <p id="modal-description"></p>
   </div>
 </div>
+      
+      <div class="server-selector">
+        <label for="server">Change Server:</label>
+        <select id="server" onchange="changeServer()">
+          <option value="vidsrc.cc">Vidsrc.cc</option>
+          <option value="vidsrc.me">Vidsrc.me</option>
+          <option value="player.videasy.net">Player.Videasy.net</option>
+        </select>
+      </div>
+      <iframe id="modal-video" width="100%" height="315" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 
-<div id="top-banner-ad" class="ad-container">TOP BANNER AD</div>
-
-<div class="banner" id="banner">
-  <h1 id="banner-title">Featured Movie</h1>
-</div>
-
-<div id="native-ad-top" class="native-ad">NATIVE AD</div>
-
-<div class="row">
-<h2>Trending Movies</h2>
-<div class="list" id="movies-list"></div>
-</div>
-
-<div id="middle-banner-ad" class="ad-container">MIDDLE BANNER AD</div>
-
-<div class="row">
-<h2>Trending TV Shows</h2>
-<div class="list" id="tvshows-list"></div>
-</div>
-
-<div id="native-ad-bottom" class="native-ad">NATIVE AD</div>
-
-<div class="row">
-<h2>Trending Anime</h2>
-<div class="list" id="anime-list"></div>
-</div>
-
-<div id="footer-banner-ad" class="ad-container">FOOTER BANNER AD</div>
+  <div class="search-modal" id="search-modal">
+    <span class="close" onclick="closeSearchModal()" style="color: red;">&times;</span>
+    <input type="text" id="search-input" placeholder="Search for a movie or show..." oninput="searchTMDB()" />
+    <div class="results" id="search-results"></div>
+  </div>
 
 <footer class="footer">
-<p>&copy; 2026 METFLIX</p>
+  <div class="footer-content">
+    <p>&copy; 2025 My Website. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Disclaimer</a>
+      <a href="#">About Us</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
 </footer>
-
-<script type="module" src="js/home.js"></script>
+<script type="text/javascript" data-cfasync="false">
+/*<![CDATA[/* */
+(function(){var l=window,j="d72f9d3a335d8f742131dbf44b195f9e",b=[["siteId",513-800*840+753+106+5983530],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],q=["d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9qSElTTy9neGhUS20vdHphYnV0b19jYWxlbmRhci5taW4uanM=","ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQva2FwaHJvZGl0ZS5taW4uanM="],u=-1,m,y,g=function(){clearTimeout(y);u++;if(q[u]&&!(1810021086000<(new Date).getTime()&&1<u)){m=l.document.createElement("script");m.type="text/javascript";m.async=!0;var w=l.document.getElementsByTagName("script")[0];m.src="https://"+atob(q[u]);m.crossOrigin="anonymous";m.onerror=g;m.onload=function(){clearTimeout(y);l[j.slice(0,16)+j.slice(0,16)]||g()};y=setTimeout(g,5E3);w.parentNode.insertBefore(m,w)}};if(!l[j]){try{Object.freeze(l[j]=b)}catch(e){}g()}})();
+/*]]>/* */
+</script>
+  
+  
 </body>
 </html>
+
