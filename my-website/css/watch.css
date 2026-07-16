@@ -684,3 +684,90 @@ body{
     }
 
 }
+
+/* ===========================
+   ERROR SCREEN
+=========================== */
+
+.error-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    background:#0b0b0b;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99998;
+
+}
+
+.error-content{
+
+    text-align:center;
+
+    max-width:450px;
+
+    padding:30px;
+
+}
+
+.error-content i{
+
+    font-size:70px;
+
+    color:#e50914;
+
+    margin-bottom:20px;
+
+}
+
+.error-content h2{
+
+    font-size:34px;
+
+    margin-bottom:15px;
+
+}
+
+.error-content p{
+
+    color:#aaa;
+
+    margin-bottom:30px;
+
+    line-height:1.7;
+
+}
+
+#errorHomeBtn,
+#backHomeBtn{
+
+    background:#e50914;
+
+    color:white;
+
+    border:none;
+
+    padding:14px 28px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+#backHomeBtn:hover{
+
+    background:#b20710;
+
+}
