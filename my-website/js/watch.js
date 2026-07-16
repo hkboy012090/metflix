@@ -115,6 +115,7 @@ alert("Status: " + response.status);
 
         const movie = await response.json();
 
+        alert(movie.title || movie.name);
         currentMovie = movie;
 
         // Backdrop
