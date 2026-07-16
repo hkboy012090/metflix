@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METFLIX - Watch</title>
+
+    <link rel="stylesheet" href="css/watch.css">
+
+    <link rel="preconnect" href="https://image.tmdb.org">
+    <link rel="preconnect" href="https://api.themoviedb.org">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<div class="watch-page">
+
+    <!-- BACK BUTTON -->
+    <button class="back-btn" id="backBtn">
+        <i class="fas fa-arrow-left"></i>
+        Back
+    </button>
+
+    <!-- BACKDROP -->
+    <div class="backdrop">
+
+        <img id="backdropImage" src="" alt="Backdrop">
+
+        <div class="backdrop-overlay">
+
+            <div class="movie-header">
+
+                <!-- POSTER -->
+                <div class="poster-section">
+
+                    <img id="posterImage" src="" alt="Poster">
+
+                </div>
+
+                <!-- MOVIE INFO -->
+                <div class="movie-info">
+
+                    <h1 id="movieTitle">
+                        Loading...
+                    </h1>
+
+                    <div class="movie-meta">
+
+                        <span id="movieYear"></span>
+
+                        <span>•</span>
+
+                        <span id="movieRuntime"></span>
+
+                        <span>•</span>
+
+                        <span id="movieLanguage"></span>
+
+                    </div>
+
+                    <div class="movie-rating">
+
+                        <i class="fas fa-star"></i>
+
+                        <span id="movieRating"></span>
+
+                    </div>
+
+                    <div id="movieGenres" class="genres">
+
+                    </div>
+
+                    <p id="movieDescription">
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+        <!-- ========================= -->
+    <!-- PLAYER SECTION -->
+    <!-- ========================= -->
+
+    <section class="player-section">
+
+        <div class="player-card">
+
+            <div class="player-top">
+
+                <h2>
+                    <i class="fas fa-play-circle"></i>
+                    Watch Now
+                </h2>
+
+                <div class="server-box">
+
+                    <label>Server</label>
+
+                    <select id="server" onchange="changeServer()">
+
+                        <option value="vidsrc.cc">
+                            Vidsrc.cc
+                        </option>
+
+                        <option value="vidsrc.me">
+                            Vidsrc.me
+                        </option>
+
+                        <option value="player.videasy.net">
+                            Player.Videasy.net
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="video-container">
+
+                <iframe
+                    id="moviePlayer"
+                    src=""
+                    allowfullscreen
+                    frameborder="0"
+                    loading="lazy">
+                </iframe>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- MOVIE DETAILS -->
+    <!-- ========================= -->
+
+    <section class="details-section">
+
+        <div class="details-grid">
+
+            <div class="detail-item">
+
+                <h3>Release Date</h3>
+
+                <p id="releaseDate">Loading...</p>
+
+            </div>
+
+            <div class="detail-item">
+
+                <h3>Status</h3>
+
+                <p id="movieStatus">Loading...</p>
+
+            </div>
+
+            <div class="detail-item">
+
+                <h3>Original Language</h3>
+
+                <p id="originalLanguage">Loading...</p>
+
+            </div>
+
+            <div class="detail-item">
+
+                <h3>Popularity</h3>
+
+                <p id="moviePopularity">Loading...</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- CAST -->
+    <!-- ========================= -->
+
+    <section class="cast-section">
+
+        <div class="section-title">
+
+            <h2>Cast</h2>
+
+        </div>
+
+        <div
+            class="cast-list"
+            id="castList">
+
+        </div>
+
+    </section>
+        <!-- ========================= -->
+    <!-- MORE LIKE THIS -->
+    <!-- ========================= -->
+
+    <section class="recommend-section">
+
+        <div class="section-title">
+
+            <h2>More Like This</h2>
+
+        </div>
+
+        <div
+            class="recommend-grid"
+            id="recommendList">
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- FOOTER -->
+    <!-- ========================= -->
+
+    <footer class="watch-footer">
+
+        <div class="footer-content">
+
+            <img src="metflixlogo.png" class="footer-logo">
+
+            <p>
+                © 2026 METFLIX
+            </p>
+
+            <p>
+                Powered by TMDB API
+            </p>
+
+        </div>
+
+    </footer>
+
+</div>
+
+<script type="module" src="js/watch.js"></script>
+
+</body>
+</html>
