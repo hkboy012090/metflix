@@ -771,3 +771,112 @@ body{
     background:#b20710;
 
 }
+
+/* ===========================
+   ACTION BUTTONS
+=========================== */
+
+.action-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+
+    margin-top:30px;
+
+}
+
+.primary-btn{
+
+    background:#e50914;
+
+    color:#fff;
+
+    border:none;
+
+    padding:14px 28px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.primary-btn:hover{
+
+    background:#b20710;
+
+    transform:translateY(-2px);
+
+}
+
+.secondary-btn{
+
+    background:#252525;
+
+    color:#fff;
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:10px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.secondary-btn:hover{
+
+    background:#3a3a3a;
+
+    transform:translateY(-2px);
+
+}
+
+/* ===========================
+   LOADING HIDE
+=========================== */
+
+.loading-screen.hide{
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+    transition:.4s;
+
+}
+
+/* ===========================
+   MOBILE BUTTONS
+=========================== */
+
+@media(max-width:768px){
+
+.action-buttons{
+
+    flex-direction:column;
+
+}
+
+.primary-btn,
+.secondary-btn{
+
+    width:100%;
+
+}
+
+}
