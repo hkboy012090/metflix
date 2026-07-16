@@ -105,6 +105,8 @@ alert(url);
 
 const response = await fetch(url);
 
+alert("Status: " + response.status);
+
         if (!response.ok) {
 
             throw new Error("Movie not found");
