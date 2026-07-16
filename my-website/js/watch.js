@@ -211,11 +211,13 @@ async function loadMovie() {
 
     } catch (err) {
 
-        console.error(err);
+    alert(err);
 
-        showError();
+    console.error(err);
 
-    }
+    showError();
+
+}
 
 }
 
@@ -396,5 +398,20 @@ function loadRecommendations(movies) {
     });
 
 }
+
+// -------------------------
+// START
+// -------------------------
+
+if (!movieId) {
+
+    showError();
+
+} else {
+
+    loadMovie();
+
+}
+
 
 
