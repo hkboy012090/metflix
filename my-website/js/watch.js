@@ -99,9 +99,11 @@ async function loadMovie() {
 
     try {
 
-        const response = await fetch(
-            `${BASE_URL}/${mediaType}/${movieId}?api_key=${API_KEY}&append_to_response=credits,recommendations`
-        );
+        const url = `${BASE_URL}/${mediaType}/${movieId}?api_key=${API_KEY}&append_to_response=credits,recommendations`;
+
+alert(url);
+
+const response = await fetch(url);
 
         if (!response.ok) {
 
