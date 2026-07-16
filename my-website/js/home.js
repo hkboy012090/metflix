@@ -56,9 +56,29 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
 
         }
 
-        const type = item.media_type || (item.title ? "movie" : "tv");
+        let type;
 
-        window.location.href = `watch.html?id=${item.id}&type=${type}`;
+        if (item.media_type) {
+
+            type = item.media_type;
+
+        } else if (item.title) {
+
+            type = "movie";
+
+        } else {
+
+            type = "tv";
+
+        }
+
+        alert(
+            "ID: " + item.id +
+            "\nTYPE: " + type
+        );
+
+        window.location.href =
+            `watch.html?id=${item.id}&type=${type}`;
 
     });
 
