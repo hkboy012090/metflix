@@ -129,14 +129,10 @@ body{
 }
 
 .movie-header{
-
     display:flex;
-    flex-direction:column !important;
-    align-items:center !important;
-    text-align:center !important;
-    gap:20px !important;
+    gap:40px;
+    align-items:flex-end;
     width:100%;
-
 }
 .poster-section img{
 
@@ -525,12 +521,16 @@ body{
 @media (max-width:768px){
 
 .backdrop{
-    height:55vh;
+    min-height:100vh;
+    height:auto;
 }
 
 .backdrop-overlay{
-    padding:80px 20px 20px;
-    align-items:flex-end;
+    position:relative;
+    padding:90px 20px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .movie-header{
