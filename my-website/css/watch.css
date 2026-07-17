@@ -522,8 +522,7 @@ body{
 
 .backdrop{
     height:auto;
-    min-height:unset;
-    overflow:visible;
+    min-height:100vh;
 }
 
 .backdrop-overlay{
