@@ -1,1 +1,204 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+...
+</head>
+<body>
+
+<div id="loadingScreen" class="loading-screen">
+    <div class="loader"></div>
+</div>
+
+<div id="errorScreen" class="error-screen" style="display:none;">
+    <h2>Movie not found</h2>
+
+    <button id="backHomeBtn">
+        Back Home
+    </button>
+</div>
+
+<div class="watch-page">
+
+    <section class="backdrop">
+
+        <img
+            id="backdropImage"
+            class="backdrop-image"
+            src=""
+            alt=""
+        >
+
+        <div class="backdrop-overlay">
+
+            <button id="backBtn" class="back-btn">
+
+                ← Back
+
+            </button>
+
+        </div>
+
+    </section>
+    
+<section class="movie-header-section">
+
+    <div class="movie-header">
+
+        <div class="poster-section">
+
+            <img
+                id="posterImage"
+                src=""
+                alt="Poster"
+            >
+
+        </div>
+
+        <div class="movie-info">
+
+            <h1 id="movieTitle"></h1>
+
+            <div class="movie-meta">
+
+                <span id="movieYear"></span>
+
+                <span>•</span>
+
+                <span id="movieRuntime"></span>
+
+                <span>•</span>
+
+                <span id="movieLanguage"></span>
+
+            </div>
+
+            <div class="movie-rating">
+
+                ⭐ <span id="movieRating"></span>
+
+            </div>
+
+            <div id="movieGenres" class="genres"></div>
+
+            <p id="movieDescription"></p>
+
+            <div class="action-buttons">
+
+                <button
+                    id="watchNowBtn"
+                    class="primary-btn">
+
+                    ▶ Watch Now
+
+                </button>
+
+                <button class="secondary-btn">
+
+                    ❤ Favorite
+
+                </button>
+
+                <button class="secondary-btn">
+
+                    🔗 Share
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="player-section">
+
+    <div class="player-card">
+
+        <div class="player-header">
+
+            <h2>▶ Watch Now</h2>
+
+            <select id="server" onchange="changeServer()">
+
+                <option value="vidfast">VidFast</option>
+
+                <option value="multiembed">MultiEmbed</option>
+
+                <option value="2embed">2Embed</option>
+
+                <option value="vidsrc.cc">VidSrc CC</option>
+
+                <option value="vidsrc.me">VidSrc ME</option>
+
+                <option value="player.videasy.net">VideoEasy</option>
+
+            </select>
+
+        </div>
+
+        <iframe
+            id="moviePlayer"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="origin"
+        ></iframe>
+
+    </div>
+
+</section>
+<section class="details-section">
+
+    <h2>Movie Details</h2>
+
+    <div class="details-grid">
+
+        <div>
+            <strong>Release Date</strong>
+            <span id="releaseDate"></span>
+        </div>
+
+        <div>
+            <strong>Status</strong>
+            <span id="movieStatus"></span>
+        </div>
+
+        <div>
+            <strong>Language</strong>
+            <span id="originalLanguage"></span>
+        </div>
+
+        <div>
+            <strong>Popularity</strong>
+            <span id="moviePopularity"></span>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="cast-section">
+
+    <h2>Cast</h2>
+
+    <div id="castList" class="cast-grid"></div>
+
+</section>
+
+<section class="recommend-section">
+
+    <h2>More Like This</h2>
+
+    <div id="recommendList" class="recommend-grid"></div>
+
+</section>
+</div>
+
+<script type="module" src="js/watch.js"></script>
+
+</body>
+
+</html>
