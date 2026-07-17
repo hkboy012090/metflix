@@ -417,6 +417,6 @@ if (!movieId) {
     loadMovie();
 
 }
-alert("WATCH.JS LOADED");
+
 
 
