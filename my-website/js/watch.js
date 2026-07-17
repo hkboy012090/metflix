@@ -140,8 +140,7 @@ const response = await fetch(url);
 
         // Description
 
-        movieDescription.textContent =
-    "Test description";
+        movieDescription.textContent = movie.overview || "No description available.";
 
         // Year
 
