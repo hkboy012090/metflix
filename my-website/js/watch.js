@@ -117,6 +117,7 @@ const response = await fetch(url);
 
         const movie = await response.json();
 
+        alert(JSON.stringify(movie));
         
         currentMovie = movie;
 
