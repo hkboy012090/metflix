@@ -539,16 +539,22 @@ body{
     align-items:center;
     text-align:center;
     gap:18px;
+    width:100%;
 }
 
-.poster-section img{
-    width:140px;
-    border-radius:14px;
+.movie-header > *{
+    width:100%;
 }
 
 .movie-info{
     width:100%;
     max-width:100%;
+    min-width:0;
+}
+
+.poster-section img{
+    width:140px;
+    border-radius:14px;
 }
 
 .movie-info h1{
