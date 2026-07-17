@@ -906,3 +906,11 @@ body{
 /* ===========================
    MOBILE BUTTONS
 =========================== */
+
+@media (max-width:768px){
+
+body{
+    background:green !important;
+}
+
+}
