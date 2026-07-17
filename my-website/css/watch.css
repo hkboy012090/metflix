@@ -131,7 +131,7 @@ body{
 .movie-header{
     display:flex;
     gap:40px;
-    align-items:flex-start;
+    align-items:flex-end;
     width:100%;
 }
 .poster-section img{
