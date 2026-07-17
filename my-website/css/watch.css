@@ -521,8 +521,8 @@ body{
 @media (max-width:768px){
 
 .backdrop{
-    height:420px;
-    min-height:auto;
+    height:auto;
+    min-height:100vh;
 }
 
 .backdrop-overlay{
