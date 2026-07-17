@@ -131,15 +131,13 @@ body{
 .movie-header{
 
     display:flex;
-
-    gap:40px;
-
-    align-items:flex-end;
-
+    flex-direction:column !important;
+    align-items:center !important;
+    text-align:center !important;
+    gap:20px !important;
     width:100%;
 
 }
-
 .poster-section img{
 
     width:250px;
