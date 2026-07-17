@@ -78,7 +78,7 @@ body{
 
     height:75vh;
 
-    overflow:visible;
+    overflow:hidden;
 
 }
 
@@ -131,7 +131,7 @@ body{
 .movie-header{
     display:flex;
     gap:40px;
-    align-items:flex-end;
+    align-items:flex-start;
     width:100%;
 }
 .poster-section img{
