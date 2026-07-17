@@ -219,9 +219,9 @@ const response = await fetch(url);
 
     } catch (err) {
 
-    
-
     console.error(err);
+
+    alert(err.message);
 
     showError();
 
@@ -417,6 +417,6 @@ if (!movieId) {
     loadMovie();
 
 }
-
+alert("WATCH.JS LOADED");
 
 
