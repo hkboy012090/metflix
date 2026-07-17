@@ -40,11 +40,11 @@ body{
 
     z-index:999;
 
-    background:blue !important;
+    background:rgba(0,0,0,.65);
 
     backdrop-filter:blur(15px);
 
-    color:yellow !important;
+    color:white;
 
     border:none;
 
@@ -906,5 +906,3 @@ body{
 /* ===========================
    MOBILE BUTTONS
 =========================== */
-
-
