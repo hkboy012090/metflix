@@ -917,5 +917,11 @@ body{
 /* ===========================
    MOBILE BUTTONS
 =========================== */
+.poster-section{
+    flex-shrink: 0;
+}
 
+.poster-section img{
+    display: block;
+}
 
