@@ -1,482 +1,421 @@
 import { checkAuth } from "./auth.js";
 
-/* ===========================
-CONFIG
-=========================== */
-
 const API_KEY = "85d06918f5f2d578fd2048c5841b6ee2";
-
 const BASE_URL = "https://api.themoviedb.org/3";
-
 const IMG_URL = "https://image.tmdb.org/t/p/original";
-
-/* ===========================
-URL PARAMS
-=========================== */
 
 const params = new URLSearchParams(window.location.search);
 
 const movieId = params.get("id");
-
 const mediaType = params.get("type") || "movie";
 
 let currentMovie = null;
 
-/* ===========================
-AUTH
-=========================== */
+// -------------------------
+// HTML Elements
+// -------------------------
 
-checkAuth((user)=>{
+const loadingScreen = document.getElementById("loadingScreen");
+const errorScreen = document.getElementById("errorScreen");
 
-if(!user){
+const backdropImage = document.getElementById("backdropImage");
+const posterImage = document.getElementById("posterImage");
 
-window.location.href="login.html";
+const movieTitle = document.getElementById("movieTitle");
+const movieDescription = document.getElementById("movieDescription");
+const movieYear = document.getElementById("movieYear");
+const movieRuntime = document.getElementById("movieRuntime");
+const movieLanguage = document.getElementById("movieLanguage");
+const movieRating = document.getElementById("movieRating");
 
-}
+const movieGenres = document.getElementById("movieGenres");
+
+const releaseDate = document.getElementById("releaseDate");
+const movieStatus = document.getElementById("movieStatus");
+const originalLanguage = document.getElementById("originalLanguage");
+const moviePopularity = document.getElementById("moviePopularity");
+
+const player = document.getElementById("moviePlayer");
+
+const castList = document.getElementById("castList");
+const recommendList = document.getElementById("recommendList");
+
+const backBtn = document.getElementById("backBtn");
+const backHomeBtn = document.getElementById("backHomeBtn");
+
+// -------------------------
+// Login Check
+// -------------------------
+
+checkAuth((user) => {
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+    }
 
 });
 
-/* ===========================
-ELEMENTS
-=========================== */
+// -------------------------
+// Back Buttons
+// -------------------------
 
-const loadingScreen=document.getElementById("loadingScreen");
+backBtn.onclick = () => {
 
-const errorScreen=document.getElementById("errorScreen");
-
-const backdropImage=document.getElementById("backdropImage");
-
-const posterImage=document.getElementById("posterImage");
-
-const movieTitle=document.getElementById("movieTitle");
-
-const movieDescription=document.getElementById("movieDescription");
-
-const movieYear=document.getElementById("movieYear");
-
-const movieRuntime=document.getElementById("movieRuntime");
-
-const movieLanguage=document.getElementById("movieLanguage");
-
-const movieRating=document.getElementById("movieRating");
-
-const movieGenres=document.getElementById("movieGenres");
-
-const releaseDate=document.getElementById("releaseDate");
-
-const movieStatus=document.getElementById("movieStatus");
-
-const originalLanguage=document.getElementById("originalLanguage");
-
-const moviePopularity=document.getElementById("moviePopularity");
-
-const castList=document.getElementById("castList");
-
-const recommendList=document.getElementById("recommendList");
-
-const player=document.getElementById("moviePlayer");
-
-const backBtn=document.getElementById("backBtn");
-
-const backHomeBtn=document.getElementById("backHomeBtn");
-
-/* ===========================
-BUTTONS
-=========================== */
-
-backBtn.onclick=()=>history.back();
-
-backHomeBtn.onclick=()=>{
-
-window.location.href="index.html";
+    history.back();
 
 };
 
-/* ===========================
-LOADING
-=========================== */
+backHomeBtn.onclick = () => {
+
+    window.location.href = "index.html";
+
+};
+
+// -------------------------
+// Loading
+// -------------------------
 
 function hideLoading(){
 
-loadingScreen.classList.add("hide");
+    loadingScreen.classList.add("hide");
 
 }
 
 function showError(){
 
-loadingScreen.classList.add("hide");
+    loadingScreen.classList.add("hide");
 
-errorScreen.style.display="flex";
-
-}
-/* ===========================
-LOAD MOVIE
-=========================== */
-
-async function loadMovie(){
-
-try{
-
-const response=await fetch(
-
-`${BASE_URL}/${mediaType}/${movieId}?api_key=${API_KEY}&append_to_response=credits,recommendations`
-
-);
-
-if(!response.ok){
-
-throw new Error("Movie not found");
+    errorScreen.style.display="flex";
 
 }
 
-const movie=await response.json();
+// -------------------------
+// Load Movie
+// -------------------------
 
-currentMovie=movie;
+async function loadMovie() {
 
+    try {
 
-/* ===========================
-BACKDROP
-=========================== */
+        const url = `${BASE_URL}/${mediaType}/${movieId}?api_key=${API_KEY}&append_to_response=credits,recommendations`;
 
-backdropImage.src=movie.backdrop_path
-?IMG_URL+movie.backdrop_path
-:"";
 
 
-/* ===========================
-POSTER
-=========================== */
 
-posterImage.src=movie.poster_path
-?IMG_URL+movie.poster_path
-:"";
 
+const response = await fetch(url);
 
-/* ===========================
-TITLE
-=========================== */
 
-movieTitle.textContent=
 
-movie.title||movie.name;
+        if (!response.ok) {
 
+            throw new Error("Movie not found");
 
-/* ===========================
-DESCRIPTION
-=========================== */
+        }
 
-movieDescription.textContent=
+        const movie = await response.json();
 
-movie.overview||
+        
+        
+        currentMovie = movie;
 
-"No description available.";
+        // Backdrop
 
+        backdropImage.src = movie.backdrop_path
+            ? IMG_URL + movie.backdrop_path
+            : "";
 
-/* ===========================
-YEAR
-=========================== */
+        // Poster
 
-const release=
+        posterImage.src = movie.poster_path
+            ? IMG_URL + movie.poster_path
+            : "";
 
-movie.release_date||
+        // Title
 
-movie.first_air_date||
+        movieTitle.textContent =
+            movie.title || movie.name;
 
-"";
+        // Description
 
-movieYear.textContent=
+        movieDescription.textContent = movie.overview || "No description available.";
 
-release
+        // Year
 
-?release.substring(0,4)
+        const date =
+            movie.release_date ||
+            movie.first_air_date ||
+            "";
 
-:"N/A";
+        movieYear.textContent =
+            date ? date.substring(0, 4) : "N/A";
 
+        // Runtime
 
-/* ===========================
-RUNTIME
-=========================== */
+        if (mediaType === "movie") {
 
-if(mediaType==="movie"){
+            movieRuntime.textContent =
+                movie.runtime
+                    ? `${Math.floor(movie.runtime / 60)}h ${movie.runtime % 60}m`
+                    : "N/A";
 
-movieRuntime.textContent=
+        } else {
 
-movie.runtime
+            movieRuntime.textContent =
+                `${movie.number_of_seasons} Season`;
 
-?`${Math.floor(movie.runtime/60)}h ${movie.runtime%60}m`
+        }
 
-:"N/A";
+        // Language
 
-}else{
+        movieLanguage.textContent =
+            (movie.original_language || "").toUpperCase();
 
-movieRuntime.textContent=
+        // Rating
 
-`${movie.number_of_seasons} Season`;
+        movieRating.textContent =
+            movie.vote_average.toFixed(1);
 
-}
+        // Genres
 
+        movieGenres.innerHTML = "";
 
-/* ===========================
-LANGUAGE
-=========================== */
+        movie.genres.forEach(genre => {
 
-movieLanguage.textContent=
+            const span = document.createElement("span");
 
-(movie.original_language||"").toUpperCase();
+            span.textContent = genre.name;
 
+            movieGenres.appendChild(span);
 
-/* ===========================
-RATING
-=========================== */
+        });
 
-movieRating.textContent=
+        // Details
 
-movie.vote_average
+        releaseDate.textContent =
+            date || "N/A";
 
-?movie.vote_average.toFixed(1)
+        movieStatus.textContent =
+            movie.status || "N/A";
 
-:"0.0";
+        originalLanguage.textContent =
+            movie.original_language;
 
+        moviePopularity.textContent =
+            Math.round(movie.popularity);
 
-/* ===========================
-GENRES
-=========================== */
+        // Load Other Sections
 
-movieGenres.innerHTML="";
+        loadPlayer();
 
-(movie.genres||[]).forEach(genre=>{
+        loadCast(movie.credits.cast);
 
-const tag=document.createElement("span");
+        loadRecommendations(movie.recommendations.results);
 
-tag.textContent=genre.name;
+        hideLoading();
 
-movieGenres.appendChild(tag);
+    } catch (err) {
 
-});
+    console.error(err);
 
+    alert(err.message);
 
-/* ===========================
-DETAILS
-=========================== */
-
-releaseDate.textContent=
-
-release||"N/A";
-
-movieStatus.textContent=
-
-movie.status||"N/A";
-
-originalLanguage.textContent=
-
-(movie.original_language||"").toUpperCase();
-
-moviePopularity.textContent=
-
-Math.round(movie.popularity||0);
-
-/* ===========================
-PLAYER
-=========================== */
-
-loadPlayer();
-
-loadCast(movie.credits?.cast || []);
-
-loadRecommendations(movie.recommendations?.results || []);
-
-hideLoading();
-
-}catch(err){
-
-console.error(err);
-
-showError();
+    showError();
 
 }
 
 }
 
+// -------------------------
+// PLAYER
+// -------------------------
 
-/* ===========================
-PLAYER
-=========================== */
+function loadPlayer() {
 
-function loadPlayer(){
+    if (!currentMovie) return;
 
-changeServer();
+    changeServer();
+
+}
+
+// -------------------------
+// CHANGE SERVER
+// -------------------------
+
+function changeServer() {
+
+    if (!currentMovie) return;
+
+    const server = document.getElementById("server").value;
+
+    let embedURL = "";
+
+    switch (server) {
+
+        case "vidfast":
+            embedURL =
+                `https://vidfast.pro/${mediaType}/${currentMovie.id}`;
+            break;
+
+        case "multiembed":
+            embedURL =
+                `https://multiembed.mov/?video_id=${currentMovie.id}&tmdb=1`;
+            break;
+
+        case "2embed":
+            embedURL =
+                `https://www.2embed.cc/embed/${currentMovie.id}`;
+            break;
+
+    }
+
+    player.src = embedURL;
+
+}
+// -------------------------
+// WATCH BUTTON
+// -------------------------
+
+const watchNowBtn = document.getElementById("watchNowBtn");
+
+if (watchNowBtn) {
+
+    watchNowBtn.addEventListener("click", () => {
+
+        document.querySelector(".player-section")
+            .scrollIntoView({
+
+                behavior: "smooth"
+
+            });
+
+    });
+
+}
+
+window.changeServer = changeServer;
+
+// -------------------------
+// LOAD CAST
+// -------------------------
+
+function loadCast(cast) {
+
+    castList.innerHTML = "";
+
+    if (!cast || cast.length === 0) {
+
+        castList.innerHTML = "<p>No cast available.</p>";
+
+        return;
+
+    }
+
+    cast.slice(0, 12).forEach(actor => {
+
+        const card = document.createElement("div");
+
+        card.className = "cast-card";
+
+        const image = actor.profile_path
+            ? IMG_URL + actor.profile_path
+            : "https://via.placeholder.com/300x450?text=No+Image";
+
+        card.innerHTML = `
+
+            <img src="${image}" alt="${actor.name}">
+
+            <div class="cast-info">
+
+                <h4>${actor.name}</h4>
+
+                <p>${actor.character || ""}</p>
+
+            </div>
+
+        `;
+
+        castList.appendChild(card);
+
+    });
+
+}
+
+// -------------------------
+// LOAD RECOMMENDATIONS
+// -------------------------
+
+function loadRecommendations(movies) {
+
+    recommendList.innerHTML = "";
+
+    if (!movies || movies.length === 0) {
+
+        recommendList.innerHTML = "<p>No recommendations available.</p>";
+
+        return;
+
+    }
+
+    movies.slice(0, 12).forEach(movie => {
+
+        if (!movie.poster_path) return;
+
+        const card = document.createElement("div");
+
+        card.className = "movie-card";
+
+        card.innerHTML = `
+
+            <img
+                src="${IMG_URL}${movie.poster_path}"
+                alt="${movie.title || movie.name}"
+            >
+
+            <div class="movie-name">
+
+                ${movie.title || movie.name}
+
+            </div>
+
+            <div class="movie-score">
+
+                ⭐ ${movie.vote_average.toFixed(1)}
+
+            </div>
+
+        `;
+
+        card.onclick = () => {
+
+            const type = movie.media_type || mediaType;
+
+            window.location.href =
+                `watch.html?id=${movie.id}&type=${type}`;
+
+        };
+
+        recommendList.appendChild(card);
+
+    });
+
+}
+
+// -------------------------
+// START
+// -------------------------
+
+if (!movieId) {
+
+    showError();
+
+} else {
+
+    loadMovie();
 
 }
 
 
-/* ===========================
-SERVER
-=========================== */
 
-function changeServer(){
-
-if(!currentMovie)return;
-
-const server=document.getElementById("server").value;
-
-let url="";
-
-switch(server){
-
-case "vidfast":
-
-url=`https://vidfast.pro/${mediaType}/${currentMovie.id}`;
-
-break;
-
-case "multiembed":
-
-url=`https://multiembed.mov/?video_id=${currentMovie.id}&tmdb=1`;
-
-break;
-
-case "2embed":
-
-url=`https://www.2embed.cc/embed/${currentMovie.id}`;
-
-break;
-
-case "vidsrc.cc":
-
-url=`https://vidsrc.cc/v2/embed/${mediaType}/${currentMovie.id}`;
-
-break;
-
-case "vidsrc.me":
-
-url=`https://vidsrc.me/embed/${mediaType}?tmdb=${currentMovie.id}`;
-
-break;
-
-case "player.videasy.net":
-
-url=`https://player.videasy.net/${mediaType}/${currentMovie.id}`;
-
-break;
-
-default:
-
-url=`https://vidfast.pro/${mediaType}/${currentMovie.id}`;
-
-}
-
-player.src=url;
-
-}
-
-window.changeServer=changeServer;
-
-
-/* ===========================
-WATCH BUTTON
-=========================== */
-
-document.getElementById("watchNowBtn")?.addEventListener("click",()=>{
-
-document.querySelector(".player-section").scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-});
-
-
-/* ===========================
-CAST
-=========================== */
-
-function loadCast(cast){
-
-castList.innerHTML="";
-
-cast.slice(0,12).forEach(actor=>{
-
-const image=actor.profile_path
-
-?IMG_URL+actor.profile_path
-
-:"https://via.placeholder.com/300x450?text=No+Image";
-
-castList.innerHTML+=`
-
-<div class="cast-card">
-
-<img src="${image}" alt="${actor.name}">
-
-<div class="cast-info">
-
-<h4>${actor.name}</h4>
-
-<p>${actor.character||""}</p>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-/* ===========================
-RECOMMENDATIONS
-=========================== */
-
-function loadRecommendations(list){
-
-recommendList.innerHTML="";
-
-list.slice(0,12).forEach(item=>{
-
-if(!item.poster_path)return;
-
-recommendList.innerHTML+=`
-
-<div class="movie-card"
-
-onclick="location.href='watch.html?id=${item.id}&type=${item.media_type||mediaType}'">
-
-<img src="${IMG_URL}${item.poster_path}">
-
-<div class="movie-name">
-
-${item.title||item.name}
-
-</div>
-
-<div class="movie-score">
-
-⭐ ${item.vote_average.toFixed(1)}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-/* ===========================
-START
-=========================== */
-
-if(movieId){
-
-loadMovie();
-
-}else{
-
-showError();
-
-}
