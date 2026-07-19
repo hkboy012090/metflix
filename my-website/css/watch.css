@@ -573,8 +573,8 @@ body{
 }
 
 .backdrop{
-    height:520px;
-    min-height:520px;
+    min-height:720px;
+    height:auto;
 }
 
 .backdrop-overlay{
