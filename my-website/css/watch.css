@@ -218,12 +218,17 @@ body{
 }
 
 .player-top{
+
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
-    gap:15px;
+
     padding:20px 25px;
+
     background:#202020;
+
 }
 /* ===========================
    PLAYER SECTION
@@ -247,19 +252,6 @@ body{
 
 }
 
-.player-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:20px 25px;
-
-    background:#202020;
-
-}
 
 .player-top h2{
 
@@ -863,93 +855,19 @@ body{
    MOBILE BUTTONS
 =========================== */
 
-@media (max-width:768px){
-
-.backdrop{
-    height:auto;
-}
-
-.backdrop-overlay{
-    padding:20px;
-}
-
-.movie-header{
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    gap:20px;
-}
-
-.poster-section img{
-    width:170px;
-}
-
-.movie-info{
-    width:100%;
-}
-
-.movie-info h1{
-    font-size:28px;
-}
-
-.movie-meta{
-    justify-content:center;
-}
-
-.movie-rating{
-    justify-content:center;
-}
-
-.genres{
-    justify-content:center;
-}
+@media(max-width:768px){
 
 .action-buttons{
+
     flex-direction:column;
-    gap:12px;
+
 }
 
 .primary-btn,
 .secondary-btn{
+
     width:100%;
-}
 
-.player-section,
-.details-section,
-.cast-section,
-.recommend-section{
-    padding:20px;
-}
-
-.player-top{
-    flex-direction:column;
-    align-items:center;
-}
-
-.server-box{
-    width:100%;
-    justify-content:center;
-}
-
-.server-box select{
-    width:100%;
-    max-width:220px;
-}
-
-.section-title{
-    padding:0 20px;
-}
-
-.details-grid{
-    grid-template-columns:1fr;
-}
-
-.cast-list{
-    grid-template-columns:repeat(2,1fr);
-}
-
-.recommend-grid{
-    grid-template-columns:repeat(2,1fr);
 }
 
 }
