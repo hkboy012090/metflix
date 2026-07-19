@@ -73,8 +73,10 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
         }
 
         
-        window.location.href =
-            `watch.html?id=${item.id}&type=${type}`;
+
+
+window.location.href =
+    `watch.html?id=${item.id}&type=${type}`;
 
     });
 
