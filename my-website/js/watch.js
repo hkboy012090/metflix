@@ -103,6 +103,8 @@ async function loadMovie() {
 
 
 
+
+
 const response = await fetch(url);
 
 
@@ -115,6 +117,7 @@ const response = await fetch(url);
 
         const movie = await response.json();
 
+        
         
         currentMovie = movie;
 
@@ -216,9 +219,9 @@ const response = await fetch(url);
 
     } catch (err) {
 
-    
-
     console.error(err);
+
+    alert(err.message);
 
     showError();
 
@@ -250,31 +253,28 @@ function changeServer() {
 
     let embedURL = "";
 
-    if (server === "vidsrc.cc") {
+    switch (server) {
 
-        embedURL =
-            `https://vidsrc.cc/v2/embed/${mediaType}/${currentMovie.id}`;
+        case "vidfast":
+            embedURL =
+                `https://vidfast.pro/${mediaType}/${currentMovie.id}`;
+            break;
 
-    }
+        case "multiembed":
+            embedURL =
+                `https://multiembed.mov/?video_id=${currentMovie.id}&tmdb=1`;
+            break;
 
-    else if (server === "vidsrc.me") {
-
-        embedURL =
-            `https://vidsrc.net/embed/${mediaType}/?tmdb=${currentMovie.id}`;
-
-    }
-
-    else if (server === "player.videasy.net") {
-
-        embedURL =
-            `https://player.videasy.net/${mediaType}/${currentMovie.id}`;
+        case "2embed":
+            embedURL =
+                `https://www.2embed.cc/embed/${currentMovie.id}`;
+            break;
 
     }
 
     player.src = embedURL;
 
 }
-
 // -------------------------
 // WATCH BUTTON
 // -------------------------
