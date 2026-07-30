@@ -292,8 +292,13 @@ function loadSeasons(totalSeasons) {
     for (let i = 1; i <= totalSeasons; i++) {
         seasonSelect.innerHTML += `<option value="${i}">Season ${i}</option>`;
     }
-}
 
+    seasonSelect.onchange = () => {
+        loadEpisodes(seasonSelect.value);
+    };
+
+    loadEpisodes(1);
+}
 // -------------------------
 // WATCH BUTTON
 // -------------------------
