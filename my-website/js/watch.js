@@ -286,6 +286,14 @@ function changeServer() {
     player.src = embedURL;
 
 }
+function loadSeasons(totalSeasons) {
+    seasonSelect.innerHTML = "";
+
+    for (let i = 1; i <= totalSeasons; i++) {
+        seasonSelect.innerHTML += `<option value="${i}">Season ${i}</option>`;
+    }
+}
+
 // -------------------------
 // WATCH BUTTON
 // -------------------------
