@@ -302,6 +302,19 @@ function loadSeasons(totalSeasons) {
 
     loadEpisodes(1);
 }
+function loadEpisodes(season) {
+    episodeSelect.innerHTML = "";
+
+    for (let i = 1; i <= 20; i++) {
+        episodeSelect.innerHTML += `<option value="${i}">Episode ${i}</option>`;
+    }
+
+    episodeSelect.onchange = () => {
+        changeServer();
+    };
+
+    changeServer();
+}
 // -------------------------
 // WATCH BUTTON
 // -------------------------
