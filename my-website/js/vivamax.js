@@ -65,9 +65,7 @@ async function searchVivamax() {
 
         const data = await res.json();
 
-        const results = data.results.filter(movie =>
-            VIVAMAX_IDS.includes(movie.id)
-        );
+        const results = data.results;
 
         displayMovies(results);
 
