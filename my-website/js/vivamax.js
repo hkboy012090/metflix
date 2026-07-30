@@ -57,17 +57,23 @@ async function searchVivamax() {
         return;
     }
 
-    const res = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(keyword)}`
-    );
+    try {
 
-    const data = await res.json();
+        const res = await fetch(
+            `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(keyword)}`
+        );
 
-    const results = data.results.filter(movie =>
-        VIVAMAX_IDS.includes(movie.id)
-    );
+        const data = await res.json();
 
-    displayMovies(results);
+        const results = data.results.filter(movie =>
+            VIVAMAX_IDS.includes(movie.id)
+        );
+
+        displayMovies(results);
+
+    } catch (error) {
+        console.error("Search Error:", error);
+    }
 
 }
 
