@@ -39,7 +39,7 @@ function displayMovies(list){
 
         movieGrid.innerHTML += `
         <div class="movie-card" onclick="location.href='watch.html?id=${movie.id}&type=movie'">
-            <img src="${IMG_URL}${movie.poster_path}">
+            <img src="${movie.poster_path ? IMG_URL + movie.poster_path : 'no-poster.png'}">
             <h3>${movie.title}</h3>
         </div>
         `;
@@ -48,16 +48,28 @@ function displayMovies(list){
 
 }
 
-searchInput.addEventListener("input",()=>{
+async function searchVivamax() {
 
-    const keyword = searchInput.value.toLowerCase();
+    const keyword = searchInput.value.trim();
 
-    const filtered = allMovies.filter(movie=>
-        movie.title.toLowerCase().includes(keyword)
+    if (keyword === "") {
+        displayMovies(allMovies);
+        return;
+    }
+
+    const res = await fetch(
+        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(keyword)}`
     );
 
-    displayMovies(filtered);
+    const data = await res.json();
 
-});
+    const results = data.results.filter(movie =>
+        VIVAMAX_IDS.includes(movie.id)
+    );
 
+    displayMovies(results);
+
+}
+
+searchInput.addEventListener("input", searchVivamax);
 loadVivamaxMovies();
