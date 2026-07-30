@@ -350,3 +350,10 @@
 body{
     padding-bottom: 75px;
 }
+.bottom-nav a.active{
+    color: #e50914;
+}
+
+.bottom-nav a.active i{
+    color: #e50914;
+}
