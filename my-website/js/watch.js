@@ -277,7 +277,10 @@ function changeServer() {
     if (mediaType === "movie") {
         embedURL = `https://vidsrc.sbs/embed/movie/${currentMovie.id}`;
     } else {
-        embedURL = `https://vidsrc.sbs/embed/tv/${currentMovie.id}`;
+        const season = seasonSelect.value || 1;
+        const episode = episodeSelect.value || 1;
+
+        embedURL = `https://vidsrc.sbs/embed/tv/${currentMovie.id}/${season}/${episode}`;
     }
     break;
 
