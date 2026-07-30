@@ -36,7 +36,8 @@ const originalLanguage = document.getElementById("originalLanguage");
 const moviePopularity = document.getElementById("moviePopularity");
 
 const player = document.getElementById("moviePlayer");
-
+const seasonSelect = document.getElementById("season");
+const episodeSelect = document.getElementById("episode");
 const castList = document.getElementById("castList");
 const recommendList = document.getElementById("recommendList");
 
@@ -120,7 +121,9 @@ const response = await fetch(url);
         
         
         currentMovie = movie;
-
+if (mediaType === "tv") {
+    loadSeasons(movie.number_of_seasons);
+}
         // Backdrop
 
         backdropImage.src = movie.backdrop_path
