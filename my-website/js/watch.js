@@ -271,9 +271,12 @@ function changeServer() {
             break;
 
         case "vidsrcsbs":
-            embedURL =
-                `https://vidsrc.sbs/embed/${mediaType}/${currentMovie.id}`;
-            break;
+    if (mediaType === "movie") {
+        embedURL = `https://vidsrc.sbs/embed/movie/${currentMovie.id}`;
+    } else {
+        embedURL = `https://vidsrc.sbs/embed/tv/${currentMovie.id}`;
+    }
+    break;
 
     }
 
