@@ -1,4 +1,4 @@
-const API_KEY = "YOUR_TMDB_API_KEY";
+const API_KEY = "85d06918f5f2d578fd2048c5841b6ee2";
 
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
