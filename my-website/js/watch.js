@@ -270,6 +270,11 @@ function changeServer() {
                 `https://www.2embed.cc/embed/${currentMovie.id}`;
             break;
 
+        case "vidsrcsbs":
+            embedURL =
+                `https://vidsrc.sbs/embed/${mediaType}/${currentMovie.id}`;
+            break;
+
     }
 
     player.src = embedURL;
