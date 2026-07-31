@@ -296,10 +296,9 @@ function loadSeasons(totalSeasons) {
         seasonSelect.innerHTML += `<option value="${i}">Season ${i}</option>`;
     }
 
-    seasonSelect.onchange = () => {
-        loadEpisodes(seasonSelect.value);
-    };
-
+    seasonSelect.onchange = async () => {
+    await loadEpisodes(seasonSelect.value);
+};
     loadEpisodes(1);
 }
 async function loadEpisodes(season) {
