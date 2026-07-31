@@ -271,34 +271,50 @@ function changeServer() {
 
     switch (server) {
 
-        case "vidfast":
-            embedURL =
-                `https://vidfast.pro/${mediaType}/${currentMovie.id}`;
-            break;
+    case "vidsrcsbs":
+        if (mediaType === "movie") {
+            embedURL = `https://vidsrc.sbs/embed/movie/${currentMovie.id}`;
+        } else {
+            const season = seasonSelect.value || 1;
+            const episode = episodeSelect.value || 1;
+            embedURL = `https://vidsrc.sbs/embed/tv/${currentMovie.id}/${season}/${episode}`;
+        }
+        break;
 
-        case "multiembed":
-            embedURL =
-                `https://multiembed.mov/?video_id=${currentMovie.id}&tmdb=1`;
-            break;
+    case "vidlink":
+        if (mediaType === "movie") {
+            embedURL = `https://vidlink.pro/movie/${currentMovie.id}`;
+        } else {
+            const season = seasonSelect.value || 1;
+            const episode = episodeSelect.value || 1;
+            embedURL = `https://vidlink.pro/tv/${currentMovie.id}/${season}/${episode}`;
+        }
+        break;
 
-        case "2embed":
-            embedURL =
-                `https://www.2embed.cc/embed/${currentMovie.id}`;
-            break;
+    case "zxcstream":
+        if (mediaType === "movie") {
+            embedURL = `https://zxcstream.xyz/player/movie/${currentMovie.id}`;
+        } else {
+            const season = seasonSelect.value || 1;
+            const episode = episodeSelect.value || 1;
+            embedURL = `https://zxcstream.xyz/player/tv/${currentMovie.id}/${season}/${episode}`;
+        }
+        break;
 
-        case "vidsrcsbs":
-    if (mediaType === "movie") {
+    case "vidnest":
+        if (mediaType === "movie") {
+            embedURL = `https://vidnest.fun/movie/${currentMovie.id}`;
+        } else {
+            const season = seasonSelect.value || 1;
+            const episode = episodeSelect.value || 1;
+            embedURL = `https://vidnest.fun/tv/${currentMovie.id}/${season}/${episode}`;
+        }
+        break;
+
+    default:
         embedURL = `https://vidsrc.sbs/embed/movie/${currentMovie.id}`;
-    } else {
-        const season = seasonSelect.value || 1;
-        const episode = episodeSelect.value || 1;
-
-        embedURL = `https://vidsrc.sbs/embed/tv/${currentMovie.id}/${season}/${episode}`;
-    }
-    break;
 
     }
-
     player.src = embedURL;
 
 }
