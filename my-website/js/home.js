@@ -103,15 +103,18 @@ window.location.href =
     }
 
     function openSearchModal() {
-      document.getElementById('search-modal').style.display = 'flex';
-      document.getElementById('search-input').focus();
-    }
+  document.getElementById('search-modal').style.display = 'flex';
+  document.getElementById('search-input').focus();
+
+  document.getElementById("searchBtn").classList.add("active");
+}
 
     function closeSearchModal() {
-      document.getElementById('search-modal').style.display = 'none';
-      document.getElementById('search-results').innerHTML = '';
-    }
+  document.getElementById('search-modal').style.display = 'none';
+  document.getElementById('search-results').innerHTML = '';
 
+  document.getElementById("searchBtn").classList.remove("active");
+}
     async function searchTMDB() {
       const query = document.getElementById('search-input').value;
       if (!query.trim()) {
