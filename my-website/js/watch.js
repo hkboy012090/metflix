@@ -302,12 +302,22 @@ function loadSeasons(totalSeasons) {
 
     loadEpisodes(1);
 }
-function loadEpisodes(season) {
+async function loadEpisodes(season) {
     episodeSelect.innerHTML = "";
 
-    for (let i = 1; i <= 20; i++) {
-        episodeSelect.innerHTML += `<option value="${i}">Episode ${i}</option>`;
-    }
+    const response = await fetch(
+        `${BASE_URL}/tv/${movieId}/season/${season}?api_key=${API_KEY}`
+    );
+
+    const data = await response.json();
+
+    data.episodes.forEach(ep => {
+        episodeSelect.innerHTML += `
+            <option value="${ep.episode_number}">
+                Episode ${ep.episode_number}
+            </option>
+        `;
+    });
 
     episodeSelect.onchange = () => {
         changeServer();
