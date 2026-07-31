@@ -121,8 +121,9 @@ const response = await fetch(url);
         
         
         currentMovie = movie;
+
 if (mediaType === "tv") {
-    loadSeasons(movie.number_of_seasons);
+    await loadSeasons(movie.number_of_seasons);
 }
         // Backdrop
 
@@ -289,7 +290,7 @@ function changeServer() {
     player.src = embedURL;
 
 }
-function loadSeasons(totalSeasons) {
+async function loadSeasons(totalSeasons) {
     seasonSelect.innerHTML = "";
 
     for (let i = 1; i <= totalSeasons; i++) {
@@ -299,7 +300,7 @@ function loadSeasons(totalSeasons) {
     seasonSelect.onchange = async () => {
     await loadEpisodes(seasonSelect.value);
 };
-    loadEpisodes(1);
+    await loadEpisodes(1);
 }
 async function loadEpisodes(season) {
     episodeSelect.innerHTML = "";
