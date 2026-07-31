@@ -38,6 +38,8 @@ const moviePopularity = document.getElementById("moviePopularity");
 const player = document.getElementById("moviePlayer");
 const seasonSelect = document.getElementById("season");
 const episodeSelect = document.getElementById("episode");
+const seasonBox = document.querySelector(".season-box");
+const episodeBox = document.querySelector(".episode-box");
 const castList = document.getElementById("castList");
 const recommendList = document.getElementById("recommendList");
 
@@ -123,7 +125,17 @@ const response = await fetch(url);
         currentMovie = movie;
 
 if (mediaType === "tv") {
+
+    seasonBox.style.display = "block";
+    episodeBox.style.display = "block";
+
     await loadSeasons(movie.number_of_seasons);
+
+} else {
+
+    seasonBox.style.display = "none";
+    episodeBox.style.display = "none";
+
 }
         // Backdrop
 
