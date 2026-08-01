@@ -397,6 +397,8 @@ body{
 
 .menu-panel a:hover{
     background:#e50914;
+    padding-left:24px;
+    color:#fff;
 }
 
 .menu-panel.show{
