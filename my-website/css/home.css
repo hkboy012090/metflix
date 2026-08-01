@@ -357,3 +357,32 @@ body{
 .bottom-nav a.active i{
     color: #e50914;
 }
+
+.menu-panel{
+    position: fixed;
+    right: 15px;
+    bottom: 80px;
+    width: 220px;
+    background: #1b1b1b;
+    border-radius: 12px;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 99999;
+    box-shadow: 0 0 20px rgba(0,0,0,.5);
+}
+
+.menu-panel a{
+    color:#fff;
+    text-decoration:none;
+    padding:15px;
+    border-bottom:1px solid #333;
+}
+
+.menu-panel a:hover{
+    background:#e50914;
+}
+
+.menu-panel.show{
+    display:flex;
+}
