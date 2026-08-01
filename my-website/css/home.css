@@ -386,3 +386,17 @@ body{
 .menu-panel.show{
     display:flex;
 }
+.menu-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.55);
+    display: none;
+    z-index: 99998;
+}
+
+.menu-overlay.show{
+    display: block;
+}
