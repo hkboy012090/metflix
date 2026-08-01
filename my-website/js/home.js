@@ -183,6 +183,17 @@ function toggleMenu() {
 }
 
 window.toggleMenu = toggleMenu;
+document.addEventListener("click", function (e) {
+    const menu = document.getElementById("menuPanel");
+
+    if (
+        menu.classList.contains("show") &&
+        !menu.contains(e.target) &&
+        !e.target.closest('[onclick="toggleMenu()"]')
+    ) {
+        menu.classList.remove("show");
+    }
+});
 
 window.closeModal = closeModal;
 window.changeServer = changeServer;
