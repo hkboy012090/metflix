@@ -383,8 +383,16 @@ body{
 .menu-panel a{
     color:#fff;
     text-decoration:none;
-    padding:15px;
-    border-bottom:1px solid #333;
+    padding:16px 18px;
+    border-bottom:1px solid #2a2a2a;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    transition:all .25s ease;
+    font-size:15px;
+    font-weight:500;
 }
 
 .menu-panel a:hover{
