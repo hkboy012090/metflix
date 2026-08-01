@@ -395,16 +395,19 @@ body{
     font-weight:500;
 }
 
+
 .menu-panel a:hover{
     background:#e50914;
     padding-left:24px;
     color:#fff;
 }
-
+.menu-panel a:last-child{
+    border-bottom:none;
+}
 .menu-panel.show{
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 .menu-overlay{
     position: fixed;
