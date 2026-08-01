@@ -178,6 +178,11 @@ checkAuth((user) => {
         showDetails(JSON.parse(savedMovie));
     }
 });
+function toggleMenu() {
+    document.getElementById("menuPanel").classList.toggle("show");
+}
+
+window.toggleMenu = toggleMenu;
 
 window.closeModal = closeModal;
 window.changeServer = changeServer;
