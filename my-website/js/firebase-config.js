@@ -5,6 +5,9 @@ import {
   getAuth
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
+import {
+  getFirestore
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyCprwxcwbJm5Qu-IjVQxKxBuseakVu16dY",
   authDomain: "metflix-e8145.firebaseapp.com",
@@ -18,3 +21,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+export const db = getFirestore(app);
