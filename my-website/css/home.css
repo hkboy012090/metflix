@@ -398,8 +398,10 @@ body{
 
 .menu-panel a:hover{
     background:#e50914;
-    padding-left:24px;
     color:#fff;
+    padding-left:24px;
+    transform:translateX(5px);
+}
 }
 .menu-panel a:last-child{
     border-bottom:none;
