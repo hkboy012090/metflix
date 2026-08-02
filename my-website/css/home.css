@@ -362,8 +362,8 @@ body{
     position: fixed;
     right: 15px;
     bottom: 80px;
-    width: 250px;
-    background: #181818;
+    width: 280px;
+background: #1b1b1b;
     border: 1px solid #333;
     border-radius: 15px;
     overflow: hidden;
@@ -409,15 +409,15 @@ body{
 .menu-panel a{
     color:#fff;
     text-decoration:none;
-    padding:16px 18px;
+    padding:18px 20px;
     border-bottom:1px solid #2a2a2a;
 
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:15px;
 
     transition:all .25s ease;
-    font-size:15px;
+    font-size:16px;
     font-weight:500;
 }
 
