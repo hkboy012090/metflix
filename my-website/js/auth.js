@@ -13,7 +13,7 @@ const loginBtn = document.getElementById("loginBtn");
 if (loginBtn) {
   loginBtn.addEventListener("click", async () => {
 
-    const email = document.getElementById("email").value;
+    const login = document.getElementById("login").value;
     const password = document.getElementById("password").value;
 
     try {
