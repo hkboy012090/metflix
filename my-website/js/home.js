@@ -1,4 +1,10 @@
 import { logout, checkAuth } from "./auth.js";
+import { auth, db } from "./firebase-config.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     const BASE_URL = 'https://api.themoviedb.org/3';
     const IMG_URL = 'https://image.tmdb.org/t/p/original';
@@ -194,7 +200,21 @@ document.addEventListener("click", function (e) {
         menu.classList.remove("show");
     }
 });
+checkAuth(async (user) => {
 
+    if (user) {
+
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            document.getElementById("menuUsername").textContent =
+                docSnap.data().username;
+        }
+
+    }
+
+});
 window.closeModal = closeModal;
 window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
