@@ -382,50 +382,57 @@ background: #1b1b1b;
 .menu-header{
     display:flex;
     flex-direction:column;
-    align-items:center;
-    padding:16px;
+    align-items:flex-start;
+    padding:6px 18px;
     background:#202020;
     border-bottom:1px solid #333;
+
 }
 
 .menu-logo{
-    width:130px;
+    width:140px;
     height:auto;
-    margin-bottom:12px;
+    margin:0 0 4px 0;
 }
 
 .user-info{
     display:flex;
     align-items:center;
     gap:10px;
+    margin:0;
 }
 
 .user-info i{
-    font-size:42px;
+    font-size:48px;
     color:#e50914;
+    flex-shrink:0;
 }
 
 .user-text{
     display:flex;
     flex-direction:column;
-    line-height:1.2;
+    justify-content:center;
+    line-height:1;
 }
 
 .user-text small{
-    color:#999;
-    font-size:13px;
+    color:#9a9a9a;
+    font-size:12px;
+    margin:0;
+
 }
 
 .user-text strong{
     color:#fff;
-    font-size:18px;
-    font-weight:bold;
+    font-size:20px;
+    font-weight:700;
+    margin-top:0;
 }
 
 .menu-panel a{
     color:#fff;
     text-decoration:none;
-    padding:18px 20px;
+    padding:15px 20px;
     border-bottom:1px solid #2a2a2a;
 
     display:flex;
