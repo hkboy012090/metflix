@@ -390,7 +390,8 @@ background: #1b1b1b;
 
 .menu-logo{
     width:140px;
-    height:auto;
+    height:40px;
+    object-fit:contain;
     display:block;
     margin:0;
     padding:0;
