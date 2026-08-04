@@ -486,7 +486,7 @@ background: #1b1b1b;
     flex-wrap:nowrap;
     overflow-x:auto;
     overflow-y:hidden;
-    gap:35px;
+    gap:20px;
     padding:25px 30px;
     scroll-behavior:smooth;
     -webkit-overflow-scrolling:touch;
@@ -498,15 +498,16 @@ background: #1b1b1b;
 .top10-item{
     position:relative;
     flex:0 0 auto;
-    width:170px;
-    height:250px;
-    }
+    width:160px;
+    height:240px;
+}
 
 .top10-number{
     position:absolute;
-    left:-18px;
-    bottom:-10px;
-    font-size:140px;
+    left:-12px;
+    bottom:-8px;
+    font-size:125px;
+}
     font-weight:900;
     font-family:'Arial Black',sans-serif;
     color:#111;
@@ -520,8 +521,8 @@ background: #1b1b1b;
     position:absolute;
     right:0;
     bottom:0;
-    width:140px;
-    height:210px;
+    width:135px;
+    height:205px
 }
     object-fit:cover;
     border-radius:12px;
