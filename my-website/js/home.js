@@ -38,17 +38,29 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
       document.getElementById('banner-title').textContent = item.title || item.name;
     }
 
-    function displayList(items, containerId) {
-      const container = document.getElementById(containerId);
-      container.innerHTML = '';
-      items.forEach(item => {
-        const img = document.createElement('img');
-        img.src = `${IMG_URL}${item.poster_path}`;
-        img.alt = item.title || item.name;
-        img.onclick = () => showDetails(item);
-        container.appendChild(img);
-      });
-    }
+    function displayList(items, containerId){
+
+    const container=document.getElementById(containerId);
+    container.innerHTML="";
+
+    items.slice(0,10).forEach((item,index)=>{
+
+        const card=document.createElement("div");
+        card.className="top10-item";
+
+        card.innerHTML=`
+            <div class="top10-number">${index+1}</div>
+            <img src="${IMG_URL}${item.poster_path}"
+                 alt="${item.title || item.name}">
+        `;
+
+        card.querySelector("img").onclick=()=>showDetails(item);
+
+        container.appendChild(card);
+
+    });
+
+}
 
    function showDetails(item) {
 
