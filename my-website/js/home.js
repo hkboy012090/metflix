@@ -202,15 +202,39 @@ document.addEventListener("click", function (e) {
 });
 checkAuth(async (user) => {
 
+    const menuUsername = document.getElementById("menuUsername");
+
+    if (!menuUsername) return;
+
     if (user) {
 
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
+        try {
 
-        if (docSnap.exists()) {
-            document.getElementById("menuUsername").textContent =
-                docSnap.data().username;
+            const docRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists() && docSnap.data().username) {
+
+                menuUsername.textContent = docSnap.data().username;
+
+            } else {
+
+                menuUsername.textContent =
+                    user.displayName ||
+                    user.email.split("@")[0];
+
+            }
+
+        } catch (e) {
+
+            menuUsername.textContent =
+                user.email.split("@")[0];
+
         }
+
+    } else {
+
+        menuUsername.textContent = "Guest";
 
     }
 
