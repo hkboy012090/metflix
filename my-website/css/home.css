@@ -486,12 +486,11 @@ background: #1b1b1b;
     flex-wrap:nowrap;
     overflow-x:auto;
     overflow-y:hidden;
-    gap:12px;
-padding:25px 20px;
+    gap:35px;
+    padding:25px 30px;
     scroll-behavior:smooth;
     -webkit-overflow-scrolling:touch;
 }
-
 #movies-list::-webkit-scrollbar{
     display:none;
 }
@@ -499,9 +498,9 @@ padding:25px 20px;
 .top10-item{
     position:relative;
     flex:0 0 auto;
-    width:150px;
-height:225px;
-}
+    width:170px;
+    height:250px;
+    }
 
 .top10-number{
     position:absolute;
@@ -521,8 +520,10 @@ height:225px;
     position:absolute;
     right:0;
     bottom:0;
-    width:130px;
-height:195px;
+    .top10-item img{
+    width:140px;
+    height:210px;
+}
     object-fit:cover;
     border-radius:12px;
     z-index:2;
