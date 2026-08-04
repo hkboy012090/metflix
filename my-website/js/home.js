@@ -43,6 +43,23 @@ const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
     const container=document.getElementById(containerId);
     container.innerHTML="";
 
+    items.forEach(item=>{
+
+        const img=document.createElement("img");
+        img.src=`${IMG_URL}${item.poster_path}`;
+        img.alt=item.title || item.name;
+        img.onclick=()=>showDetails(item);
+
+        container.appendChild(img);
+
+    });
+
+}
+function displayTop10(items, containerId){
+
+    const container=document.getElementById(containerId);
+    container.innerHTML="";
+
     items.slice(0,10).forEach((item,index)=>{
 
         const card=document.createElement("div");
@@ -164,7 +181,7 @@ window.location.href =
       const anime = await fetchTrendingAnime();
 
       displayBanner(movies[Math.floor(Math.random() * movies.length)]);
-      displayList(movies, 'movies-list');
+      displayTop10(movies, 'movies-list');
       displayList(tvShows, 'tvshows-list');
       displayList(anime, 'anime-list');
     }
