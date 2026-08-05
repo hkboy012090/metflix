@@ -5,73 +5,93 @@ import {
   doc,
   getDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
 const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
-    const BASE_URL = 'https://api.themoviedb.org/3';
-    const IMG_URL = 'https://image.tmdb.org/t/p/original';
-    let currentItem;
+const BASE_URL = 'https://api.themoviedb.org/3';
+const IMG_URL = 'https://image.tmdb.org/t/p/original';
 
-    async function fetchTrending(type) {
-      const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
-      const data = await res.json();
-      return data.results;
-    }
+let currentItem;
 
-    async function fetchTrendingAnime() {
-  let allResults = [];
-
-  // Fetch from multiple pages to get more anime (max 3 pages for demo)
-  for (let page = 1; page <= 3; page++) {
-    const res = await fetch(`${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`);
+async function fetchTrending(type) {
+    const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
     const data = await res.json();
-    const filtered = data.results.filter(item =>
-      item.original_language === 'ja' && item.genre_ids.includes(16)
-    );
-    allResults = allResults.concat(filtered);
-  }
-
-  return allResults;
+    return data.results;
 }
 
+async function fetchTrendingAnime() {
 
-    function displayBanner(item) {
-      document.getElementById('banner').style.backgroundImage = `url(${IMG_URL}${item.backdrop_path})`;
-      document.getElementById('banner-title').textContent = item.title || item.name;
+    let allResults = [];
+
+    for (let page = 1; page <= 3; page++) {
+
+        const res = await fetch(
+            `${BASE_URL}/trending/tv/week?api_key=${API_KEY}&page=${page}`
+        );
+
+        const data = await res.json();
+
+        const filtered = data.results.filter(item =>
+            item.original_language === "ja" &&
+            item.genre_ids.includes(16)
+        );
+
+        allResults = allResults.concat(filtered);
     }
 
-    function displayList(items, containerId){
+    return allResults;
+}
 
-    const container=document.getElementById(containerId);
-    container.innerHTML="";
+function displayBanner(item) {
 
-    items.forEach(item=>{
+    document.getElementById("banner").style.backgroundImage =
+        `url(${IMG_URL}${item.backdrop_path})`;
 
-        const img=document.createElement("img");
-        img.src=`${IMG_URL}${item.poster_path}`;
-        img.alt=item.title || item.name;
-        img.onclick=()=>showDetails(item);
+    document.getElementById("banner-title").textContent =
+        item.title || item.name;
+
+}
+
+function displayList(items, containerId) {
+
+    const container = document.getElementById(containerId);
+
+    container.innerHTML = "";
+
+    items.forEach(item => {
+
+        const img = document.createElement("img");
+
+        img.src = `${IMG_URL}${item.poster_path}`;
+
+        img.alt = item.title || item.name;
+
+        img.onclick = () => showDetails(item);
 
         container.appendChild(img);
 
     });
 
 }
-function displayTop10(items, containerId){
 
-    const container=document.getElementById(containerId);
-    container.innerHTML="";
+function displayTop10(items, containerId) {
 
-    items.slice(0,10).forEach((item,index)=>{
+    const container = document.getElementById(containerId);
 
-        const card=document.createElement("div");
-        card.className="top10-item";
+    container.innerHTML = "";
 
-        card.innerHTML=`
-            <div class="top10-number">${index+1}</div>
+    items.slice(0, 10).forEach((item, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "top10-item";
+
+        card.innerHTML = `
+            <div class="top10-number">${index + 1}</div>
             <img src="${IMG_URL}${item.poster_path}"
-                 alt="${item.title || item.name}">
+            alt="${item.title || item.name}">
         `;
 
-        card.querySelector("img").onclick=()=>showDetails(item);
+        card.querySelector("img").onclick = () => showDetails(item);
 
         container.appendChild(card);
 
@@ -79,14 +99,19 @@ function displayTop10(items, containerId){
 
 }
 
-   function showDetails(item) {
+function showDetails(item) {
 
     checkAuth((user) => {
 
         if (!user) {
 
-            sessionStorage.setItem("selectedMovie", JSON.stringify(item));
+            sessionStorage.setItem(
+                "selectedMovie",
+                JSON.stringify(item)
+            );
+
             window.location.href = "login.html";
+
             return;
 
         }
@@ -107,131 +132,241 @@ function displayTop10(items, containerId){
 
         }
 
-        
-
-
-window.location.href =
-    `watch.html?id=${item.id}&type=${type}`;
+        window.location.href =
+            `watch.html?id=${item.id}&type=${type}`;
 
     });
 
 }
-    function changeServer() {
-      const server = document.getElementById('server').value;
-      const type = currentItem.media_type === "movie" ? "movie" : "tv";
-      let embedURL = "";
 
-      if (server === "vidsrc.cc") {
-        embedURL = `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
-      } else if (server === "vidsrc.me") {
-        embedURL = `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
-      } else if (server === "player.videasy.net") {
-        embedURL = `https://player.videasy.net/${type}/${currentItem.id}`;
-      }
+function changeServer() {
 
-      document.getElementById('modal-video').src = embedURL;
+    const server =
+        document.getElementById("server").value;
+
+    const type =
+        currentItem.media_type === "movie"
+            ? "movie"
+            : "tv";
+
+    let embedURL = "";
+
+    if (server === "vidsrc.cc") {
+
+        embedURL =
+            `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
+
+    } else if (server === "vidsrc.me") {
+
+        embedURL =
+            `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
+
+    } else if (server === "player.videasy.net") {
+
+        embedURL =
+            `https://player.videasy.net/${type}/${currentItem.id}`;
+
     }
 
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('modal-video').src = '';
-    }
+    document.getElementById("modal-video").src = embedURL;
 
-    function openSearchModal() {
-  document.getElementById('search-modal').style.display = 'flex';
-  document.getElementById('search-input').focus();
-
-  document.getElementById("searchBtn").classList.add("active");
 }
 
-    function closeSearchModal() {
-  document.getElementById('search-modal').style.display = 'none';
-  document.getElementById('search-results').innerHTML = '';
+function closeModal() {
 
-  document.getElementById("searchBtn").classList.remove("active");
+    document.getElementById("modal").style.display = "none";
+
+    document.getElementById("modal-video").src = "";
+
 }
-    async function searchTMDB() {
-      const query = document.getElementById('search-input').value;
-      if (!query.trim()) {
-        document.getElementById('search-results').innerHTML = '';
+
+function openSearchModal() {
+
+    document.getElementById("search-modal").style.display = "flex";
+
+    document.getElementById("search-input").focus();
+
+    document.getElementById("searchBtn").classList.add("active");
+
+}
+function closeSearchModal() {
+
+    document.getElementById("search-modal").style.display = "none";
+
+    document.getElementById("search-results").innerHTML = "";
+
+    document.getElementById("searchBtn").classList.remove("active");
+
+}
+
+async function searchTMDB() {
+
+    const query = document.getElementById("search-input").value;
+
+    if (!query.trim()) {
+
+        document.getElementById("search-results").innerHTML = "";
+
         return;
-      }
 
-      const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`);
-      const data = await res.json();
+    }
 
-      const container = document.getElementById('search-results');
-      container.innerHTML = '';
-      data.results.forEach(item => {
+    const res = await fetch(
+        `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`
+    );
+
+    const data = await res.json();
+
+    const container =
+        document.getElementById("search-results");
+
+    container.innerHTML = "";
+
+    data.results.forEach(item => {
+
         if (!item.poster_path) return;
-        const img = document.createElement('img');
+
+        const img = document.createElement("img");
+
         img.src = `${IMG_URL}${item.poster_path}`;
+
         img.alt = item.title || item.name;
+
         img.onclick = () => {
-          closeSearchModal();
-          showDetails(item);
+
+            closeSearchModal();
+
+            showDetails(item);
+
         };
+
         container.appendChild(img);
-      });
-    }
 
-    async function init() {
-      const movies = await fetchTrending('movie');
-      const tvShows = await fetchTrending('tv');
-      const anime = await fetchTrendingAnime();
+    });
 
-      displayBanner(movies[Math.floor(Math.random() * movies.length)]);
-      displayTop10(movies, 'movies-list');
-      displayList(tvShows, 'tvshows-list');
-      displayList(anime, 'anime-list');
-    }
+}
 
-    init();
+async function init() {
+
+    const movies = await fetchTrending("movie");
+
+    const tvShows = await fetchTrending("tv");
+
+    const anime = await fetchTrendingAnime();
+
+    displayBanner(
+        movies[Math.floor(Math.random() * movies.length)]
+    );
+
+    displayTop10(movies, "movies-list");
+
+    displayList(tvShows, "tvshows-list");
+
+    displayList(anime, "anime-list");
+
+}
+
+init();
+
 const loginBtn = document.getElementById("loginBtn");
+
 const logoutBtn = document.getElementById("logoutBtn");
 
-if (loginBtn && logoutBtn) {
+const customizeProfile =
+    document.getElementById("customizeProfile");
 
-    checkAuth((user) => {
+checkAuth(async (user) => {
+
     if (user) {
+
         loginBtn.style.display = "none";
+
         logoutBtn.style.display = "inline-block";
+
+        if (customizeProfile)
+            customizeProfile.style.display = "flex";
+
     } else {
+
         loginBtn.style.display = "inline-block";
+
         logoutBtn.style.display = "none";
+
+        if (customizeProfile)
+            customizeProfile.style.display = "none";
+
+        const avatar =
+            document.getElementById("menuProfileImage");
+
+        if (avatar)
+            avatar.remove();
+
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "block";
+
     }
+
 });
 
-    logoutBtn.addEventListener("click", logout);
-}
+logoutBtn?.addEventListener("click", logout);
 
-const savedMovie = sessionStorage.getItem("selectedMovie");
+const savedMovie =
+    sessionStorage.getItem("selectedMovie");
 
 checkAuth((user) => {
+
     if (user && savedMovie) {
+
         sessionStorage.removeItem("selectedMovie");
+
         showDetails(JSON.parse(savedMovie));
+
     }
+
 });
+
 function toggleMenu() {
-    document.getElementById("menuPanel").classList.toggle("show");
+
+    document.getElementById("menuPanel")
+        .classList.toggle("show");
+
 }
 
 window.toggleMenu = toggleMenu;
+
 document.addEventListener("click", function (e) {
-    const menu = document.getElementById("menuPanel");
+
+    const menu =
+        document.getElementById("menuPanel");
 
     if (
+
         menu.classList.contains("show") &&
+
         !menu.contains(e.target) &&
+
         !e.target.closest('[onclick="toggleMenu()"]')
+
     ) {
+
         menu.classList.remove("show");
+
     }
+
 });
 checkAuth(async (user) => {
 
-    const menuUsername = document.getElementById("menuUsername");
+    const menuUsername =
+        document.getElementById("menuUsername");
+
+    const customize =
+        document.getElementById("customizeProfile");
+
+    const userInfo =
+        document.querySelector(".user-info");
 
     if (!menuUsername) return;
 
@@ -239,12 +374,16 @@ checkAuth(async (user) => {
 
         try {
 
-            const docRef = doc(db, "users", user.uid);
-            const docSnap = await getDoc(docRef);
+            const docRef =
+                doc(db, "users", user.uid);
+
+            const docSnap =
+                await getDoc(docRef);
 
             if (docSnap.exists() && docSnap.data().username) {
 
-                menuUsername.textContent = docSnap.data().username;
+                menuUsername.textContent =
+                    docSnap.data().username;
 
             } else {
 
@@ -254,10 +393,46 @@ checkAuth(async (user) => {
 
             }
 
-        } catch (e) {
+        } catch {
 
             menuUsername.textContent =
                 user.email.split("@")[0];
+
+        }
+
+        if (customize)
+            customize.style.display = "flex";
+
+        const savedProfileImage =
+            localStorage.getItem("profileImage");
+
+        if (savedProfileImage) {
+
+            let img =
+                document.getElementById("menuProfileImage");
+
+            if (!img) {
+
+                img = document.createElement("img");
+
+                img.id = "menuProfileImage";
+
+                img.style.width = "48px";
+                img.style.height = "48px";
+                img.style.borderRadius = "50%";
+                img.style.objectFit = "cover";
+
+                userInfo.prepend(img);
+
+            }
+
+            img.src = savedProfileImage;
+
+            const icon =
+                document.querySelector(".user-info i");
+
+            if (icon)
+                icon.style.display = "none";
 
         }
 
@@ -265,9 +440,25 @@ checkAuth(async (user) => {
 
         menuUsername.textContent = "Guest";
 
+        if (customize)
+            customize.style.display = "none";
+
+        const avatar =
+            document.getElementById("menuProfileImage");
+
+        if (avatar)
+            avatar.remove();
+
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "block";
+
     }
 
 });
+
 window.closeModal = closeModal;
 window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
@@ -279,100 +470,164 @@ window.searchTMDB = searchTMDB;
 // ===========================
 
 function openProfileModal() {
+
     document.getElementById("profileModal").style.display = "flex";
+
 }
 
 function closeProfileModal() {
+
     document.getElementById("profileModal").style.display = "none";
+
 }
 
-const avatarOptions = document.querySelectorAll(".avatar-option");
-const profilePreview = document.getElementById("profilePreview");
+const avatarOptions =
+    document.querySelectorAll(".avatar-option");
 
-avatarOptions.forEach(img => {
+const profilePreview =
+    document.getElementById("profilePreview");
+    avatarOptions.forEach(img => {
+
     img.addEventListener("click", () => {
+
         profilePreview.src = img.src;
+
     });
+
 });
 
-const galleryUpload = document.getElementById("galleryUpload");
+const galleryUpload =
+    document.getElementById("galleryUpload");
 
 galleryUpload.addEventListener("change", function () {
 
     const file = this.files[0];
 
-    if (file) {
+    if (!file) return;
 
-        const reader = new FileReader();
+    const reader = new FileReader();
 
-        reader.onload = function (e) {
+    reader.onload = function (e) {
 
-            profilePreview.src = e.target.result;
+        profilePreview.src = e.target.result;
 
-        }
+    };
 
-        reader.readAsDataURL(file);
-
-    }
+    reader.readAsDataURL(file);
 
 });
 
 function saveProfileImage() {
 
-    localStorage.setItem("profileImage", profilePreview.src);
+    checkAuth((user) => {
 
-    document.querySelector(".user-info i").style.display = "none";
+        if (!user) {
 
-    let img = document.getElementById("menuProfileImage");
+            alert("Please login first.");
 
-    if (!img) {
+            closeProfileModal();
 
-        img = document.createElement("img");
+            return;
 
-        img.id = "menuProfileImage";
+        }
 
-        img.style.width = "48px";
-        img.style.height = "48px";
-        img.style.borderRadius = "50%";
-        img.style.objectFit = "cover";
+        localStorage.setItem(
+            "profileImage",
+            profilePreview.src
+        );
 
-        document.querySelector(".user-info").prepend(img);
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "none";
+
+        let img =
+            document.getElementById("menuProfileImage");
+
+        if (!img) {
+
+            img = document.createElement("img");
+
+            img.id = "menuProfileImage";
+
+            img.style.width = "48px";
+            img.style.height = "48px";
+            img.style.borderRadius = "50%";
+            img.style.objectFit = "cover";
+
+            document.querySelector(".user-info")
+                .prepend(img);
+
+        }
+
+        img.src = profilePreview.src;
+
+        closeProfileModal();
+
+    });
+
+}
+
+const savedProfileImage =
+    localStorage.getItem("profileImage");
+
+checkAuth((user) => {
+
+    if (!user) {
+
+        localStorage.removeItem("profileImage");
+
+        const avatar =
+            document.getElementById("menuProfileImage");
+
+        if (avatar)
+            avatar.remove();
+
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "block";
+
+        return;
 
     }
 
-    img.src = profilePreview.src;
+    if (savedProfileImage) {
 
-    closeProfileModal();
-
-}
-// Load saved profile image
-const savedProfileImage = localStorage.getItem("profileImage");
-
-if (savedProfileImage) {
-
-    if (profilePreview) {
         profilePreview.src = savedProfileImage;
+
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "none";
+
+        let img =
+            document.getElementById("menuProfileImage");
+
+        if (!img) {
+
+            img = document.createElement("img");
+
+            img.id = "menuProfileImage";
+
+            img.style.width = "48px";
+            img.style.height = "48px";
+            img.style.borderRadius = "50%";
+            img.style.objectFit = "cover";
+
+            document.querySelector(".user-info")
+                .prepend(img);
+
+        }
+
+        img.src = savedProfileImage;
+
     }
 
-    document.querySelector(".user-info i").style.display = "none";
-
-    let img = document.getElementById("menuProfileImage");
-
-    if (!img) {
-
-        img = document.createElement("img");
-
-        img.id = "menuProfileImage";
-        img.style.width = "48px";
-        img.style.height = "48px";
-        img.style.borderRadius = "50%";
-        img.style.objectFit = "cover";
-
-        document.querySelector(".user-info").prepend(img);
-    }
-
-    img.src = savedProfileImage;
-}
+});
 
 window.openProfileModal = openProfileModal;
 window.closeProfileModal = closeProfileModal;
