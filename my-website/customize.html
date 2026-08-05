@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customize Profile</title>
+
+<link rel="stylesheet" href="css/customize.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+<body>
+
+<div class="profile-container">
+
+<h1>Customize Profile</h1>
+
+<img id="profilePreview" class="profile-preview"
+src="images/avatars/avatar1.png">
+
+<h3>Profile Picture</h3>
+
+<button id="avatarBtn">
+<i class="fas fa-user-circle"></i>
+Choose Avatar
+</button>
+
+<button onclick="document.getElementById('gallery').click()">
+<i class="fas fa-image"></i>
+Upload from Gallery
+</button>
+
+<input type="file"
+id="gallery"
+accept="image/*"
+hidden>
+
+<div id="avatarBox" class="avatar-box">
+
+<img src="images/avatars/avatar1.png">
+<img src="images/avatars/avatar2.png">
+<img src="images/avatars/avatar3.png">
+<img src="images/avatars/avatar4.png">
+<img src="images/avatars/avatar5.png">
+<img src="images/avatars/avatar6.png">
+
+</div>
+
+</div>
+
+<script src="js/customize.js"></script>
+
+</body>
+</html>
