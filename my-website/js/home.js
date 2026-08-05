@@ -273,6 +273,9 @@ window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
 window.closeSearchModal = closeSearchModal;
 window.searchTMDB = searchTMDB;
+window.openProfileModal = openProfileModal;
+window.closeProfileModal = closeProfileModal;
+window.saveProfileImage = saveProfileImage;
 // ===========================
 // PROFILE CUSTOMIZATION
 // ===========================
