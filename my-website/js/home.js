@@ -273,3 +273,74 @@ window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
 window.closeSearchModal = closeSearchModal;
 window.searchTMDB = searchTMDB;
+// ===========================
+// PROFILE CUSTOMIZATION
+// ===========================
+
+function openProfileModal() {
+    document.getElementById("profileModal").style.display = "flex";
+}
+
+function closeProfileModal() {
+    document.getElementById("profileModal").style.display = "none";
+}
+
+const avatarOptions = document.querySelectorAll(".avatar-option");
+const profilePreview = document.getElementById("profilePreview");
+
+avatarOptions.forEach(img => {
+    img.addEventListener("click", () => {
+        profilePreview.src = img.src;
+    });
+});
+
+const galleryUpload = document.getElementById("galleryUpload");
+
+galleryUpload.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (file) {
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            profilePreview.src = e.target.result;
+
+        }
+
+        reader.readAsDataURL(file);
+
+    }
+
+});
+
+function saveProfileImage() {
+
+    localStorage.setItem("profileImage", profilePreview.src);
+
+    document.querySelector(".user-info i").style.display = "none";
+
+    let img = document.getElementById("menuProfileImage");
+
+    if (!img) {
+
+        img = document.createElement("img");
+
+        img.id = "menuProfileImage";
+
+        img.style.width = "48px";
+        img.style.height = "48px";
+        img.style.borderRadius = "50%";
+        img.style.objectFit = "cover";
+
+        document.querySelector(".user-info").prepend(img);
+
+    }
+
+    img.src = profilePreview.src;
+
+    closeProfileModal();
+
+}
