@@ -273,9 +273,7 @@ window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
 window.closeSearchModal = closeSearchModal;
 window.searchTMDB = searchTMDB;
-window.openProfileModal = openProfileModal;
-window.closeProfileModal = closeProfileModal;
-window.saveProfileImage = saveProfileImage;
+
 // ===========================
 // PROFILE CUSTOMIZATION
 // ===========================
@@ -347,3 +345,35 @@ function saveProfileImage() {
     closeProfileModal();
 
 }
+// Load saved profile image
+const savedProfileImage = localStorage.getItem("profileImage");
+
+if (savedProfileImage) {
+
+    if (profilePreview) {
+        profilePreview.src = savedProfileImage;
+    }
+
+    document.querySelector(".user-info i").style.display = "none";
+
+    let img = document.getElementById("menuProfileImage");
+
+    if (!img) {
+
+        img = document.createElement("img");
+
+        img.id = "menuProfileImage";
+        img.style.width = "48px";
+        img.style.height = "48px";
+        img.style.borderRadius = "50%";
+        img.style.objectFit = "cover";
+
+        document.querySelector(".user-info").prepend(img);
+    }
+
+    img.src = savedProfileImage;
+}
+
+window.openProfileModal = openProfileModal;
+window.closeProfileModal = closeProfileModal;
+window.saveProfileImage = saveProfileImage;
