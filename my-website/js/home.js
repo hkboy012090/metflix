@@ -274,43 +274,6 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 const customizeProfile =
     document.getElementById("customizeProfile");
-
-checkAuth(async (user) => {
-
-    if (user) {
-
-        loginBtn.style.display = "none";
-
-        logoutBtn.style.display = "inline-block";
-
-        if (customizeProfile)
-            customizeProfile.style.display = "flex";
-
-    } else {
-
-        loginBtn.style.display = "inline-block";
-
-        logoutBtn.style.display = "none";
-
-        if (customizeProfile)
-            customizeProfile.style.display = "none";
-
-        const avatar =
-            document.getElementById("menuProfileImage");
-
-        if (avatar)
-            avatar.remove();
-
-        const icon =
-            document.querySelector(".user-info i");
-
-        if (icon)
-            icon.style.display = "block";
-
-    }
-
-});
-
 logoutBtn?.addEventListener("click", logout);
 
 const savedMovie =
@@ -367,11 +330,13 @@ checkAuth(async (user) => {
 
     const userInfo =
         document.querySelector(".user-info");
-
+  
     if (!menuUsername) return;
 
     if (user) {
 
+      loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
         try {
 
             const docRef =
@@ -436,9 +401,12 @@ checkAuth(async (user) => {
 
         }
 
-    } else {
+        } else {
 
-        menuUsername.textContent = "Guest";
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+
+    menuUsername.textContent = "Guest";
 
         if (customize)
             customize.style.display = "none";
@@ -568,67 +536,6 @@ function saveProfileImage() {
     });
 
 }
-
-const savedProfileImage =
-    localStorage.getItem("profileImage");
-
-checkAuth((user) => {
-
-    if (!user) {
-
-        localStorage.removeItem("profileImage");
-
-        const avatar =
-            document.getElementById("menuProfileImage");
-
-        if (avatar)
-            avatar.remove();
-
-        const icon =
-            document.querySelector(".user-info i");
-
-        if (icon)
-            icon.style.display = "block";
-
-        return;
-
-    }
-
-    if (savedProfileImage) {
-
-        profilePreview.src = savedProfileImage;
-
-        const icon =
-            document.querySelector(".user-info i");
-
-        if (icon)
-            icon.style.display = "none";
-
-        let img =
-            document.getElementById("menuProfileImage");
-
-        if (!img) {
-
-            img = document.createElement("img");
-
-            img.id = "menuProfileImage";
-
-            img.style.width = "48px";
-            img.style.height = "48px";
-            img.style.borderRadius = "50%";
-            img.style.objectFit = "cover";
-
-            document.querySelector(".user-info")
-                .prepend(img);
-
-        }
-
-        img.src = savedProfileImage;
-
-    }
-
-});
-
 window.openProfileModal = openProfileModal;
 window.closeProfileModal = closeProfileModal;
 window.saveProfileImage = saveProfileImage;
