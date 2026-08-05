@@ -1,73 +1,69 @@
-body{
+const preview = document.getElementById("profilePreview");
 
-background:#111;
-color:white;
-font-family:Arial;
+const avatarBtn = document.getElementById("avatarBtn");
 
-}
+const avatarBox = document.getElementById("avatarBox");
 
-.profile-container{
+const gallery = document.getElementById("gallery");
 
-max-width:500px;
-margin:auto;
-padding:30px;
-text-align:center;
 
-}
 
-.profile-preview{
+// Load saved profile
 
-width:140px;
-height:140px;
-border-radius:50%;
-object-fit:cover;
-border:4px solid #e50914;
-margin:20px 0;
+const saved = localStorage.getItem("profileImage");
+
+if(saved){
+
+preview.src = saved;
 
 }
 
-button{
 
-width:100%;
-padding:14px;
-margin:10px 0;
-font-size:17px;
-background:#e50914;
-color:white;
-border:none;
-border-radius:10px;
-cursor:pointer;
+
+// Show avatars
+
+avatarBtn.onclick=()=>{
+
+avatarBox.classList.toggle("show");
 
 }
 
-.avatar-box{
 
-display:none;
-margin-top:20px;
 
-grid-template-columns:repeat(3,1fr);
+// Select avatar
 
-gap:15px;
+document.querySelectorAll(".avatar-box img").forEach(img=>{
 
-}
+img.onclick=()=>{
 
-.avatar-box.show{
+preview.src=img.src;
 
-display:grid;
+localStorage.setItem("profileImage",img.src);
 
 }
 
-.avatar-box img{
+});
 
-width:100%;
-border-radius:50%;
-cursor:pointer;
-border:3px solid transparent;
+
+
+// Gallery upload
+
+gallery.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+preview.src=e.target.result;
+
+localStorage.setItem("profileImage",e.target.result);
 
 }
 
-.avatar-box img:hover{
+reader.readAsDataURL(file);
 
-border-color:#e50914;
-
-}
+});
