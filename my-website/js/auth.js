@@ -110,6 +110,9 @@ if (registerBtn) {
 // -------------------- LOGOUT --------------------
 export async function logout() {
 
+  // Burahin ang saved avatar
+  localStorage.removeItem("profileImage");
+
   await signOut(auth);
 
   window.location.href = "index.html";
