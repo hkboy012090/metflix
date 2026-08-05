@@ -421,7 +421,7 @@ checkAuth(async (user) => {
             document.querySelector(".user-info i");
 
         if (icon)
-            icon.style.display = "block";
+            icon.style.display = "none";
 
     }
 
