@@ -2,9 +2,9 @@ import { auth, db } from "./firebase-config.js";
 
 import {
     doc,
+    getDoc,
     setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
@@ -24,14 +24,34 @@ const preview = document.getElementById("profilePreview");
 const avatarBtn = document.getElementById("avatarBtn");
 const avatarBox = document.getElementById("avatarBox");
 const gallery = document.getElementById("gallery");
+onAuthStateChanged(auth, async (user) => {
 
-// Load saved profile
-const saved = localStorage.getItem("profileImage");
+    if (!user) {
+        alert("No user logged in");
+        return;
+    }
 
-if (saved) {
-    preview.src = saved;
-}
+    try {
 
+        const snap = await getDoc(doc(db, "users", user.uid));
+
+        if (snap.exists()) {
+
+            const data = snap.data();
+
+            if (data.profileImage) {
+                preview.src = data.profileImage;
+            }
+
+        }
+
+    } catch (e) {
+
+        console.error(e);
+
+    }
+
+});
 // Show avatars
 avatarBtn.onclick = () => {
     avatarBox.classList.toggle("show");
@@ -43,7 +63,7 @@ document.querySelectorAll(".avatar-box img").forEach(img => {
     img.onclick = async () => {
 
         preview.src = img.src;
-        localStorage.setItem("profileImage", img.src);
+        
 
         if (!auth.currentUser) {
             alert("No user is logged in!");
@@ -83,7 +103,7 @@ gallery.addEventListener("change", function () {
     reader.onload = async function (e) {
 
         preview.src = e.target.result;
-        localStorage.setItem("profileImage", e.target.result);
+        
 
         if (!auth.currentUser) {
             alert("No user is logged in!");
