@@ -4,7 +4,12 @@ import {
   doc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-alert("customize.js loaded");
+if (auth.currentUser) {
+    alert("User: " + auth.currentUser.uid);
+} else {
+    alert("No user logged in");
+}
+console.log(auth.currentUser);
 const preview = document.getElementById("profilePreview");
 
 const avatarBtn = document.getElementById("avatarBtn");
