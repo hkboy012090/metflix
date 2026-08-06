@@ -4,12 +4,19 @@ import {
   doc,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
-if (auth.currentUser) {
-    alert("User: " + auth.currentUser.uid);
-} else {
-    alert("No user logged in");
-}
-console.log(auth.currentUser);
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+        alert("User: " + user.uid);
+    } else {
+        alert("No user logged in");
+    }
+
+});
 const preview = document.getElementById("profilePreview");
 
 const avatarBtn = document.getElementById("avatarBtn");
