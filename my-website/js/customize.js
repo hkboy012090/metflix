@@ -8,6 +8,8 @@ import {
 import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+// Check kung naka-login ang user
 onAuthStateChanged(auth, (user) => {
 
     if (user) {
@@ -17,40 +19,25 @@ onAuthStateChanged(auth, (user) => {
     }
 
 });
+
 const preview = document.getElementById("profilePreview");
-
 const avatarBtn = document.getElementById("avatarBtn");
-
 const avatarBox = document.getElementById("avatarBox");
-
 const gallery = document.getElementById("gallery");
 
-
-
 // Load saved profile
-
 const saved = localStorage.getItem("profileImage");
 
-if(saved){
-
-preview.src = saved;
-
+if (saved) {
+    preview.src = saved;
 }
-
-
 
 // Show avatars
-
-avatarBtn.onclick=()=>{
-
-avatarBox.classList.toggle("show");
-
-}
-
-
+avatarBtn.onclick = () => {
+    avatarBox.classList.toggle("show");
+};
 
 // Select avatar
-
 document.querySelectorAll(".avatar-box img").forEach(img => {
 
     img.onclick = async () => {
@@ -66,16 +53,19 @@ document.querySelectorAll(".avatar-box img").forEach(img => {
 
         try {
 
-            await updateDoc(doc(db, "users", auth.currentUser.uid), {
-                profileImage: img.src
-            });
+            await updateDoc(
+                doc(db, "users", auth.currentUser.uid),
+                {
+                    profileImage: img.src
+                }
+            );
 
-            alert("Avatar saved to Firestore!");
+            alert("SUCCESS");
 
-        } catch (error) {
+        } catch (e) {
 
-            alert(error.message);
-            console.error(error);
+            alert("ERROR: " + e.message);
+            console.error(e);
 
         }
 
@@ -83,32 +73,46 @@ document.querySelectorAll(".avatar-box img").forEach(img => {
 
 });
 
-
-
 // Gallery upload
+gallery.addEventListener("change", function () {
 
-gallery.addEventListener("change",function(){
+    const file = this.files[0];
 
-const file=this.files[0];
+    if (!file) return;
 
-if(!file) return;
+    const reader = new FileReader();
 
-const reader=new FileReader();
+    reader.onload = async function (e) {
 
-reader.onload = async function(e){
+        preview.src = e.target.result;
 
-    preview.src = e.target.result;
+        localStorage.setItem("profileImage", e.target.result);
 
-    localStorage.setItem("profileImage", e.target.result);
+        if (!auth.currentUser) {
+            alert("No user is logged in!");
+            return;
+        }
 
-    if (auth.currentUser) {
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-            profileImage: e.target.result
-        });
-    }
+        try {
 
-}
+            await updateDoc(
+                doc(db, "users", auth.currentUser.uid),
+                {
+                    profileImage: e.target.result
+                }
+            );
 
-reader.readAsDataURL(file);
+            alert("SUCCESS");
+
+        } catch (e) {
+
+            alert("ERROR: " + e.message);
+            console.error(e);
+
+        }
+
+    };
+
+    reader.readAsDataURL(file);
 
 });
