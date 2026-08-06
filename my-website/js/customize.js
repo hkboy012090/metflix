@@ -1,3 +1,5 @@
+
+
 import { auth, db } from "./firebase-config.js";
 
 import {
@@ -5,125 +7,160 @@ import {
     getDoc,
     setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
 import {
     onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
-// Check kung naka-login ang user
-onAuthStateChanged(auth, (user) => {
-
-    if (user) {
-        alert("User: " + user.uid);
-    } else {
-        alert("No user logged in");
-    }
-
-});
+// ===========================
+// ELEMENTS
+// ===========================
 
 const preview = document.getElementById("profilePreview");
 const avatarBtn = document.getElementById("avatarBtn");
 const avatarBox = document.getElementById("avatarBox");
 const gallery = document.getElementById("gallery");
+
+// ===========================
+// LOAD USER PROFILE
+// ===========================
+
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
-        alert("No user logged in");
+
+        window.location.href = "login.html";
         return;
+
     }
 
     try {
 
-        const snap = await getDoc(doc(db, "users", user.uid));
+        const ref = doc(db, "users", user.uid);
+
+        const snap = await getDoc(ref);
 
         if (snap.exists()) {
 
             const data = snap.data();
 
             if (data.profileImage) {
+
                 preview.src = data.profileImage;
+
             }
 
         }
 
-    } catch (e) {
+    } catch (error) {
 
-        console.error(e);
+        console.error(error);
 
     }
 
 });
-// Show avatars
-avatarBtn.onclick = () => {
+
+// ===========================
+// OPEN AVATAR LIST
+// ===========================
+
+avatarBtn.addEventListener("click", () => {
+
     avatarBox.classList.toggle("show");
-};
-
-// Select avatar
-document.querySelectorAll(".avatar-box img").forEach(img => {
-
-    img.onclick = async () => {
-
-        preview.src = img.src;
-        
-
-        if (!auth.currentUser) {
-            alert("No user is logged in!");
-            return;
-        }
-
-        try {
-
-            const ref = doc(db, "users", auth.currentUser.uid);
-
-            await setDoc(ref, {
-                profileImage: img.src
-            }, { merge: true });
-
-            alert("SUCCESS");
-
-        } catch (e) {
-
-            alert("ERROR: " + e.message);
-            console.error(e);
-
-        }
-
-    };
 
 });
 
-// Gallery upload
-gallery.addEventListener("change", function () {
+// ===========================
+// SELECT AVATAR
+// ===========================
 
-    const file = this.files[0];
+document.querySelectorAll(".avatar-box img").forEach(img => {
+
+    img.addEventListener("click", async () => {
+
+        preview.src = img.src;
+
+        if (!auth.currentUser) return;
+
+        try {
+
+            await setDoc(
+
+                doc(db, "users", auth.currentUser.uid),
+
+                {
+
+                    profileImage: img.src
+
+                },
+
+                {
+
+                    merge: true
+
+                }
+
+            );
+
+            console.log("Avatar Saved");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Failed to save avatar.");
+
+        }
+
+    });
+
+});
+
+// ===========================
+// GALLERY UPLOAD
+// ===========================
+
+gallery.addEventListener("change", () => {
+
+    const file = gallery.files[0];
 
     if (!file) return;
 
     const reader = new FileReader();
 
-    reader.onload = async function (e) {
+    reader.onload = async (e) => {
 
         preview.src = e.target.result;
-        
 
-        if (!auth.currentUser) {
-            alert("No user is logged in!");
-            return;
-        }
+        if (!auth.currentUser) return;
 
         try {
 
-            const ref = doc(db, "users", auth.currentUser.uid);
+            await setDoc(
 
-            await setDoc(ref, {
-                profileImage: e.target.result
-            }, { merge: true });
+                doc(db, "users", auth.currentUser.uid),
 
-            alert("SUCCESS");
+                {
 
-        } catch (e) {
+                    profileImage: e.target.result
 
-            alert("ERROR: " + e.message);
-            console.error(e);
+                },
+
+                {
+
+                    merge: true
+
+                }
+
+            );
+
+            console.log("Custom Avatar Saved");
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert("Failed to save avatar.");
 
         }
 
