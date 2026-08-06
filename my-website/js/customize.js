@@ -1,12 +1,12 @@
 import { auth, db } from "./firebase-config.js";
 
 import {
-  doc,
-  updateDoc
+    doc,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 import {
-  onAuthStateChanged
+    onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 // Check kung naka-login ang user
@@ -43,7 +43,6 @@ document.querySelectorAll(".avatar-box img").forEach(img => {
     img.onclick = async () => {
 
         preview.src = img.src;
-
         localStorage.setItem("profileImage", img.src);
 
         if (!auth.currentUser) {
@@ -53,12 +52,11 @@ document.querySelectorAll(".avatar-box img").forEach(img => {
 
         try {
 
-            await updateDoc(
-                doc(db, "users", auth.currentUser.uid),
-                {
-                    profileImage: img.src
-                }
-            );
+            const ref = doc(db, "users", auth.currentUser.uid);
+
+            await setDoc(ref, {
+                profileImage: img.src
+            }, { merge: true });
 
             alert("SUCCESS");
 
@@ -85,7 +83,6 @@ gallery.addEventListener("change", function () {
     reader.onload = async function (e) {
 
         preview.src = e.target.result;
-
         localStorage.setItem("profileImage", e.target.result);
 
         if (!auth.currentUser) {
@@ -95,12 +92,11 @@ gallery.addEventListener("change", function () {
 
         try {
 
-            await updateDoc(
-                doc(db, "users", auth.currentUser.uid),
-                {
-                    profileImage: e.target.result
-                }
-            );
+            const ref = doc(db, "users", auth.currentUser.uid);
+
+            await setDoc(ref, {
+                profileImage: e.target.result
+            }, { merge: true });
 
             alert("SUCCESS");
 
