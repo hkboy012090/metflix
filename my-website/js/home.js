@@ -1,22 +1,38 @@
+
 import { logout, checkAuth } from "./auth.js";
 import { auth, db } from "./firebase-config.js";
 
 import {
-  doc,
-  getDoc
+    doc,
+    getDoc,
+    setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
-const BASE_URL = 'https://api.themoviedb.org/3';
-const IMG_URL = 'https://image.tmdb.org/t/p/original';
+const API_KEY = "85d06918f5f2d578fd2048c5841b6ee2";
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMG_URL = "https://image.tmdb.org/t/p/original";
 
-let currentItem;
+let currentItem = null;
+
+// ===========================
+// FETCH TRENDING MOVIES
+// ===========================
 
 async function fetchTrending(type) {
-    const res = await fetch(`${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`);
+
+    const res = await fetch(
+        `${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`
+    );
+
     const data = await res.json();
+
     return data.results;
+
 }
+
+// ===========================
+// FETCH TRENDING ANIME
+// ===========================
 
 async function fetchTrendingAnime() {
 
@@ -30,42 +46,71 @@ async function fetchTrendingAnime() {
 
         const data = await res.json();
 
-        const filtered = data.results.filter(item =>
+        const anime = data.results.filter(item =>
+
             item.original_language === "ja" &&
             item.genre_ids.includes(16)
+
         );
 
-        allResults = allResults.concat(filtered);
+        allResults = allResults.concat(anime);
+
     }
 
     return allResults;
+
 }
+
+// ===========================
+// BANNER
+// ===========================
 
 function displayBanner(item) {
 
-    document.getElementById("banner").style.backgroundImage =
+    const banner = document.getElementById("banner");
+    const title = document.getElementById("banner-title");
+
+    if (!banner || !title) return;
+
+    banner.style.backgroundImage =
         `url(${IMG_URL}${item.backdrop_path})`;
 
-    document.getElementById("banner-title").textContent =
+    title.textContent =
         item.title || item.name;
 
 }
+
+// ===========================
+// MOVIE LIST
+// ===========================
 
 function displayList(items, containerId) {
 
     const container = document.getElementById(containerId);
 
+    if (!container) return;
+
     container.innerHTML = "";
 
     items.forEach(item => {
 
+        if (!item.poster_path) return;
+
         const img = document.createElement("img");
 
-        img.src = `${IMG_URL}${item.poster_path}`;
+        img.src =
+            `${IMG_URL}${item.poster_path}`;
 
-        img.alt = item.title || item.name;
+        img.alt =
+            item.title || item.name;
 
-        img.onclick = () => showDetails(item);
+        img.loading = "lazy";
+
+        img.onclick = () => {
+
+            showDetails(item);
+
+        };
 
         container.appendChild(img);
 
@@ -73,31 +118,56 @@ function displayList(items, containerId) {
 
 }
 
+// ===========================
+// TOP 10
+// ===========================
+
 function displayTop10(items, containerId) {
 
-    const container = document.getElementById(containerId);
+    const container =
+        document.getElementById(containerId);
+
+    if (!container) return;
 
     container.innerHTML = "";
 
-    items.slice(0, 10).forEach((item, index) => {
+    items.slice(0,10).forEach((item,index)=>{
 
-        const card = document.createElement("div");
+        if(!item.poster_path) return;
 
-        card.className = "top10-item";
+        const card=document.createElement("div");
 
-        card.innerHTML = `
-            <div class="top10-number">${index + 1}</div>
-            <img src="${IMG_URL}${item.poster_path}"
-            alt="${item.title || item.name}">
+        card.className="top10-item";
+
+        card.innerHTML=`
+
+            <div class="top10-number">
+
+                ${index+1}
+
+            </div>
+
+            <img
+                src="${IMG_URL}${item.poster_path}"
+                alt="${item.title || item.name}"
+            >
+
         `;
 
-        card.querySelector("img").onclick = () => showDetails(item);
+        card.querySelector("img").onclick=()=>{
+
+            showDetails(item);
+
+        };
 
         container.appendChild(card);
 
     });
 
 }
+// ===========================
+// SHOW DETAILS
+// ===========================
 
 function showDetails(item) {
 
@@ -111,22 +181,17 @@ function showDetails(item) {
             );
 
             window.location.href = "login.html";
-
             return;
 
         }
 
-        let type;
+        let type = "movie";
 
         if (item.media_type) {
 
             type = item.media_type;
 
-        } else if (item.title) {
-
-            type = "movie";
-
-        } else {
+        } else if (!item.title) {
 
             type = "tv";
 
@@ -139,6 +204,10 @@ function showDetails(item) {
 
 }
 
+// ===========================
+// PLAYER SERVER
+// ===========================
+
 function changeServer() {
 
     const server =
@@ -149,28 +218,34 @@ function changeServer() {
             ? "movie"
             : "tv";
 
-    let embedURL = "";
+    let url = "";
 
-    if (server === "vidsrc.cc") {
+    switch (server) {
 
-        embedURL =
+        case "vidsrc.cc":
+            url =
             `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
+            break;
 
-    } else if (server === "vidsrc.me") {
-
-        embedURL =
+        case "vidsrc.me":
+            url =
             `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
+            break;
 
-    } else if (server === "player.videasy.net") {
-
-        embedURL =
+        case "player.videasy.net":
+            url =
             `https://player.videasy.net/${type}/${currentItem.id}`;
+            break;
 
     }
 
-    document.getElementById("modal-video").src = embedURL;
+    document.getElementById("modal-video").src = url;
 
 }
+
+// ===========================
+// MODAL
+// ===========================
 
 function closeModal() {
 
@@ -180,28 +255,36 @@ function closeModal() {
 
 }
 
+// ===========================
+// SEARCH
+// ===========================
+
 function openSearchModal() {
 
     document.getElementById("search-modal").style.display = "flex";
 
     document.getElementById("search-input").focus();
 
-    document.getElementById("searchBtn").classList.add("active");
+    document.getElementById("searchBtn")
+        .classList.add("active");
 
 }
+
 function closeSearchModal() {
 
     document.getElementById("search-modal").style.display = "none";
 
     document.getElementById("search-results").innerHTML = "";
 
-    document.getElementById("searchBtn").classList.remove("active");
+    document.getElementById("searchBtn")
+        .classList.remove("active");
 
 }
 
 async function searchTMDB() {
 
-    const query = document.getElementById("search-input").value;
+    const query =
+        document.getElementById("search-input").value;
 
     if (!query.trim()) {
 
@@ -212,7 +295,9 @@ async function searchTMDB() {
     }
 
     const res = await fetch(
-        `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`
+
+        `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+
     );
 
     const data = await res.json();
@@ -228,9 +313,11 @@ async function searchTMDB() {
 
         const img = document.createElement("img");
 
-        img.src = `${IMG_URL}${item.poster_path}`;
+        img.src =
+            `${IMG_URL}${item.poster_path}`;
 
-        img.alt = item.title || item.name;
+        img.alt =
+            item.title || item.name;
 
         img.onclick = () => {
 
@@ -246,38 +333,57 @@ async function searchTMDB() {
 
 }
 
+// ===========================
+// INITIALIZE
+// ===========================
+
 async function init() {
 
-    const movies = await fetchTrending("movie");
+    const movies =
+        await fetchTrending("movie");
 
-    const tvShows = await fetchTrending("tv");
+    const tv =
+        await fetchTrending("tv");
 
-    const anime = await fetchTrendingAnime();
+    const anime =
+        await fetchTrendingAnime();
 
     displayBanner(
+
         movies[Math.floor(Math.random() * movies.length)]
+
     );
 
-    displayTop10(movies, "movies-list");
+    displayTop10(
+        movies,
+        "movies-list"
+    );
 
-    displayList(tvShows, "tvshows-list");
+    displayList(
+        tv,
+        "tvshows-list"
+    );
 
-    displayList(anime, "anime-list");
+    displayList(
+        anime,
+        "anime-list"
+    );
 
 }
 
 init();
+// ===========================
+// AUTH & MENU
+// ===========================
 
 const loginBtn = document.getElementById("loginBtn");
-
 const logoutBtn = document.getElementById("logoutBtn");
+const customizeProfile = document.getElementById("customizeProfile");
 
-const customizeProfile =
-    document.getElementById("customizeProfile");
 logoutBtn?.addEventListener("click", logout);
 
-const savedMovie =
-    sessionStorage.getItem("selectedMovie");
+// Bumalik sa napiling movie pagkatapos mag-login
+const savedMovie = sessionStorage.getItem("selectedMovie");
 
 checkAuth((user) => {
 
@@ -291,6 +397,10 @@ checkAuth((user) => {
 
 });
 
+// ===========================
+// MENU
+// ===========================
+
 function toggleMenu() {
 
     document.getElementById("menuPanel")
@@ -300,19 +410,14 @@ function toggleMenu() {
 
 window.toggleMenu = toggleMenu;
 
-document.addEventListener("click", function (e) {
+document.addEventListener("click", (e) => {
 
-    const menu =
-        document.getElementById("menuPanel");
+    const menu = document.getElementById("menuPanel");
 
     if (
-
         menu.classList.contains("show") &&
-
         !menu.contains(e.target) &&
-
         !e.target.closest('[onclick="toggleMenu()"]')
-
     ) {
 
         menu.classList.remove("show");
@@ -320,78 +425,104 @@ document.addEventListener("click", function (e) {
     }
 
 });
+
+// ===========================
+// USER INFO
+// ===========================
+
 checkAuth(async (user) => {
 
     const menuUsername =
         document.getElementById("menuUsername");
 
-    const customize =
-        document.getElementById("customizeProfile");
-
     const userInfo =
         document.querySelector(".user-info");
-  
+
     if (!menuUsername) return;
 
-    if (user) {
+    // -----------------------
+    // NOT LOGGED IN
+    // -----------------------
 
-      loginBtn.style.display = "none";
+    if (!user) {
+
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+
+        menuUsername.textContent = "Guest";
+
+        if (customizeProfile)
+            customizeProfile.style.display = "none";
+
+        const avatar =
+            document.getElementById("menuProfileImage");
+
+        if (avatar) avatar.remove();
+
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "block";
+
+        return;
+
+    }
+
+    // -----------------------
+    // LOGGED IN
+    // -----------------------
+
+    loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
-        try {
 
-            const docRef =
-                doc(db, "users", user.uid);
+    if (customizeProfile)
+        customizeProfile.style.display = "flex";
 
-            const docSnap =
-                await getDoc(docRef);
+    try {
 
-            if (docSnap.exists() && docSnap.data().username) {
+        const ref = doc(db, "users", user.uid);
 
-                menuUsername.textContent =
-                    docSnap.data().username;
+        const snap = await getDoc(ref);
 
-            } else {
+        let data = {};
 
-                menuUsername.textContent =
-                    user.displayName ||
-                    user.email.split("@")[0];
+        if (snap.exists()) {
 
-            }
-
-        } catch {
-
-            menuUsername.textContent =
-                user.email.split("@")[0];
+            data = snap.data();
 
         }
 
-        if (customize)
-            customize.style.display = "flex";
+        // Username
 
-        const savedProfileImage =
-            localStorage.getItem("profileImage");
+        menuUsername.textContent =
+            data.username ||
+            user.displayName ||
+            user.email.split("@")[0];
 
-        if (savedProfileImage) {
+        // Avatar
 
-            let img =
-                document.getElementById("menuProfileImage");
+        let img =
+            document.getElementById("menuProfileImage");
 
-            if (!img) {
+        if (!img) {
 
-                img = document.createElement("img");
+            img = document.createElement("img");
 
-                img.id = "menuProfileImage";
+            img.id = "menuProfileImage";
 
-                img.style.width = "48px";
-                img.style.height = "48px";
-                img.style.borderRadius = "50%";
-                img.style.objectFit = "cover";
+            img.style.width = "48px";
+            img.style.height = "48px";
+            img.style.borderRadius = "50%";
+            img.style.objectFit = "cover";
 
-                userInfo.prepend(img);
+            userInfo.prepend(img);
 
-            }
+        }
 
-            img.src = savedProfileImage;
+        if (data.profileImage) {
+
+            img.src = data.profileImage;
 
             const icon =
                 document.querySelector(".user-info i");
@@ -401,31 +532,17 @@ checkAuth(async (user) => {
 
         }
 
-        } else {
+    } catch (err) {
 
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-
-    menuUsername.textContent = "Guest";
-
-        if (customize)
-            customize.style.display = "none";
-
-        const avatar =
-            document.getElementById("menuProfileImage");
-
-        if (avatar)
-            avatar.remove();
-
-        const icon =
-            document.querySelector(".user-info i");
-
-        if (icon)
-            icon.style.display = "none";
+        console.error(err);
 
     }
 
 });
+
+// ===========================
+// EXPORTS
+// ===========================
 
 window.closeModal = closeModal;
 window.changeServer = changeServer;
@@ -437,24 +554,55 @@ window.searchTMDB = searchTMDB;
 // PROFILE CUSTOMIZATION
 // ===========================
 
+const profilePreview = document.getElementById("profilePreview");
+const avatarOptions = document.querySelectorAll(".avatar-option");
+const galleryUpload = document.getElementById("galleryUpload");
+
+// Open Modal
 function openProfileModal() {
 
     document.getElementById("profileModal").style.display = "flex";
 
+    // Load current avatar from Firestore
+    checkAuth(async (user) => {
+
+        if (!user) return;
+
+        try {
+
+            const snap = await getDoc(doc(db, "users", user.uid));
+
+            if (snap.exists()) {
+
+                const data = snap.data();
+
+                if (data.profileImage) {
+
+                    profilePreview.src = data.profileImage;
+
+                }
+
+            }
+
+        } catch (e) {
+
+            console.error(e);
+
+        }
+
+    });
+
 }
 
+// Close Modal
 function closeProfileModal() {
 
     document.getElementById("profileModal").style.display = "none";
 
 }
 
-const avatarOptions =
-    document.querySelectorAll(".avatar-option");
-
-const profilePreview =
-    document.getElementById("profilePreview");
-    avatarOptions.forEach(img => {
+// Select Avatar
+avatarOptions.forEach(img => {
 
     img.addEventListener("click", () => {
 
@@ -464,9 +612,7 @@ const profilePreview =
 
 });
 
-const galleryUpload =
-    document.getElementById("galleryUpload");
-
+// Upload Gallery Image
 galleryUpload.addEventListener("change", function () {
 
     const file = this.files[0];
@@ -485,30 +631,30 @@ galleryUpload.addEventListener("change", function () {
 
 });
 
-function saveProfileImage() {
+// Save Avatar
+async function saveProfileImage() {
 
-    checkAuth((user) => {
+    if (!auth.currentUser) {
 
-        if (!user) {
+        alert("Please login first.");
 
-            alert("Please login first.");
+        return;
 
-            closeProfileModal();
+    }
 
-            return;
+    try {
 
-        }
+        const ref = doc(db, "users", auth.currentUser.uid);
 
-        localStorage.setItem(
-            "profileImage",
-            profilePreview.src
-        );
+        await setDoc(ref, {
 
-        const icon =
-            document.querySelector(".user-info i");
+            profileImage: profilePreview.src
 
-        if (icon)
-            icon.style.display = "none";
+        }, {
+
+            merge: true
+
+        });
 
         let img =
             document.getElementById("menuProfileImage");
@@ -524,18 +670,22 @@ function saveProfileImage() {
             img.style.borderRadius = "50%";
             img.style.objectFit = "cover";
 
-            document.querySelector(".user-info")
-                .prepend(img);
+            document.querySelector(".user-info").prepend(img);
 
         }
 
         img.src = profilePreview.src;
 
+        const icon =
+            document.querySelector(".user-info i");
+
+        if (icon)
+            icon.style.display = "none";
+
+        alert("Profile updated successfully!");
+
         closeProfileModal();
 
-    });
+    } catch (e) {
 
-}
-window.openProfileModal = openProfileModal;
-window.closeProfileModal = closeProfileModal;
-window.saveProfileImage = saveProfileImage;
+        console.error(e);
