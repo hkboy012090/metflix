@@ -38,21 +38,36 @@ avatarBox.classList.toggle("show");
 
 // Select avatar
 
-document.querySelectorAll(".avatar-box img").forEach(img=>{
+document.querySelectorAll(".avatar-box img").forEach(img => {
 
-img.onclick = async () => {
+    img.onclick = async () => {
 
-    preview.src = img.src;
+        preview.src = img.src;
 
-    localStorage.setItem("profileImage", img.src);
+        localStorage.setItem("profileImage", img.src);
 
-    if (auth.currentUser) {
-        await updateDoc(doc(db, "users", auth.currentUser.uid), {
-            profileImage: img.src
-        });
-    }
+        if (!auth.currentUser) {
+            alert("No user is logged in!");
+            return;
+        }
 
-}
+        try {
+
+            await updateDoc(doc(db, "users", auth.currentUser.uid), {
+                profileImage: img.src
+            });
+
+            alert("Avatar saved to Firestore!");
+
+        } catch (error) {
+
+            alert(error.message);
+            console.error(error);
+
+        }
+
+    };
+
 });
 
 
