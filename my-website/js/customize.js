@@ -1,3 +1,9 @@
+import { auth, db } from "./firebase-config.js";
+
+import {
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 const preview = document.getElementById("profilePreview");
 
 const avatarBtn = document.getElementById("avatarBtn");
@@ -34,14 +40,19 @@ avatarBox.classList.toggle("show");
 
 document.querySelectorAll(".avatar-box img").forEach(img=>{
 
-img.onclick=()=>{
+img.onclick = async () => {
 
-preview.src=img.src;
+    preview.src = img.src;
 
-localStorage.setItem("profileImage",img.src);
+    localStorage.setItem("profileImage", img.src);
+
+    if (auth.currentUser) {
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            profileImage: img.src
+        });
+    }
 
 }
-
 });
 
 
@@ -56,11 +67,17 @@ if(!file) return;
 
 const reader=new FileReader();
 
-reader.onload=function(e){
+reader.onload = async function(e){
 
-preview.src=e.target.result;
+    preview.src = e.target.result;
 
-localStorage.setItem("profileImage",e.target.result);
+    localStorage.setItem("profileImage", e.target.result);
+
+    if (auth.currentUser) {
+        await updateDoc(doc(db, "users", auth.currentUser.uid), {
+            profileImage: e.target.result
+        });
+    }
 
 }
 
