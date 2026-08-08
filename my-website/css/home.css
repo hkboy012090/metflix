@@ -527,7 +527,6 @@ background: #1b1b1b;
     bottom:0;
     width:140px;
     height:210px;
-}
     object-fit:cover;
     border-radius:12px;
     z-index:2;
@@ -537,4 +536,25 @@ background: #1b1b1b;
 
 .top10-item:hover img{
     transform:scale(1.08);
+}
+
+.profile-submenu{
+    display:none;
+    background:#111;
+}
+
+
+.profile-submenu a{
+    padding-left:45px !important;
+    font-size:15px;
+}
+
+
+.profile-submenu a:hover{
+    background:#e50914;
+}
+
+
+.profile-submenu.show{
+    display:block;
 }
