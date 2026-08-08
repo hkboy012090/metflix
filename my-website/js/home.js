@@ -273,3 +273,13 @@ window.changeServer = changeServer;
 window.openSearchModal = openSearchModal;
 window.closeSearchModal = closeSearchModal;
 window.searchTMDB = searchTMDB;
+
+function toggleProfileMenu() {
+    const submenu = document.getElementById("profileSubMenu");
+
+    if (!submenu) return;
+
+    submenu.classList.toggle("show");
+}
+
+window.toggleProfileMenu = toggleProfileMenu;
