@@ -1,109 +1,127 @@
 import { auth, db } from "./firebase-config.js";
 
 import {
-    onAuthStateChanged
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 import {
-    doc,
-    setDoc,
-    getDoc
+  doc,
+  getDoc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
 const currentAvatar = document.getElementById("currentAvatar");
-const status = document.getElementById("status");
 const avatarOptions = document.querySelectorAll(".avatar-option");
+const status = document.getElementById("status");
 
+
+// ===============================
+// CHECK LOGIN
+// ===============================
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
+
         window.location.href = "login.html";
         return;
-    }
-
-    try {
-
-        const userRef = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userRef);
-
-        if (userSnap.exists()) {
-
-            const data = userSnap.data();
-
-            if (data.profileImage) {
-
-                currentAvatar.src = "avatars/" + data.profileImage;
-
-                avatarOptions.forEach(button => {
-
-                    if (button.dataset.avatar === data.profileImage) {
-                        button.classList.add("selected");
-                    }
-
-                });
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error("Error loading avatar:", error);
 
     }
 
-});
+    // Kunin ang user's Firestore document
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
 
-avatarOptions.forEach(button => {
+    // ===============================
+    // LOAD SAVED AVATAR
+    // ===============================
 
-    button.addEventListener("click", async () => {
+    if (userSnap.exists()) {
 
-        const user = auth.currentUser;
+        const userData = userSnap.data();
 
-        if (!user) {
-            window.location.href = "login.html";
-            return;
-        }
+        if (userData.profileImage) {
 
-        const selectedAvatar = button.dataset.avatar;
+            currentAvatar.src = userData.profileImage;
 
-        try {
+            // Markahan kung alin ang kasalukuyang avatar
+            avatarOptions.forEach(option => {
 
-            status.textContent = "Saving...";
+                if (option.dataset.avatar === userData.profileImage) {
 
-            const userRef = doc(db, "users", user.uid);
+                    option.classList.add("selected");
 
-            await setDoc(
-                userRef,
-                {
-                    profileImage: selectedAvatar
-                },
-                {
-                    merge: true
                 }
-            );
 
-            currentAvatar.src = "avatars/" + selectedAvatar;
+            });
 
+        }
+
+    }
+
+
+    // ===============================
+    // AVATAR SELECTION
+    // ===============================
+
+    avatarOptions.forEach(option => {
+
+        option.addEventListener("click", async () => {
+
+            const avatar = option.dataset.avatar;
+
+            // Ipakita agad ang bagong avatar
+            currentAvatar.src = avatar;
+
+
+            // Alisin ang selected sa lahat
             avatarOptions.forEach(item => {
                 item.classList.remove("selected");
             });
 
-            button.classList.add("selected");
 
-            status.textContent = "Avatar saved successfully!";
+            // Lagyan ng selected ang pinili
+            option.classList.add("selected");
 
-        } catch (error) {
 
-            console.error("Error saving avatar:", error);
+            status.textContent = "Saving avatar...";
 
-            status.textContent =
-                "Failed to save avatar. Please try again.";
 
-        }
+            try {
+
+                // SAVE SA FIRESTORE
+                await setDoc(
+                    userRef,
+                    {
+                        profileImage: avatar
+                    },
+                    {
+                        merge: true
+                    }
+                );
+
+
+                status.textContent = "Avatar saved successfully!";
+
+
+                // Mawawala ang message pagkatapos ng ilang segundo
+                setTimeout(() => {
+                    status.textContent = "";
+                }, 2000);
+
+
+            } catch (error) {
+
+                console.error("Avatar save error:", error);
+
+                status.textContent =
+                    "Failed to save avatar.";
+
+            }
+
+        });
 
     });
 
