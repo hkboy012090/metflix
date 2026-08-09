@@ -236,7 +236,16 @@ checkAuth(async (user) => {
 
     if (!menuUsername) return;
 
+    // ========================================
+    // LOGGED IN
+    // ========================================
+
     if (user) {
+
+        // Ipakita ang avatar kapag naka-login
+        if (menuAvatar) {
+            menuAvatar.style.display = "block";
+        }
 
         try {
 
@@ -247,9 +256,9 @@ checkAuth(async (user) => {
 
                 const userData = docSnap.data();
 
-                // ==============================
+                // ========================================
                 // LOAD USERNAME
-                // ==============================
+                // ========================================
 
                 if (userData.username) {
 
@@ -265,9 +274,9 @@ checkAuth(async (user) => {
                 }
 
 
-                // ==============================
+                // ========================================
                 // LOAD SAVED AVATAR
-                // ==============================
+                // ========================================
 
                 if (
                     menuAvatar &&
@@ -300,13 +309,19 @@ checkAuth(async (user) => {
 
         }
 
-    } else {
+    }
+
+    // ========================================
+    // LOGGED OUT
+    // ========================================
+
+    else {
 
         menuUsername.textContent = "Guest";
 
+        // Itago ang avatar kapag Guest
         if (menuAvatar) {
-            menuAvatar.src =
-                "avatars/avatar1.png";
+            menuAvatar.style.display = "none";
         }
 
     }
