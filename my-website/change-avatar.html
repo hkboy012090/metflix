@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Change Avatar - METFLIX</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #111;
+      color: #fff;
+      min-height: 100vh;
+      padding-bottom: 30px;
+    }
+
+    /* HEADER */
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: #181818;
+      border-bottom: 1px solid #333;
+    }
+
+    .back-btn {
+      color: #fff;
+      text-decoration: none;
+      font-size: 22px;
+      margin-right: 15px;
+    }
+
+    .back-btn:hover {
+      color: #e50914;
+    }
+
+    .page-header h1 {
+      font-size: 21px;
+    }
+
+
+    /* MAIN */
+
+    .avatar-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+
+    /* CURRENT AVATAR */
+
+    .current-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+
+    .current-avatar {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #e50914;
+      background: #222;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .current-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+    /* AVATAR OPTIONS */
+
+    .section-title {
+      font-size: 20px;
+      margin: 25px 0 15px;
+    }
+
+    .avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      max-width: 450px;
+      margin: 0 auto;
+    }
+
+    .avatar-option {
+      width: 80px;
+      height: 80px;
+      margin: auto;
+
+      border-radius: 50%;
+      overflow: hidden;
+
+      background: #222;
+      border: 3px solid transparent;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .avatar-option:hover {
+      transform: scale(1.08);
+      border-color: #777;
+    }
+
+    .avatar-option.selected {
+      border-color: #e50914;
+      box-shadow: 0 0 12px rgba(229, 9, 20, .6);
+    }
+
+    .avatar-option img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+
+    /* GALLERY BUTTON */
+
+    .gallery-section {
+      margin-top: 30px;
+    }
+
+    .gallery-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+
+      background: #222;
+      border: 1px solid #444;
+      color: #fff;
+
+      padding: 13px 20px;
+      border-radius: 8px;
+
+      cursor: pointer;
+      font-size: 15px;
+
+      transition: .2s;
+    }
+
+    .gallery-btn:hover {
+      background: #e50914;
+      border-color: #e50914;
+    }
+
+    #galleryInput {
+      display: none;
+    }
+
+
+    /* SAVE BUTTON */
+
+    .save-btn {
+      display: block;
+
+      width: 100%;
+      max-width: 350px;
+
+      margin: 30px auto 10px;
+
+      padding: 14px;
+
+      background: #e50914;
+      color: white;
+
+      border: none;
+      border-radius: 8px;
+
+      font-size: 17px;
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .save-btn:hover {
+      background: #b20710;
+    }
+
+    .save-btn:disabled {
+      background: #555;
+      cursor: not-allowed;
+    }
+
+
+    /* STATUS */
+
+    #status {
+      min-height: 22px;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .success {
+      color: #4caf50 !important;
+    }
+
+    .error {
+      color: #ff4444 !important;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 500px) {
+
+      .avatar-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+
+      .avatar-option {
+        width: 68px;
+        height: 68px;
+      }
+
+      .current-avatar {
+        width: 105px;
+        height: 105px;
+      }
+
+      .page-header h1 {
+        font-size: 18px;
+      }
+
+    }
+
+    @media (max-width: 350px) {
+
+      .avatar-option {
+        width: 60px;
+        height: 60px;
+      }
+
+      .avatar-grid {
+        gap: 7px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+
+    <h1>Change Avatar</h1>
+
+  </div>
+
+
+
+  <!-- MAIN -->
+
+  <main class="avatar-container">
+
+
+    <div class="current-title">
+      Your Current Avatar
+    </div>
+
+
+    <!-- CURRENT AVATAR -->
+
+    <div class="current-avatar">
+
+      <img
+        id="currentAvatar"
+        src=""
+        alt="Current Avatar"
+      >
+
+    </div>
+
+
+
+    <!-- PRESET AVATARS -->
+
+    <h2 class="section-title">
+      Choose an Avatar
+    </h2>
+
+
+    <div class="avatar-grid" id="avatarGrid">
+
+
+      <div class="avatar-option" data-avatar="avatar1">
+        <img src="avatars/avatar1.png" alt="Avatar 1">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar2">
+        <img src="avatars/avatar2.png" alt="Avatar 2">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar3">
+        <img src="avatars/avatar3.png" alt="Avatar 3">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar4">
+        <img src="avatars/avatar4.png" alt="Avatar 4">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar5">
+        <img src="avatars/avatar5.png" alt="Avatar 5">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar6">
+        <img src="avatars/avatar6.png" alt="Avatar 6">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar7">
+        <img src="avatars/avatar7.png" alt="Avatar 7">
+      </div>
+
+
+      <div class="avatar-option" data-avatar="avatar8">
+        <img src="avatars/avatar8.png" alt="Avatar 8">
+      </div>
+
+
+    </div>
+
+
+
+    <!-- GALLERY -->
+
+    <div class="gallery-section">
+
+      <label for="galleryInput" class="gallery-btn">
+
+        <i class="fas fa-camera"></i>
+
+        Choose from Gallery
+
+      </label>
+
+
+      <input
+        type="file"
+        id="galleryInput"
+        accept="image/*"
+      >
+
+    </div>
+
+
+
+    <!-- SAVE -->
+
+    <button
+      id="saveBtn"
+      class="save-btn"
+    >
+
+      <i class="fas fa-save"></i>
+      Save Avatar
+
+    </button>
+
+
+    <div id="status"></div>
+
+
+  </main>
+
+
+
+  <!-- JAVASCRIPT -->
+
+  <script type="module">
+
+    import {
+      auth,
+      db,
+      storage
+    } from "./firebase-config.js";
+
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+
+    import {
+      doc,
+      getDoc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+
+    import {
+      ref,
+      uploadBytes,
+      getDownloadURL
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
+
+
+
+    /* =========================
+       VARIABLES
+    ========================= */
+
+    const currentAvatar =
+      document.getElementById("currentAvatar");
+
+    const avatarOptions =
+      document.querySelectorAll(".avatar-option");
+
+    const galleryInput =
+      document.getElementById("galleryInput");
+
+    const saveBtn =
+      document.getElementById("saveBtn");
+
+    const status =
+      document.getElementById("status");
+
+
+    let currentUser = null;
+
+    let selectedAvatar = null;
+
+    let uploadedFile = null;
+
+
+
+    /* =========================
+       PRESET AVATAR PATH
+    ========================= */
+
+    const avatarPaths = {
+
+      avatar1: "avatars/avatar1.png",
+      avatar2: "avatars/avatar2.png",
+      avatar3: "avatars/avatar3.png",
+      avatar4: "avatars/avatar4.png",
+      avatar5: "avatars/avatar5.png",
+      avatar6: "avatars/avatar6.png",
+      avatar7: "avatars/avatar7.png",
+      avatar8: "avatars/avatar8.png"
+
+    };
+
+
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    function showStatus(message, type = "") {
+
+      status.textContent = message;
+
+      status.className = type;
+
+    }
+
+
+
+    /* =========================
+       SELECT PRESET AVATAR
+    ========================= */
+
+    avatarOptions.forEach(option => {
+
+      option.addEventListener("click", () => {
+
+        const avatar =
+          option.dataset.avatar;
+
+
+        selectedAvatar = avatar;
+
+        uploadedFile = null;
+
+        galleryInput.value = "";
+
+
+        avatarOptions.forEach(item => {
+
+          item.classList.remove("selected");
+
+        });
+
+
+        option.classList.add("selected");
+
+
+        currentAvatar.src =
+          avatarPaths[avatar];
+
+
+        showStatus("");
+
+      });
+
+    });
+
+
+
+    /* =========================
+       GALLERY
+    ========================= */
+
+    galleryInput.addEventListener("change", event => {
+
+      const file = event.target.files[0];
+
+      if (!file) return;
+
+
+      if (!file.type.startsWith("image/")) {
+
+        showStatus(
+          "Please select an image file.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      uploadedFile = file;
+
+      selectedAvatar = null;
+
+
+      avatarOptions.forEach(item => {
+
+        item.classList.remove("selected");
+
+      });
+
+
+      const previewURL =
+        URL.createObjectURL(file);
+
+
+      currentAvatar.src = previewURL;
+
+
+      showStatus(
+        "Image selected. Press Save Avatar.",
+        ""
+      );
+
+    });
+
+
+
+    /* =========================
+       LOAD SAVED AVATAR
+    ========================= */
+
+    async function loadAvatar(user) {
+
+      try {
+
+        const userRef =
+          doc(db, "users", user.uid);
+
+
+        const userSnap =
+          await getDoc(userRef);
+
+
+        if (
+          userSnap.exists() &&
+          userSnap.data().avatar
+        ) {
+
+          const avatar =
+            userSnap.data().avatar;
+
+
+          /* PRESET */
+
+          if (avatarPaths[avatar]) {
+
+            selectedAvatar = avatar;
+
+            currentAvatar.src =
+              avatarPaths[avatar];
+
+
+            avatarOptions.forEach(option => {
+
+              option.classList.toggle(
+                "selected",
+                option.dataset.avatar === avatar
+              );
+
+            });
+
+          }
+
+
+          /* FIREBASE STORAGE IMAGE */
+
+          else if (
+            avatar.startsWith("https://")
+          ) {
+
+            currentAvatar.src = avatar;
+
+          }
+
+        }
+
+        else {
+
+          /* DEFAULT */
+
+          selectedAvatar = "avatar1";
+
+          currentAvatar.src =
+            avatarPaths.avatar1;
+
+          document
+            .querySelector('[data-avatar="avatar1"]')
+            .classList.add("selected");
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "Unable to load your avatar.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+
+    /* =========================
+       SAVE AVATAR
+    ========================= */
+
+    saveBtn.addEventListener("click", async () => {
+
+      if (!currentUser) {
+
+        showStatus(
+          "Please login first.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      saveBtn.disabled = true;
+
+
+      try {
+
+        const userRef =
+          doc(db, "users", currentUser.uid);
+
+
+
+        /* GALLERY IMAGE */
+
+        if (uploadedFile) {
+
+          showStatus(
+            "Uploading image..."
+          );
+
+
+          const fileRef =
+            ref(
+              storage,
+              `avatars/${currentUser.uid}/avatar.jpg`
+            );
+
+
+          await uploadBytes(
+            fileRef,
+            uploadedFile
+          );
+
+
+          const downloadURL =
+            await getDownloadURL(fileRef);
+
+
+          await setDoc(
+            userRef,
+            {
+              avatar: downloadURL
+            },
+            {
+              merge: true
+            }
+          );
+
+
+          currentAvatar.src =
+            downloadURL;
+
+
+          showStatus(
+            "Avatar saved successfully!",
+            "success"
+          );
+
+        }
+
+
+        /* PRESET AVATAR */
+
+        else if (selectedAvatar) {
+
+          showStatus(
+            "Saving avatar..."
+          );
+
+
+          await setDoc(
+            userRef,
+            {
+              avatar: selectedAvatar
+            },
+            {
+              merge: true
+            }
+          );
+
+
+          showStatus(
+            "Avatar saved successfully!",
+            "success"
+          );
+
+        }
+
+
+        else {
+
+          showStatus(
+            "Please select an avatar first.",
+            "error"
+          );
+
+        }
+
+      }
+
+      catch (error) {
+
+        console.error(error);
+
+        showStatus(
+          "Failed to save avatar: " + error.message,
+          "error"
+        );
+
+      }
+
+
+      saveBtn.disabled = false;
+
+    });
+
+
+
+    /* =========================
+       AUTH
+    ========================= */
+
+    onAuthStateChanged(auth, async user => {
+
+      if (!user) {
+
+        currentUser = null;
+
+        showStatus(
+          "Please login first.",
+          "error"
+        );
+
+        saveBtn.disabled = true;
+
+        return;
+
+      }
+
+
+      currentUser = user;
+
+      saveBtn.disabled = false;
+
+
+      await loadAvatar(user);
+
+    });
+
+  </script>
+
+</body>
+</html>
