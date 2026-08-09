@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #111;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.avatar-page {
+    min-height: 100vh;
+    padding: 25px 20px 50px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.back-btn:hover {
+    color: #e50914;
+}
+
+.avatar-box {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.avatar-box h1 {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #aaa;
+    margin-bottom: 25px;
+}
+
+.current-avatar {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #e50914;
+    background: #222;
+}
+
+.current-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.avatar-option {
+    background: #222;
+    border: 3px solid transparent;
+    border-radius: 15px;
+    padding: 8px;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.avatar-option img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.avatar-option:hover {
+    transform: scale(1.05);
+    border-color: #e50914;
+}
+
+.avatar-option.selected {
+    border-color: #e50914;
+    box-shadow: 0 0 15px rgba(229, 9, 20, .6);
+}
+
+#status {
+    margin-top: 25px;
+    min-height: 22px;
+    color: #aaa;
+}
+
+@media (max-width: 480px) {
+
+    .avatar-page {
+        padding: 20px 15px 40px;
+    }
+
+    .avatar-box h1 {
+        font-size: 26px;
+    }
+
+    .avatar-grid {
+        gap: 12px;
+    }
+
+    .avatar-option {
+        padding: 5px;
+    }
+
+}
