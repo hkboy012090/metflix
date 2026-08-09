@@ -232,6 +232,7 @@ document.addEventListener("click", function (e) {
 checkAuth(async (user) => {
 
     const menuUsername = document.getElementById("menuUsername");
+    const menuAvatar = document.getElementById("menuAvatar");
 
     if (!menuUsername) return;
 
@@ -242,9 +243,41 @@ checkAuth(async (user) => {
             const docRef = doc(db, "users", user.uid);
             const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists() && docSnap.data().username) {
+            if (docSnap.exists()) {
 
-                menuUsername.textContent = docSnap.data().username;
+                const userData = docSnap.data();
+
+                // ==============================
+                // LOAD USERNAME
+                // ==============================
+
+                if (userData.username) {
+
+                    menuUsername.textContent =
+                        userData.username;
+
+                } else {
+
+                    menuUsername.textContent =
+                        user.displayName ||
+                        user.email.split("@")[0];
+
+                }
+
+
+                // ==============================
+                // LOAD SAVED AVATAR
+                // ==============================
+
+                if (
+                    menuAvatar &&
+                    userData.profileImage
+                ) {
+
+                    menuAvatar.src =
+                        userData.profileImage;
+
+                }
 
             } else {
 
@@ -256,7 +289,13 @@ checkAuth(async (user) => {
 
         } catch (e) {
 
+            console.error(
+                "Error loading user profile:",
+                e
+            );
+
             menuUsername.textContent =
+                user.displayName ||
                 user.email.split("@")[0];
 
         }
@@ -264,6 +303,11 @@ checkAuth(async (user) => {
     } else {
 
         menuUsername.textContent = "Guest";
+
+        if (menuAvatar) {
+            menuAvatar.src =
+                "avatars/avatar1.png";
+        }
 
     }
 
