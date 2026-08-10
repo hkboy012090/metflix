@@ -1,14 +1,11 @@
-import { auth, db } from "./firebase-config.js";
+import { auth } from "./firebase-config.js";
 
 import {
     onAuthStateChanged,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
     verifyBeforeUpdateEmail
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
-
-import {
-    doc,
-    updateDoc
-} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
 const currentEmail = document.getElementById("currentEmail");
@@ -18,7 +15,7 @@ const saveEmailBtn = document.getElementById("saveEmailBtn");
 const status = document.getElementById("status");
 
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, (user) => {
 
     // ========================================
     // CHECK LOGIN
@@ -38,12 +35,13 @@ onAuthStateChanged(auth, async (user) => {
 
 
     // ========================================
-    // SEND VERIFICATION EMAIL
+    // SAVE EMAIL BUTTON
     // ========================================
 
     saveEmailBtn.addEventListener("click", async () => {
 
         const newEmailValue = newEmail.value.trim();
+        const passwordValue = password.value;
 
 
         // ========================================
@@ -59,6 +57,23 @@ onAuthStateChanged(auth, async (user) => {
         }
 
 
+        // ========================================
+        // CHECK PASSWORD
+        // ========================================
+
+        if (!passwordValue) {
+
+            status.textContent =
+                "Please enter your current password.";
+
+            return;
+        }
+
+
+        // ========================================
+        // SAME EMAIL CHECK
+        // ========================================
+
         if (newEmailValue === user.email) {
 
             status.textContent =
@@ -73,7 +88,7 @@ onAuthStateChanged(auth, async (user) => {
         // ========================================
 
         status.textContent =
-            "Sending verification email...";
+            "Checking your password...";
 
         saveEmailBtn.disabled = true;
 
@@ -81,8 +96,27 @@ onAuthStateChanged(auth, async (user) => {
         try {
 
             // ========================================
-            // SEND VERIFICATION TO NEW EMAIL
+            // RE-AUTHENTICATE USER
             // ========================================
+
+            const credential =
+                EmailAuthProvider.credential(
+                    user.email,
+                    passwordValue
+                );
+
+            await reauthenticateWithCredential(
+                user,
+                credential
+            );
+
+
+            // ========================================
+            // SEND VERIFICATION LINK
+            // ========================================
+
+            status.textContent =
+                "Sending verification email...";
 
             await verifyBeforeUpdateEmail(
                 user,
@@ -95,52 +129,118 @@ onAuthStateChanged(auth, async (user) => {
             // ========================================
 
             status.textContent =
-                "Verification link sent! Check your new email.";
-
+                "Verification link sent to your new email. Check your inbox and click the link to complete the change.";
 
             newEmail.value = "";
+            password.value = "";
 
 
         } catch (error) {
 
             console.error(
-                "Error sending verification email:",
+                "Change email error:",
                 error
             );
 
 
             // ========================================
-            // ERROR HANDLING
+            // WRONG PASSWORD
             // ========================================
 
             if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                status.textContent =
+                    "Incorrect current password.";
+
+            }
+
+
+            // ========================================
+            // INVALID CREDENTIAL
+            // ========================================
+
+            else if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                status.textContent =
+                    "Incorrect current password.";
+
+            }
+
+
+            // ========================================
+            // EMAIL ALREADY USED
+            // ========================================
+
+            else if (
                 error.code ===
                 "auth/email-already-in-use"
             ) {
 
                 status.textContent =
-                    "This email is already being used.";
+                    "This email is already being used by another account.";
 
-            } else if (
+            }
+
+
+            // ========================================
+            // INVALID EMAIL
+            // ========================================
+
+            else if (
                 error.code ===
                 "auth/invalid-email"
             ) {
 
                 status.textContent =
-                    "Invalid email address.";
+                    "Please enter a valid email address.";
 
-            } else if (
+            }
+
+
+            // ========================================
+            // RECENT LOGIN REQUIRED
+            // ========================================
+
+            else if (
                 error.code ===
                 "auth/requires-recent-login"
             ) {
 
                 status.textContent =
-                    "Please log in again before changing your email.";
+                    "Please log in again and try again.";
 
-            } else {
+            }
+
+
+            // ========================================
+            // TOO MANY REQUESTS
+            // ========================================
+
+            else if (
+                error.code ===
+                "auth/too-many-requests"
+            ) {
 
                 status.textContent =
-                    "Failed to send verification email.";
+                    "Too many attempts. Please try again later.";
+
+            }
+
+
+            // ========================================
+            // OTHER ERROR
+            // ========================================
+
+            else {
+
+                status.textContent =
+                    "Something went wrong. Please try again.";
 
             }
 
