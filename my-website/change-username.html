@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Change Username - METFLIX</title>
+
+  <link rel="stylesheet" href="css/change-username.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="username-page">
+
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
+    <div class="username-box">
+
+      <div class="username-icon">
+        <i class="fas fa-user"></i>
+      </div>
+
+      <h1>Change Username</h1>
+
+      <p class="subtitle">
+        Update your username
+      </p>
+
+
+      <!-- CURRENT USERNAME -->
+
+      <div class="current-username">
+
+        <div class="current-icon">
+          <i class="fas fa-user"></i>
+        </div>
+
+        <div class="current-label">
+          <span>Current</span>
+          <span>Username</span>
+        </div>
+
+        <strong id="currentUsername">
+          Loading...
+        </strong>
+
+      </div>
+
+
+      <!-- NEW USERNAME -->
+
+      <div class="input-group">
+
+        <label for="newUsername">
+          New Username
+        </label>
+
+        <input
+          type="text"
+          id="newUsername"
+          placeholder="Enter your new username"
+          autocomplete="username"
+        >
+
+      </div>
+
+
+      <!-- SAVE BUTTON -->
+
+      <button id="saveUsernameBtn">
+        <i class="fas fa-save"></i>
+        Save Username
+      </button>
+
+
+      <!-- STATUS -->
+
+      <p id="status"></p>
+
+    </div>
+
+  </div>
+
+
+  <script
+    type="module"
+    src="js/change-username.js">
+  </script>
+
+</body>
+
+</html>
