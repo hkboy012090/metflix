@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Theme Settings - METFLIX</title>
+
+  <link rel="stylesheet" href="css/theme-settings.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+  <div class="theme-page">
+
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
+    <div class="theme-box">
+
+      <!-- ICON -->
+
+      <div class="theme-icon">
+        <i class="fas fa-palette"></i>
+      </div>
+
+
+      <!-- TITLE -->
+
+      <h1>Theme Settings</h1>
+
+      <p class="subtitle">
+        Choose your preferred theme
+      </p>
+
+
+      <!-- THEME OPTIONS -->
+
+      <div class="theme-options">
+
+        <button class="theme-option" id="darkModeBtn">
+
+          <div class="option-icon">
+            <i class="fas fa-moon"></i>
+          </div>
+
+          <div class="option-text">
+            <strong>Dark Mode</strong>
+            <span>Use dark theme</span>
+          </div>
+
+          <i class="fas fa-check check-icon"></i>
+
+        </button>
+
+
+        <button class="theme-option" id="lightModeBtn">
+
+          <div class="option-icon">
+            <i class="fas fa-sun"></i>
+          </div>
+
+          <div class="option-text">
+            <strong>Light Mode</strong>
+            <span>Use light theme</span>
+          </div>
+
+          <i class="fas fa-check check-icon"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- STATUS -->
+
+      <p id="status"></p>
+
+    </div>
+
+  </div>
+
+
+  <script type="module" src="js/theme-settings.js"></script>
+
+</body>
+
+</html>
