@@ -1,0 +1,429 @@
+/* ========================================
+   METFLIX - CHANGE EMAIL
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #080808;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ========================================
+   PAGE BACKGROUND
+   ======================================== */
+
+.email-page {
+  min-height: 100vh;
+  padding: 35px 20px 60px;
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at 10% 55%,
+      rgba(229, 9, 20, 0.18),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 95% 75%,
+      rgba(229, 9, 20, 0.14),
+      transparent 35%
+    ),
+    #080808;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 14px 22px;
+
+  color: #fff;
+  text-decoration: none;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  background: rgba(25, 25, 28, 0.85);
+
+  border: 1px solid #303038;
+  border-radius: 14px;
+
+  transition: 0.25s ease;
+}
+
+.back-btn i {
+  font-size: 20px;
+}
+
+.back-btn:hover {
+  background: #e50914;
+  border-color: #e50914;
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   MAIN CARD
+   ======================================== */
+
+.email-box {
+  width: 100%;
+  max-width: 780px;
+
+  margin: 35px auto 0;
+
+  padding: 38px 45px 45px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(27, 27, 31, 0.97),
+      rgba(13, 13, 16, 0.97)
+    );
+
+  border: 1px solid #35353d;
+  border-top: 2px solid #e50914;
+
+  border-radius: 25px;
+
+  box-shadow:
+    0 0 35px rgba(229, 9, 20, 0.12),
+    0 25px 70px rgba(0, 0, 0, 0.6);
+
+  text-align: center;
+}
+
+/* ========================================
+   ICON
+   ======================================== */
+
+.email-box::before {
+  content: "\f0e0";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 82px;
+  height: 82px;
+
+  margin: 0 auto 22px;
+
+  color: #ff1630;
+  font-size: 38px;
+
+  background: rgba(229, 9, 20, 0.16);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 25px rgba(229, 9, 20, 0.12);
+}
+
+/* ========================================
+   TITLE
+   ======================================== */
+
+.email-box h1 {
+  font-size: 42px;
+  font-weight: 700;
+
+  margin-bottom: 10px;
+
+  color: #fff;
+}
+
+.subtitle {
+  color: #9b9ba5;
+  font-size: 20px;
+
+  margin-bottom: 35px;
+}
+
+/* ========================================
+   CURRENT EMAIL
+   ======================================== */
+
+.current-email {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+
+  padding: 22px 25px;
+
+  margin-bottom: 30px;
+
+  text-align: left;
+
+  background: rgba(35, 35, 41, 0.8);
+
+  border: 1px solid #454550;
+  border-radius: 18px;
+}
+
+/* Envelope icon */
+
+.current-email::before {
+  content: "\f0e0";
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 65px;
+  height: 65px;
+
+  font-size: 27px;
+
+  color: #fff;
+
+  background: #3a3a43;
+
+  border-radius: 50%;
+}
+
+.current-email label {
+  display: block;
+
+  color: #a6a6b0;
+
+  font-size: 17px;
+
+  margin-bottom: 6px;
+}
+
+.current-email p {
+  color: #fff;
+
+  font-size: 21px;
+  font-weight: 600;
+
+  word-break: break-word;
+}
+
+/* ========================================
+   INPUT GROUP
+   ======================================== */
+
+.input-group {
+  text-align: left;
+
+  margin-bottom: 24px;
+}
+
+.input-group label {
+  display: block;
+
+  color: #fff;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+/* ========================================
+   INPUTS
+   ======================================== */
+
+.input-group input {
+  width: 100%;
+
+  height: 62px;
+
+  padding: 0 20px;
+
+  color: #fff;
+
+  font-size: 17px;
+
+  background: rgba(22, 22, 27, 0.95);
+
+  border: 1px solid #50505b;
+  border-radius: 15px;
+
+  outline: none;
+
+  transition: 0.25s ease;
+}
+
+.input-group input::placeholder {
+  color: #8e8e9a;
+}
+
+.input-group input:focus {
+  border-color: #e50914;
+
+  box-shadow:
+    0 0 0 3px rgba(229, 9, 20, 0.12);
+}
+
+/* ========================================
+   SAVE BUTTON
+   ======================================== */
+
+#saveEmailBtn {
+  width: 100%;
+
+  height: 64px;
+
+  margin-top: 10px;
+
+  border: none;
+  border-radius: 15px;
+
+  background: linear-gradient(
+    180deg,
+    #ff1728,
+    #e50914
+  );
+
+  color: #fff;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 25px rgba(229, 9, 20, 0.25);
+
+  transition: 0.25s ease;
+}
+
+#saveEmailBtn i {
+  margin-right: 10px;
+}
+
+#saveEmailBtn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(229, 9, 20, 0.4);
+}
+
+#saveEmailBtn:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   STATUS MESSAGE
+   ======================================== */
+
+#status {
+  margin-top: 25px;
+
+  color: #9999a5;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 600px) {
+
+  .email-page {
+    padding: 22px 15px 45px;
+  }
+
+  .back-btn {
+    padding: 12px 18px;
+    font-size: 16px;
+  }
+
+  .email-box {
+    margin-top: 25px;
+
+    padding: 30px 20px 32px;
+
+    border-radius: 20px;
+  }
+
+  .email-box::before {
+    width: 70px;
+    height: 70px;
+
+    font-size: 32px;
+
+    margin-bottom: 18px;
+  }
+
+  .email-box h1 {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 17px;
+
+    margin-bottom: 28px;
+  }
+
+  .current-email {
+    padding: 18px;
+
+    gap: 14px;
+
+    border-radius: 15px;
+  }
+
+  .current-email::before {
+    width: 55px;
+    height: 55px;
+
+    font-size: 23px;
+  }
+
+  .current-email label {
+    font-size: 15px;
+  }
+
+  .current-email p {
+    font-size: 17px;
+  }
+
+  .input-group label {
+    font-size: 16px;
+  }
+
+  .input-group input {
+    height: 56px;
+
+    font-size: 16px;
+
+    border-radius: 13px;
+  }
+
+  #saveEmailBtn {
+    height: 58px;
+
+    font-size: 18px;
+
+    border-radius: 13px;
+  }
+
+  #status {
+    font-size: 14px;
+  }
+}
