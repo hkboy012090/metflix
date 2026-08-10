@@ -235,18 +235,27 @@ checkAuth(async (user) => {
     const menuAvatar = document.getElementById("menuAvatar");
 
     if (!menuUsername) return;
+const customizeProfile = document.querySelector(
+    '[onclick="toggleProfileMenu()"]'
+);
 
-    // ========================================
-    // LOGGED IN
-    // ========================================
+const profileSubMenu = document.getElementById("profileSubMenu");
+  
+  // ========================================
+// LOGGED IN
+// ========================================
 
-    if (user) {
+if (user) {
 
-        // Ipakita ang avatar kapag naka-login
-        if (menuAvatar) {
-            menuAvatar.style.display = "block";
-        }
+    // Ipakita ang Customize Profile kapag naka-login
+    if (customizeProfile) {
+        customizeProfile.style.display = "flex";
+    }
 
+    // Ipakita ang avatar kapag naka-login
+    if (menuAvatar) {
+        menuAvatar.style.display = "block";
+    }
         try {
 
             const docRef = doc(db, "users", user.uid);
@@ -324,6 +333,15 @@ checkAuth(async (user) => {
             menuAvatar.style.display = "none";
         }
 
+      // Itago ang Customize Profile kapag Guest
+if (customizeProfile) {
+    customizeProfile.style.display = "none";
+}
+
+// Isara ang submenu kapag Guest
+if (profileSubMenu) {
+    profileSubMenu.classList.remove("show");
+}
     }
 
 });
