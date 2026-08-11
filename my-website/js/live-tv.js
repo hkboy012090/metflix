@@ -1,14 +1,18 @@
 // ========================================
 // METFLIX LIVE TV
-// Step 4B - Live Video Player
+// Step 4C - Cinema One HLS
 // ========================================
 
 const channelStreams = {
 
-    "Cinema One": "",
+    "Cinema One":
+        "https://cinemaone-abscbn-ono.amagi.tv/index.m3u8",
+
     "Cinemo": ""
 
 };
+
+let hls = null;
 
 
 // ========================================
@@ -17,56 +21,89 @@ const channelStreams = {
 
 function selectChannel(channelName) {
 
-    const playerModal = document.getElementById("playerModal");
-    const playerTitle = document.getElementById("playerTitle");
-    const playerStatus = document.getElementById("playerStatus");
+    const playerModal =
+        document.getElementById("playerModal");
 
-    const liveVideo = document.getElementById("liveVideo");
+    const playerTitle =
+        document.getElementById("playerTitle");
+
+    const playerStatus =
+        document.getElementById("playerStatus");
+
+    const liveVideo =
+        document.getElementById("liveVideo");
+
     const videoPlaceholder =
         document.getElementById("videoPlaceholder");
 
 
-    if (!playerModal) {
-        console.error("Player modal not found.");
+    if (!playerModal || !liveVideo) {
+        console.error("Player elements not found.");
         return;
     }
 
 
     playerTitle.textContent = channelName;
 
+    playerModal.classList.add("show");
 
-    // Kunin ang stream URL
-    const streamUrl = channelStreams[channelName];
+    document.body.style.overflow = "hidden";
 
 
-    // Walang stream URL
-    if (!streamUrl) {
+    // Stop previous stream
+    if (hls) {
+        hls.destroy();
+        hls = null;
+    }
 
-        if (liveVideo) {
-            liveVideo.pause();
-            liveVideo.removeAttribute("src");
-            liveVideo.load();
-            liveVideo.classList.remove("active");
-        }
+    liveVideo.pause();
+    liveVideo.removeAttribute("src");
+    liveVideo.load();
 
-        if (videoPlaceholder) {
-            videoPlaceholder.style.display = "flex";
-        }
+    liveVideo.classList.remove("active");
 
-        if (playerStatus) {
-            playerStatus.textContent =
-                "No authorized live stream connected yet.";
-        }
-
+    if (videoPlaceholder) {
+        videoPlaceholder.style.display = "flex";
     }
 
 
-    // May stream URL
-    else {
+    const streamUrl =
+        channelStreams[channelName];
 
-        if (liveVideo) {
 
-            liveVideo.src = streamUrl;
+    // No stream
+    if (!streamUrl) {
+
+        playerStatus.textContent =
+            "No authorized live stream connected yet.";
+
+        return;
+    }
+
+
+    // Loading message
+    playerStatus.textContent =
+        "Connecting to live stream...";
+
+
+    // ========================================
+    // HLS.JS
+    // ========================================
+
+    if (window.Hls && Hls.isSupported()) {
+
+        hls = new Hls();
+
+        hls.loadSource(streamUrl);
+
+        hls.attachMedia(liveVideo);
+
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+
+            console.log(
+                "Cinema One HLS stream loaded."
+            );
 
             liveVideo.classList.add("active");
 
@@ -74,19 +111,88 @@ function selectChannel(channelName) {
                 videoPlaceholder.style.display = "none";
             }
 
-            liveVideo.play().catch(error => {
-                console.log("Autoplay blocked:", error);
+            liveVideo.play().catch(function(error) {
+
+                console.log(
+                    "Autoplay blocked:",
+                    error
+                );
+
             });
 
-        }
+        });
+
+
+        hls.on(Hls.Events.ERROR, function (
+            event,
+            data
+        ) {
+
+            console.error(
+                "HLS Error:",
+                data
+            );
+
+            if (data.fatal) {
+
+                playerStatus.textContent =
+                    "Unable to play this live stream.";
+
+                liveVideo.classList.remove("active");
+
+                if (videoPlaceholder) {
+                    videoPlaceholder.style.display =
+                        "flex";
+                }
+
+            }
+
+        });
 
     }
 
 
-    // Open player
-    playerModal.classList.add("show");
+    // ========================================
+    // NATIVE HLS
+    // ========================================
 
-    document.body.style.overflow = "hidden";
+    else if (
+        liveVideo.canPlayType(
+            "application/vnd.apple.mpegurl"
+        )
+    ) {
+
+        liveVideo.src = streamUrl;
+
+        liveVideo.classList.add("active");
+
+        if (videoPlaceholder) {
+            videoPlaceholder.style.display = "none";
+        }
+
+        liveVideo.play().catch(function(error) {
+
+            console.log(
+                "Autoplay blocked:",
+                error
+            );
+
+        });
+
+    }
+
+
+    // ========================================
+    // NOT SUPPORTED
+    // ========================================
+
+    else {
+
+        playerStatus.textContent =
+            "This browser does not support HLS live streaming.";
+
+    }
+
 }
 
 
@@ -102,8 +208,14 @@ function closePlayer() {
     const liveVideo =
         document.getElementById("liveVideo");
 
+    const videoPlaceholder =
+        document.getElementById("videoPlaceholder");
 
-    if (!playerModal) return;
+
+    if (hls) {
+        hls.destroy();
+        hls = null;
+    }
 
 
     if (liveVideo) {
@@ -119,48 +231,53 @@ function closePlayer() {
     }
 
 
-    const videoPlaceholder =
-        document.getElementById("videoPlaceholder");
-
     if (videoPlaceholder) {
         videoPlaceholder.style.display = "flex";
     }
 
 
-    playerModal.classList.remove("show");
+    if (playerModal) {
+        playerModal.classList.remove("show");
+    }
+
 
     document.body.style.overflow = "";
+
 }
 
 
 // ========================================
-// CLICK OUTSIDE PLAYER
+// CLICK OUTSIDE
 // ========================================
 
-document.addEventListener("click", function(event) {
+document.addEventListener(
+    "click",
+    function(event) {
 
-    const playerModal =
-        document.getElementById("playerModal");
+        const playerModal =
+            document.getElementById("playerModal");
 
+        if (!playerModal) return;
 
-    if (!playerModal) return;
+        if (event.target === playerModal) {
+            closePlayer();
+        }
 
-
-    if (event.target === playerModal) {
-        closePlayer();
     }
-
-});
+);
 
 
 // ========================================
 // ESC KEY
 // ========================================
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (event.key === "Escape") {
-        closePlayer();
+        if (event.key === "Escape") {
+            closePlayer();
+        }
+
     }
-
-});
+);
