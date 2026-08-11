@@ -1,33 +1,23 @@
-// ========================================
-// METFLIX LIVE TV
-// Step 4A - Channel Player
-// ========================================
+console.log("METFLIX LIVE TV JS LOADED");
 
 function selectChannel(channelName) {
 
+    alert("Napindot ang " + channelName);
+
     const playerModal = document.getElementById("playerModal");
     const playerTitle = document.getElementById("playerTitle");
-    const playerStatus = document.getElementById("playerStatus");
 
     if (!playerModal) {
-        console.error("Player modal not found.");
+        alert("ERROR: playerModal not found!");
         return;
     }
 
     playerTitle.textContent = channelName;
 
-    playerStatus.textContent =
-        "Live stream will appear here when an authorized stream is connected.";
-
     playerModal.classList.add("show");
 
     document.body.style.overflow = "hidden";
 }
-
-
-// ========================================
-// CLOSE PLAYER
-// ========================================
 
 function closePlayer() {
 
@@ -39,20 +29,3 @@ function closePlayer() {
 
     document.body.style.overflow = "";
 }
-
-
-// ========================================
-// CLOSE WHEN CLICKING OUTSIDE
-// ========================================
-
-document.addEventListener("click", function (event) {
-
-    const playerModal = document.getElementById("playerModal");
-
-    if (!playerModal) return;
-
-    if (event.target === playerModal) {
-        closePlayer();
-    }
-
-});
