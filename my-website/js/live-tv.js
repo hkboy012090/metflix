@@ -1,6 +1,18 @@
 // ========================================
 // METFLIX LIVE TV
-// CHANNEL PLAYER
+// Step 4B - Live Video Player
+// ========================================
+
+const channelStreams = {
+
+    "Cinema One": "",
+    "Cinemo": ""
+
+};
+
+
+// ========================================
+// SELECT CHANNEL
 // ========================================
 
 function selectChannel(channelName) {
@@ -8,36 +20,70 @@ function selectChannel(channelName) {
     const playerModal = document.getElementById("playerModal");
     const playerTitle = document.getElementById("playerTitle");
     const playerStatus = document.getElementById("playerStatus");
+
     const liveVideo = document.getElementById("liveVideo");
-    const videoPlaceholder = document.getElementById("videoPlaceholder");
+    const videoPlaceholder =
+        document.getElementById("videoPlaceholder");
+
 
     if (!playerModal) {
         console.error("Player modal not found.");
         return;
     }
 
-    if (playerTitle) {
-        playerTitle.textContent = channelName;
+
+    playerTitle.textContent = channelName;
+
+
+    // Kunin ang stream URL
+    const streamUrl = channelStreams[channelName];
+
+
+    // Walang stream URL
+    if (!streamUrl) {
+
+        if (liveVideo) {
+            liveVideo.pause();
+            liveVideo.removeAttribute("src");
+            liveVideo.load();
+            liveVideo.classList.remove("active");
+        }
+
+        if (videoPlaceholder) {
+            videoPlaceholder.style.display = "flex";
+        }
+
+        if (playerStatus) {
+            playerStatus.textContent =
+                "No authorized live stream connected yet.";
+        }
+
     }
 
-    // Walang stream na ikakabit hangga't walang
-    // authorized/legal stream URL.
-    if (liveVideo) {
-        liveVideo.pause();
-        liveVideo.removeAttribute("src");
-        liveVideo.load();
-        liveVideo.classList.remove("active");
+
+    // May stream URL
+    else {
+
+        if (liveVideo) {
+
+            liveVideo.src = streamUrl;
+
+            liveVideo.classList.add("active");
+
+            if (videoPlaceholder) {
+                videoPlaceholder.style.display = "none";
+            }
+
+            liveVideo.play().catch(error => {
+                console.log("Autoplay blocked:", error);
+            });
+
+        }
+
     }
 
-    if (videoPlaceholder) {
-        videoPlaceholder.style.display = "flex";
-    }
 
-    if (playerStatus) {
-        playerStatus.textContent =
-            "No authorized live stream connected yet.";
-    }
-
+    // Open player
     playerModal.classList.add("show");
 
     document.body.style.overflow = "hidden";
@@ -50,32 +96,70 @@ function selectChannel(channelName) {
 
 function closePlayer() {
 
-    const playerModal = document.getElementById("playerModal");
-    const liveVideo = document.getElementById("liveVideo");
+    const playerModal =
+        document.getElementById("playerModal");
+
+    const liveVideo =
+        document.getElementById("liveVideo");
+
+
+    if (!playerModal) return;
+
 
     if (liveVideo) {
+
         liveVideo.pause();
+
+        liveVideo.removeAttribute("src");
+
+        liveVideo.load();
+
+        liveVideo.classList.remove("active");
+
     }
 
-    if (playerModal) {
-        playerModal.classList.remove("show");
+
+    const videoPlaceholder =
+        document.getElementById("videoPlaceholder");
+
+    if (videoPlaceholder) {
+        videoPlaceholder.style.display = "flex";
     }
+
+
+    playerModal.classList.remove("show");
 
     document.body.style.overflow = "";
 }
 
 
 // ========================================
-// CLOSE OUTSIDE PLAYER
+// CLICK OUTSIDE PLAYER
 // ========================================
 
 document.addEventListener("click", function(event) {
 
-    const playerModal = document.getElementById("playerModal");
+    const playerModal =
+        document.getElementById("playerModal");
+
 
     if (!playerModal) return;
 
+
     if (event.target === playerModal) {
+        closePlayer();
+    }
+
+});
+
+
+// ========================================
+// ESC KEY
+// ========================================
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
         closePlayer();
     }
 
