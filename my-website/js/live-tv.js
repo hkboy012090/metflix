@@ -8,6 +8,8 @@ function selectChannel(channelName) {
     const playerModal = document.getElementById("playerModal");
     const playerTitle = document.getElementById("playerTitle");
     const playerStatus = document.getElementById("playerStatus");
+    const liveVideo = document.getElementById("liveVideo");
+    const videoPlaceholder = document.getElementById("videoPlaceholder");
 
     if (!playerModal) {
         console.error("Player modal not found.");
@@ -18,9 +20,22 @@ function selectChannel(channelName) {
         playerTitle.textContent = channelName;
     }
 
+    // Walang stream na ikakabit hangga't walang
+    // authorized/legal stream URL.
+    if (liveVideo) {
+        liveVideo.pause();
+        liveVideo.removeAttribute("src");
+        liveVideo.load();
+        liveVideo.classList.remove("active");
+    }
+
+    if (videoPlaceholder) {
+        videoPlaceholder.style.display = "flex";
+    }
+
     if (playerStatus) {
         playerStatus.textContent =
-            "Live stream will appear here when an authorized stream is connected.";
+            "No authorized live stream connected yet.";
     }
 
     playerModal.classList.add("show");
@@ -36,28 +51,29 @@ function selectChannel(channelName) {
 function closePlayer() {
 
     const playerModal = document.getElementById("playerModal");
+    const liveVideo = document.getElementById("liveVideo");
 
-    if (!playerModal) {
-        return;
+    if (liveVideo) {
+        liveVideo.pause();
     }
 
-    playerModal.classList.remove("show");
+    if (playerModal) {
+        playerModal.classList.remove("show");
+    }
 
     document.body.style.overflow = "";
 }
 
 
 // ========================================
-// CLOSE WHEN CLICKING OUTSIDE PLAYER
+// CLOSE OUTSIDE PLAYER
 // ========================================
 
 document.addEventListener("click", function(event) {
 
     const playerModal = document.getElementById("playerModal");
 
-    if (!playerModal) {
-        return;
-    }
+    if (!playerModal) return;
 
     if (event.target === playerModal) {
         closePlayer();
