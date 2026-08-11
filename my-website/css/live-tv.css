@@ -1,0 +1,363 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #111;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    padding-bottom: 85px;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.live-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 20px;
+    background: #181818;
+    border-bottom: 1px solid #292929;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.back-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #252525;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.back-btn:hover {
+    background: #e50914;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header-title i {
+    color: #e50914;
+}
+
+
+/* =========================
+   MAIN PAGE
+========================= */
+
+.live-tv-page {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.channel-section {
+    margin-bottom: 40px;
+}
+
+.channel-section h2 {
+    font-size: 25px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* =========================
+   CHANNEL GRID
+========================= */
+
+.channel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 18px;
+}
+
+
+/* =========================
+   CHANNEL CARD
+========================= */
+
+.channel-card {
+    background: #1a1a1a;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 22px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.channel-card:hover {
+    transform: translateY(-5px);
+    border-color: #e50914;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .35);
+}
+
+
+/* =========================
+   CHANNEL ICON
+========================= */
+
+.channel-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #252525;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.channel-icon i {
+    font-size: 30px;
+    color: #e50914;
+}
+
+
+/* =========================
+   CHANNEL NAME
+========================= */
+
+.channel-card h3 {
+    font-size: 17px;
+    margin-bottom: 7px;
+}
+
+
+/* =========================
+   CHANNEL DESCRIPTION
+========================= */
+
+.channel-status {
+    display: block;
+    color: #999;
+    font-size: 12px;
+}
+
+
+/* =========================
+   BOTTOM NAV
+========================= */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+    height: 70px;
+
+    background: rgba(24, 24, 24, .97);
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border-top: 1px solid #333;
+
+    z-index: 9999;
+}
+
+.bottom-nav a {
+    color: #aaa;
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    font-size: 11px;
+
+    min-width: 55px;
+}
+
+.bottom-nav i {
+    font-size: 21px;
+}
+
+.bottom-nav a.active {
+    color: #e50914;
+}
+
+.bottom-nav a.active i {
+    color: #e50914;
+}
+
+
+/* =========================
+   LIGHT MODE
+========================= */
+
+html.light-mode body {
+    background: #f4f4f4;
+    color: #111;
+}
+
+html.light-mode .live-header {
+    background: #fff;
+    border-bottom-color: #ddd;
+}
+
+html.light-mode .back-btn {
+    background: #eee;
+    color: #111;
+}
+
+html.light-mode .channel-card {
+    background: #fff;
+    border-color: #ddd;
+}
+
+html.light-mode .channel-icon {
+    background: #eee;
+}
+
+html.light-mode .channel-status {
+    color: #666;
+}
+
+html.light-mode .bottom-nav {
+    background: rgba(255, 255, 255, .97);
+    border-top-color: #ddd;
+}
+
+html.light-mode .bottom-nav a {
+    color: #555;
+}
+
+html.light-mode .bottom-nav a.active,
+html.light-mode .bottom-nav a.active i {
+    color: #e50914;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 768px) {
+
+    .live-tv-page {
+        padding: 25px 15px;
+    }
+
+    .channel-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .channel-card {
+        padding: 18px 8px;
+    }
+
+    .channel-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .channel-icon i {
+        font-size: 25px;
+    }
+
+    .channel-card h3 {
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 480px) {
+
+    .live-header {
+        padding: 14px 15px;
+    }
+
+    .header-title {
+        font-size: 18px;
+    }
+
+    .live-tv-page {
+        padding: 20px 10px;
+    }
+
+    .channel-section h2 {
+        font-size: 20px;
+    }
+
+    .channel-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .channel-card {
+        padding: 18px 8px;
+        border-radius: 10px;
+    }
+
+    .channel-icon {
+        width: 55px;
+        height: 55px;
+        margin-bottom: 10px;
+    }
+
+    .channel-icon i {
+        font-size: 23px;
+    }
+
+    .channel-card h3 {
+        font-size: 13px;
+    }
+
+    .channel-status {
+        font-size: 10px;
+    }
+
+    .bottom-nav {
+        height: 65px;
+    }
+
+    .bottom-nav a {
+        font-size: 9px;
+    }
+
+    .bottom-nav i {
+        font-size: 19px;
+    }
+
+}
