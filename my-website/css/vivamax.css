@@ -153,4 +153,45 @@ body{
 .bottom-nav a.active i{
     color:#e50914;
 }
+/* =========================================
+   VIVAMAX LIGHT MODE
+   ========================================= */
 
+html.light-mode body {
+    background: #f4f4f4;
+    color: #111;
+}
+
+html.light-mode .vivamax-page {
+    background: #f4f4f4;
+    color: #111;
+}
+
+html.light-mode .row h2 {
+    color: #111;
+}
+
+html.light-mode .movie-card,
+html.light-mode .card {
+    background: #ffffff;
+    color: #111;
+}
+
+html.light-mode .movie-card h3,
+html.light-mode .card h3 {
+    color: #111;
+}
+
+html.light-mode .movie-card p,
+html.light-mode .card p {
+    color: #555;
+}
+
+html.light-mode .footer {
+    background: #ffffff;
+    color: #222;
+}
+
+html.light-mode .bottom-nav {
+    background: rgba(255,255,255,0.96);
+}
