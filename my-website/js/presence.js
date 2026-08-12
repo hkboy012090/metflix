@@ -24,9 +24,11 @@ onAuthStateChanged(auth, (user) => {
 
   // Walang naka-login
   if (!user) {
-    console.log("Metflix: No user logged in.");
+    alert("NO USER LOGIN");
     return;
-  }
+}
+
+alert("USER LOGIN OK: " + user.uid);
 
   console.log("Metflix: Logged in user:", user.uid);
 
