@@ -9,6 +9,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
  <script src="js/theme.js"></script>
+  <script type="module" src="js/presence.js"></script>
   <script type="module" src="js/home.js"></script>
 </head>
 
@@ -133,6 +134,13 @@
     <div class="user-text">
         <small>Welcome</small>
         <strong id="menuUsername">Guest</strong>
+
+        <div class="online-users">
+            <span class="online-dot"></span>
+            <span>Online: </span>
+            <strong id="onlineUserCount">0</strong>
+        </div>
+
     </div>
 
 </div>
