@@ -22,6 +22,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCprwxcwbJm5Qu-IjVQxKxBuseakVu16dY",
   authDomain: "metflix-e8145.firebaseapp.com",
   projectId: "metflix-e8145",
+  databaseURL: "https://metflix-e8145-default-rtdb.asia-southeast1.firebasedatabase.app",
   storageBucket: "metflix-e8145.firebasestorage.app",
   messagingSenderId: "995899651117",
   appId: "1:995899651117:web:3544fba402b658d3f5b4a4",
