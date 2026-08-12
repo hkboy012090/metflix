@@ -27,12 +27,14 @@ const INACTIVITY_TIME =   15 * 1000;
 
 function isWatchingMovie() {
 
-    alert(window.location.pathname);
+    const url = window.location.href.toLowerCase();
 
-    return window.location.pathname
-        .toLowerCase()
-        .includes("watch.html");
+    console.log("CURRENT URL:", url);
 
+
+    return url.includes("watch.html");
+
+}
 }
 
 
