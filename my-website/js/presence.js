@@ -12,6 +12,9 @@ import {
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
+console.log("METFLIX PRESENCE FILE LOADED");
+console.log("AUTH:", auth);
+console.log("RTDB:", rtdb);
 
 // ========================================
 // METFLIX ONLINE PRESENCE
