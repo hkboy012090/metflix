@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>METFLIX - Tasks</title>
+
+  <link rel="stylesheet" href="css/home.css">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+
+    body {
+      background: #0b0b0b;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tasks-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 20px 40px;
+    }
+
+    .tasks-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .tasks-header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .points-box {
+      margin-top: 15px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #1c1c1c;
+      border: 1px solid #333;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 18px;
+    }
+
+    .points-box i {
+      color: gold;
+    }
+
+    .task-card {
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 15px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+
+    .task-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .task-title i {
+      font-size: 25px;
+      color: #e50914;
+    }
+
+    .task-title h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    .task-description {
+      color: #aaa;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .reward-info {
+      background: #202020;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 15px;
+    }
+
+    .reward-info strong {
+      color: #ffd700;
+    }
+
+    .task-button {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 8px;
+      background: #e50914;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .task-button:hover {
+      opacity: 0.9;
+    }
+
+    .task-button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
+
+    /* 7 DAY REWARD */
+
+    .login-rewards {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .reward-day {
+      background: #202020;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 12px 5px;
+      text-align: center;
+    }
+
+    .reward-day.active {
+      border-color: #e50914;
+    }
+
+    .reward-day.claimed {
+      opacity: 0.5;
+    }
+
+    .reward-day.today {
+      box-shadow: 0 0 0 2px #e50914;
+    }
+
+    .reward-day .day {
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+
+    .reward-day .reward {
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffd700;
+    }
+
+    .reward-day .status {
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .claim-button {
+      margin-top: 20px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .back-button:hover {
+      color: #e50914;
+    }
+
+    @media (max-width: 700px) {
+
+      .tasks-page {
+        padding-top: 80px;
+      }
+
+      .login-rewards {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+    }
+
+    @media (max-width: 450px) {
+
+      .login-rewards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <main class="tasks-page">
+
+    <a href="index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back
+    </a>
+
+
+    <!-- HEADER -->
+
+    <div class="tasks-header">
+
+      <h1>🎯 METFLIX TASKS</h1>
+
+      <div class="points-box">
+
+        <i class="fas fa-star"></i>
+
+        <span>Your Points:</span>
+
+        <strong id="points">0</strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- WATCH ADS -->
+
+    <section class="task-card">
+
+      <div class="task-title">
+
+        <i class="fas fa-video"></i>
+
+        <h2>Watch Ads</h2>
+
+      </div>
+
+      <p class="task-description">
+
+        Watch available advertisements and earn points.
+
+      </p>
+
+      <div class="reward-info">
+
+        Reward:
+        <strong>+10 Points</strong>
+
+      </div>
+
+      <button
+        id="watchAdsBtn"
+        class="task-button">
+
+        <i class="fas fa-play"></i>
+        WATCH ADS
+
+      </button>
+
+    </section>
+
+
+    <!-- 7 DAY LOGIN REWARD -->
+
+    <section class="task-card">
+
+      <div class="task-title">
+
+        <i class="fas fa-calendar-check"></i>
+
+        <h2>7-Day Login Reward</h2>
+
+      </div>
+
+      <p class="task-description">
+
+        Login every day and claim your daily reward.
+        Complete all 7 days to receive the biggest reward.
+
+      </p>
+
+
+      <div class="login-rewards">
+
+        <div class="reward-day" id="day1">
+          <div class="day">DAY 1</div>
+          <div class="reward">+10</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day2">
+          <div class="day">DAY 2</div>
+          <div class="reward">+15</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day3">
+          <div class="day">DAY 3</div>
+          <div class="reward">+20</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day4">
+          <div class="day">DAY 4</div>
+          <div class="reward">+25</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day5">
+          <div class="day">DAY 5</div>
+          <div class="reward">+30</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day6">
+          <div class="day">DAY 6</div>
+          <div class="reward">+40</div>
+          <div class="status">🔒</div>
+        </div>
+
+        <div class="reward-day" id="day7">
+          <div class="day">DAY 7</div>
+          <div class="reward">+100</div>
+          <div class="status">🔒</div>
+        </div>
+
+      </div>
+
+
+      <div class="reward-info">
+
+        Today's Reward:
+        <strong id="todayReward">+10 Points</strong>
+
+      </div>
+
+
+      <button
+        id="claimRewardBtn"
+        class="task-button claim-button">
+
+        <i class="fas fa-gift"></i>
+        CLAIM DAILY REWARD
+
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <script type="module">
+
+    import { auth, db }
+      from "./js/firebase-config.js";
+
+    import {
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+    import {
+      doc,
+      getDoc,
+      updateDoc,
+      setDoc,
+      increment
+    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+
+    const pointsElement =
+      document.getElementById("points");
+
+    const claimButton =
+      document.getElementById("claimRewardBtn");
+
+    const todayRewardElement =
+      document.getElementById("todayReward");
+
+
+    const rewards = [
+      10,
+      15,
+      20,
+      25,
+      30,
+      40,
+      100
+    ];
+
+
+    let currentUser = null;
+
+
+    // ========================================
+    // DATE
+    // ========================================
+
+    function getToday() {
+
+      const now = new Date();
+
+      return now.getFullYear() +
+        "-" +
+        String(now.getMonth() + 1).padStart(2, "0") +
+        "-" +
+        String(now.getDate()).padStart(2, "0");
+
+    }
+
+
+    // ========================================
+    // LOAD USER
+    // ========================================
+
+    onAuthStateChanged(auth, async (user) => {
+
+      if (!user) {
+
+        window.location.href = "login.html";
+
+        return;
+
+      }
+
+
+      currentUser = user;
+
+      await loadUserData();
+
+    });
+
+
+    // ========================================
+    // LOAD FIRESTORE DATA
+    // ========================================
+
+    async function loadUserData() {
+
+      try {
+
+        const userRef =
+          doc(db, "users", currentUser.uid);
+
+        const snap =
+          await getDoc(userRef);
+
+
+        if (!snap.exists()) {
+
+          await setDoc(
+            userRef,
+            {
+              points: 0,
+              loginRewardDay: 1,
+              lastLoginReward: ""
+            },
+            { merge: true }
+          );
+
+          pointsElement.textContent = "0";
+
+          updateRewardDisplay(1, "");
+
+          return;
+
+        }
+
+
+        const data = snap.data();
+
+
+        const points =
+          data.points || 0;
+
+        const rewardDay =
+          data.loginRewardDay || 1;
+
+        const lastReward =
+          data.lastLoginReward || "";
+
+
+        pointsElement.textContent =
+          points;
+
+
+        updateRewardDisplay(
+          rewardDay,
+          lastReward
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "TASK LOAD ERROR:",
+          error
+        );
+
+      }
+
+    }
+
+
+    // ========================================
+    // DISPLAY REWARDS
+    // ========================================
+
+    function updateRewardDisplay(
+      rewardDay,
+      lastReward
+    ) {
+
+      const today =
+        getToday();
+
+
+      for (
+        let i = 1;
+        i <= 7;
+        i++
+      ) {
+
+        const element =
+          document.getElementById(
+            "day" + i
+          );
+
+        if (!element) continue;
+
+
+        const status =
+          element.querySelector(
+            ".status"
+          );
+
+
+        element.classList.remove(
+          "active",
+          "claimed",
+          "today"
+        );
+
+
+        if (i < rewardDay) {
+
+          element.classList.add(
+            "claimed"
+          );
+
+          status.textContent = "✓";
+
+        }
+
+        else if (i === rewardDay) {
+
+          element.classList.add(
+            "active"
+          );
+
+          status.textContent = "🎁";
+
+        }
+
+        else {
+
+          status.textContent = "🔒";
+
+        }
+
+      }
+
+
+      if (lastReward === today) {
+
+        claimButton.disabled = true;
+
+        claimButton.innerHTML =
+          '<i class="fas fa-check"></i> REWARD CLAIMED TODAY';
+
+      }
+
+      else {
+
+        claimButton.disabled = false;
+
+        claimButton.innerHTML =
+          '<i class="fas fa-gift"></i> CLAIM DAILY REWARD';
+
+      }
+
+
+      const reward =
+        rewards[rewardDay - 1] || rewards[0];
+
+
+      todayRewardElement.textContent =
+        "+" + reward + " Points";
+
+    }
+
+
+    // ========================================
+    // CLAIM DAILY REWARD
+    // ========================================
+
+    claimButton.addEventListener(
+      "click",
+      async () => {
+
+        if (!currentUser) {
+
+          return;
+
+        }
+
+
+        claimButton.disabled = true;
+
+
+        try {
+
+          const userRef =
+            doc(
+              db,
+              "users",
+              currentUser.uid
+            );
+
+
+          const snap =
+            await getDoc(userRef);
+
+
+          if (!snap.exists()) {
+
+            throw new Error(
+              "User profile not found."
+            );
+
+          }
+
+
+          const data =
+            snap.data();
+
+
+          const today =
+            getToday();
+
+
+          const lastReward =
+            data.lastLoginReward || "";
+
+
+          // Already claimed today
+
+          if (
+            lastReward === today
+          ) {
+
+            alert(
+              "You already claimed today's reward."
+            );
+
+            await loadUserData();
+
+            return;
+
+          }
+
+
+          let rewardDay =
+            data.loginRewardDay || 1;
+
+
+          let reward =
+            rewards[
+              rewardDay - 1
+            ];
+
+
+          // Add points
+
+          await updateDoc(
+            userRef,
+            {
+
+              points:
+                increment(reward),
+
+              lastLoginReward:
+                today,
+
+              loginRewardDay:
+                rewardDay >= 7
+                  ? 1
+                  : rewardDay + 1
+
+            }
+          );
+
+
+          alert(
+            "🎉 Congratulations!\n\n+" +
+            reward +
+            " Points earned!"
+          );
+
+
+          await loadUserData();
+
+
+        } catch (error) {
+
+          console.error(
+            "REWARD ERROR:",
+            error
+          );
+
+          alert(
+            "Unable to claim reward.\n\n" +
+            error.message
+          );
+
+
+          claimButton.disabled = false;
+
+        }
+
+      }
+    );
+
+
+    // ========================================
+    // WATCH ADS
+    // ========================================
+
+    document
+      .getElementById("watchAdsBtn")
+      .addEventListener(
+        "click",
+        () => {
+
+          alert(
+            "Rewarded Ads will be connected here once the AdInPlay integration is approved."
+          );
+
+        }
+      );
+
+  </script>
+
+</body>
+
+</html>
