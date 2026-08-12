@@ -27,6 +27,8 @@ const INACTIVITY_TIME =   15 * 1000;
 
 function isWatchingMovie() {
 
+    alert(window.location.pathname);
+
     return window.location.pathname
         .toLowerCase()
         .includes("watch.html");
