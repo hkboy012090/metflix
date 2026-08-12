@@ -14,7 +14,7 @@ let logoutTimer;
 
 
 // 15 minutes
-const INACTIVITY_TIME = 15 * 60 * 1000;
+const INACTIVITY_TIME = 30 * 1000;
 
 
 // Check kung nasa watch page
@@ -101,4 +101,4 @@ function resetTimer() {
 // Start timer
 resetTimer();
 
-alert("METFLIX AUTO LOGOUT ACTIVE");
+console.log("METFLIX AUTO LOGOUT ACTIVE");
