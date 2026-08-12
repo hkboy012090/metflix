@@ -1,4 +1,4 @@
-import { auth, db } from "./firebase-config.js";
+import { auth, db, rtdb } from "./firebase-config.js";
 
 import {
   createUserWithEmailAndPassword,
@@ -6,6 +6,10 @@ import {
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+import {
+  ref,
+  remove
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
 import {
   doc,
@@ -110,12 +114,24 @@ if (registerBtn) {
 // -------------------- LOGOUT --------------------
 export async function logout() {
 
+  const user = auth.currentUser;
+
+  if (user) {
+
+    const presenceRef = ref(
+      rtdb,
+      `presence/${user.uid}`
+    );
+
+    await remove(presenceRef);
+
+  }
+
   await signOut(auth);
 
   window.location.href = "index.html";
 
 }
-
 // -------------------- CHECK LOGIN --------------------
 export function checkAuth(callback) {
   onAuthStateChanged(auth, callback);
