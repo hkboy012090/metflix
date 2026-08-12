@@ -24,12 +24,9 @@ onAuthStateChanged(auth, (user) => {
 
   // Walang naka-login
   if (!user) {
-    alert("NO USER LOGIN");
+    console.log("Metflix: No user logged in.");
     return;
-}
-
-alert("USER LOGIN OK: " + user.uid);
-
+  }
   console.log("Metflix: Logged in user:", user.uid);
 
   // Check kung connected sa Realtime Database
