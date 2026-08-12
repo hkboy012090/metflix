@@ -32,7 +32,15 @@ function isWatchingMovie() {
     console.log("CURRENT URL:", url);
 
 
-    return url.includes("watch.html");
+    // Check kung may movie id sa URL
+    if (url.includes("id=") && url.includes("type=")) {
+
+        return true;
+
+    }
+
+
+    return false;
 
 }
 
