@@ -10,19 +10,21 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
 
+// ========================================
+// METFLIX AUTO LOGOUT SYSTEM
+// ========================================
+
+
 let logoutTimer = null;
 
 
-// ========================================
-// METFLIX AUTO LOGOUT
-// ========================================
-
 // 15 minutes
-const INACTIVITY_TIME =   15 * 1000;
+const INACTIVITY_TIME = 15 * 1000;
+
 
 
 // ========================================
-// CHECK WATCH PAGE
+// CHECK IF WATCHING MOVIE
 // ========================================
 
 function isWatchingMovie() {
@@ -32,8 +34,13 @@ function isWatchingMovie() {
     console.log("CURRENT URL:", url);
 
 
-    // Check kung may movie id sa URL
-    if (url.includes("id=") && url.includes("type=")) {
+    // Watch page format:
+    // watch.html?id=123&type=movie
+
+    if (
+        url.includes("id=") &&
+        url.includes("type=")
+    ) {
 
         return true;
 
@@ -43,6 +50,9 @@ function isWatchingMovie() {
     return false;
 
 }
+
+
+
 
 // ========================================
 // STOP TIMER
@@ -58,35 +68,46 @@ function stopAutoLogout() {
 
     }
 
+
     console.log(
-        "METFLIX: Auto logout disabled on watch page."
+        "METFLIX: Auto logout stopped."
     );
 
 }
 
 
+
+
+
 // ========================================
-// AUTO LOGOUT
+// LOGOUT USER
 // ========================================
 
 async function autoLogout() {
 
-    // HUWAG MAG LOGOUT HABANG NANONOOD
+
+    // Kapag nanonood ng movie
+    // huwag mag logout
+
     if (isWatchingMovie()) {
 
-    alert("WATCH PAGE DETECTED - NO AUTO LOGOUT");
 
-    stopAutoLogout();
+        console.log(
+            "METFLIX: User watching movie. Logout cancelled."
+        );
 
-} else {
 
-    alert("NOT WATCH PAGE - TIMER START");
+        stopAutoLogout();
 
-    resetTimer();
 
-}
+        return;
+
+    }
+
+
 
     const user = auth.currentUser;
+
 
 
     if (!user) {
@@ -96,40 +117,55 @@ async function autoLogout() {
     }
 
 
+
     try {
 
-        // Remove user's presence
+
+        // Remove online presence
+
         const presenceRef = ref(
             rtdb,
             `presence/${user.uid}`
         );
 
+
         await remove(presenceRef);
 
 
+
         // Firebase logout
+
         await signOut(auth);
 
 
+
         console.log(
-            "METFLIX: User automatically logged out."
+            "METFLIX: Auto logout successful."
         );
 
 
-        // Return to login
-        window.location.href = "login.html";
+
+        window.location.href =
+            "login.html";
 
 
-    } catch (error) {
+
+    } catch(error) {
+
 
         console.error(
             "METFLIX AUTO LOGOUT ERROR:",
             error
         );
 
+
     }
 
+
 }
+
+
+
 
 
 // ========================================
@@ -138,38 +174,50 @@ async function autoLogout() {
 
 function resetTimer() {
 
-    // IMPORTANT:
-    // Kapag nasa watch page,
-    // walang inactivity timer.
+
+
+    // Kapag nasa watch page
+    // walang inactivity logout
 
     if (isWatchingMovie()) {
 
+
         stopAutoLogout();
+
 
         return;
 
     }
 
 
+
     clearTimeout(logoutTimer);
 
 
+
     logoutTimer = setTimeout(
+
         autoLogout,
+
         INACTIVITY_TIME
+
     );
 
+
 }
+
+
+
 
 
 // ========================================
 // USER ACTIVITY
 // ========================================
 
+
 const activityEvents = [
 
     "click",
-    "mousemove",
     "keydown",
     "scroll",
     "touchstart",
@@ -178,30 +226,47 @@ const activityEvents = [
 ];
 
 
-activityEvents.forEach((eventName) => {
+
+activityEvents.forEach((event) => {
+
 
     document.addEventListener(
-        eventName,
+
+        event,
+
         resetTimer,
-        { passive: true }
+
+        { passive:true }
+
     );
+
 
 });
 
 
+
+
+
+
 // ========================================
-// START
+// START SYSTEM
 // ========================================
+
 
 if (isWatchingMovie()) {
 
+
     stopAutoLogout();
+
 
 } else {
 
+
     resetTimer();
 
+
 }
+
 
 
 console.log(
