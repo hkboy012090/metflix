@@ -13,6 +13,10 @@ import {
   getStorage
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-storage.js";
 
+import {
+  getDatabase
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCprwxcwbJm5Qu-IjVQxKxBuseakVu16dY",
@@ -27,6 +31,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
+
+// Firebase Authentication
 export const auth = getAuth(app);
+
+
+// Firebase Firestore
 export const db = getFirestore(app);
+
+
+// Firebase Storage
 export const storage = getStorage(app);
+
+
+// Firebase Realtime Database
+export const rtdb = getDatabase(app);
