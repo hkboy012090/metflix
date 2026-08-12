@@ -14,8 +14,7 @@ let logoutTimer;
 
 
 // 15 minutes
-const INACTIVITY_TIME = 30 * 1000;
-
+const INACTIVITY_TIME = 15 * 60 * 1000;
 
 // Check kung nasa watch page
 function isWatchingMovie() {
