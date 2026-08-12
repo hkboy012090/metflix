@@ -1,5 +1,4 @@
-import { auth, rtdb } from "../firebase-config.js";
-
+import { auth, rtdb } from "./firebase-config.js";
 import {
   ref,
   push,
