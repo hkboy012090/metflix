@@ -10,94 +10,185 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
 
-let logoutTimer;
+let logoutTimer = null;
 
+
+// ========================================
+// METFLIX AUTO LOGOUT
+// ========================================
 
 // 15 minutes
-const INACTIVITY_TIME = 30 * 1000;
+const INACTIVITY_TIME =   15 * 1000;
 
-// Check kung nasa watch page
+
+// ========================================
+// CHECK WATCH PAGE
+// ========================================
+
 function isWatchingMovie() {
 
-  return window.location.pathname.includes("watch.html");
+    return window.location.pathname
+        .toLowerCase()
+        .includes("watch.html");
 
 }
 
 
-// Auto logout function
-async function autoLogout() {
+// ========================================
+// STOP TIMER
+// ========================================
 
-  // Huwag mag logout habang nanonood
-  if (isWatchingMovie()) {
+function stopAutoLogout() {
 
-    console.log("METFLIX: User watching movie. Auto logout disabled.");
+    if (logoutTimer) {
 
-    resetTimer();
-    return;
+        clearTimeout(logoutTimer);
 
-  }
+        logoutTimer = null;
 
+    }
 
-  const user = auth.currentUser;
-
-
-  if (user) {
-
-    // alisin presence
-    const presenceRef = ref(
-      rtdb,
-      `presence/${user.uid}`
+    console.log(
+        "METFLIX: Auto logout disabled on watch page."
     );
 
-    await remove(presenceRef);
+}
 
 
-    // logout firebase
-    await signOut(auth);
+// ========================================
+// AUTO LOGOUT
+// ========================================
+
+async function autoLogout() {
+
+    // HUWAG MAG LOGOUT HABANG NANONOOD
+    if (isWatchingMovie()) {
+
+        stopAutoLogout();
+
+        return;
+
+    }
 
 
-    console.log("METFLIX: Auto logout due to inactivity.");
+    const user = auth.currentUser;
 
-    window.location.href = "login.html";
 
-  }
+    if (!user) {
+
+        return;
+
+    }
+
+
+    try {
+
+        // Remove user's presence
+        const presenceRef = ref(
+            rtdb,
+            `presence/${user.uid}`
+        );
+
+        await remove(presenceRef);
+
+
+        // Firebase logout
+        await signOut(auth);
+
+
+        console.log(
+            "METFLIX: User automatically logged out."
+        );
+
+
+        // Return to login
+        window.location.href = "login.html";
+
+
+    } catch (error) {
+
+        console.error(
+            "METFLIX AUTO LOGOUT ERROR:",
+            error
+        );
+
+    }
 
 }
 
 
+// ========================================
+// RESET TIMER
+// ========================================
 
-// Reset timer
 function resetTimer() {
 
-  clearTimeout(logoutTimer);
+    // IMPORTANT:
+    // Kapag nasa watch page,
+    // walang inactivity timer.
 
-  logoutTimer = setTimeout(
-    autoLogout,
-    INACTIVITY_TIME
-  );
+    if (isWatchingMovie()) {
+
+        stopAutoLogout();
+
+        return;
+
+    }
+
+
+    clearTimeout(logoutTimer);
+
+
+    logoutTimer = setTimeout(
+        autoLogout,
+        INACTIVITY_TIME
+    );
 
 }
 
 
+// ========================================
+// USER ACTIVITY
+// ========================================
 
-// User activity detection
-[
-  "click",
-  "mousemove",
-  "keydown",
-  "scroll",
-  "touchstart"
-].forEach(event => {
+const activityEvents = [
 
-  document.addEventListener(
-    event,
-    resetTimer
-  );
+    "click",
+    "mousemove",
+    "keydown",
+    "scroll",
+    "touchstart",
+    "touchmove"
+
+];
+
+
+activityEvents.forEach((eventName) => {
+
+    document.addEventListener(
+        eventName,
+        resetTimer,
+        { passive: true }
+    );
 
 });
 
 
-// Start timer
-resetTimer();
+// ========================================
+// START
+// ========================================
 
-console.log("METFLIX AUTO LOGOUT ACTIVE");
+if (isWatchingMovie()) {
+
+    stopAutoLogout();
+
+} else {
+
+    resetTimer();
+
+}
+
+
+console.log(
+    "METFLIX AUTO LOGOUT SYSTEM ACTIVE"
+);
