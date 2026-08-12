@@ -19,7 +19,7 @@ let logoutTimer = null;
 
 
 // 15 minutes
-const INACTIVITY_TIME = 15 * 1000;
+const INACTIVITY_TIME = 10 * 60 * 1000;
 
 
 
