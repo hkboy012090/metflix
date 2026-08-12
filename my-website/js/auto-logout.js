@@ -35,8 +35,6 @@ function isWatchingMovie() {
     return url.includes("watch.html");
 
 }
-}
-
 
 // ========================================
 // STOP TIMER
