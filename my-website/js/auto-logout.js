@@ -66,12 +66,17 @@ async function autoLogout() {
     // HUWAG MAG LOGOUT HABANG NANONOOD
     if (isWatchingMovie()) {
 
-        stopAutoLogout();
+    alert("WATCH PAGE DETECTED - NO AUTO LOGOUT");
 
-        return;
+    stopAutoLogout();
 
-    }
+} else {
 
+    alert("NOT WATCH PAGE - TIMER START");
+
+    resetTimer();
+
+}
 
     const user = auth.currentUser;
 
