@@ -1,3 +1,4 @@
+// ayeT callback endpoint
 export async function onRequest(context) {
 
   console.log("ayeT callback received");
