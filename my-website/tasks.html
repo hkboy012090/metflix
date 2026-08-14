@@ -2,7 +2,9 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>METFLIX - Tasks</title>
@@ -12,183 +14,1022 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+
   <style>
 
+    /* =========================================
+       PAGE
+    ========================================= */
+
     body {
+
       background: #0b0b0b;
+
       color: white;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       margin: 0;
+
     }
+
 
     .tasks-page {
+
       max-width: 900px;
+
       margin: auto;
-      padding: 90px 20px 50px;
+
+      padding:
+        90px 20px 50px;
+
     }
+
 
     .back-button {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
+
       color: white;
+
       text-decoration: none;
+
       margin-bottom: 25px;
+
     }
+
 
     .back-button:hover {
+
       color: #e50914;
+
     }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
 
     .tasks-header {
+
       text-align: center;
+
       margin-bottom: 30px;
+
     }
+
 
     .tasks-header h1 {
+
       font-size: 32px;
+
       margin-bottom: 15px;
+
     }
+
 
     .points-box {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
+
       background: #1c1c1c;
+
       border: 1px solid #333;
-      padding: 12px 22px;
+
+      padding:
+        12px 22px;
+
       border-radius: 12px;
+
       font-size: 18px;
+
     }
+
 
     .points-box i {
+
       color: gold;
+
     }
+
 
     #points {
+
       color: #ffd700;
+
     }
+
+
+    /* =========================================
+       TASK CARD
+    ========================================= */
 
     .task-card {
+
       background: #151515;
-      border: 1px solid #292929;
+
+      border:
+        1px solid #292929;
+
       border-radius: 15px;
+
       padding: 22px;
+
       margin-bottom: 20px;
+
     }
+
 
     .task-title {
+
       display: flex;
+
       align-items: center;
+
       gap: 12px;
+
     }
+
 
     .task-title i {
+
       color: #e50914;
+
       font-size: 25px;
+
     }
+
 
     .task-title h2 {
+
       margin: 0;
+
       font-size: 22px;
+
     }
+
 
     .task-description {
+
       color: #aaa;
+
       line-height: 1.5;
+
     }
+
 
     .reward-info {
+
       background: #202020;
+
       padding: 12px;
+
       border-radius: 10px;
+
       margin: 15px 0;
+
     }
+
 
     .reward-info strong {
+
       color: #ffd700;
+
     }
+
+
+    /* =========================================
+       BUTTON
+    ========================================= */
 
     .task-button {
+
       width: 100%;
+
       padding: 14px;
+
       border: none;
+
       border-radius: 8px;
+
       background: #e50914;
+
       color: white;
+
       font-size: 16px;
+
       font-weight: bold;
+
       cursor: pointer;
+
+      transition:
+        0.2s ease;
+
     }
+
+
+    .task-button:hover {
+
+      background: #ff1622;
+
+      transform: translateY(-1px);
+
+    }
+
 
     .task-button:disabled {
+
       background: #444;
+
       cursor: not-allowed;
+
+      transform: none;
+
     }
 
-    /* 7 DAYS */
+
+    /* =========================================
+       7 DAYS
+    ========================================= */
 
     .login-rewards {
+
       display: grid;
-      grid-template-columns: repeat(7, 1fr);
+
+      grid-template-columns:
+        repeat(7, 1fr);
+
       gap: 8px;
+
       margin-top: 20px;
+
     }
+
 
     .reward-day {
-      background: #202020;
-      border: 1px solid #333;
+
+      background:
+        rgba(32, 32, 32, 0.90);
+
+      border:
+        1px solid #333;
+
       border-radius: 10px;
-      padding: 12px 5px;
+
+      padding:
+        12px 5px;
+
       text-align: center;
+
+      backdrop-filter:
+        blur(3px);
+
     }
+
 
     .reward-day.active {
-      border-color: #e50914;
-      box-shadow: 0 0 8px rgba(229, 9, 20, 0.3);
+
+      border-color:
+        #e50914;
+
+      box-shadow:
+        0 0 10px
+        rgba(229, 9, 20, 0.4);
+
+      background:
+        rgba(80, 0, 0, 0.55);
+
     }
+
 
     .reward-day.claimed {
+
       opacity: 0.5;
+
     }
+
 
     .reward-day .day {
+
       font-size: 12px;
+
       color: #aaa;
+
       margin-bottom: 8px;
+
     }
+
 
     .reward-day .reward {
+
       color: #ffd700;
+
       font-weight: bold;
+
     }
 
+
     .reward-day .status {
+
       margin-top: 8px;
+
       font-size: 14px;
+
     }
+
+
+    /* =========================================
+       DAILY REWARD CARD BACKGROUND
+    ========================================= */
+
+    .daily-reward-card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      background:
+
+        linear-gradient(
+          rgba(0, 0, 0, 0.62),
+          rgba(0, 0, 0, 0.78)
+        ),
+
+        url("../images/reward-bg.png");
+
+      background-size: cover;
+
+      background-position: center;
+
+      background-repeat: no-repeat;
+
+      border-color:
+        rgba(229, 9, 20, 0.55);
+
+      box-shadow:
+        0 0 25px
+        rgba(229, 9, 20, 0.12);
+
+    }
+
+
+    .daily-reward-card > * {
+
+      position: relative;
+
+      z-index: 1;
+
+    }
+
+
+    /* =========================================
+       CLAIM REWARD MODAL
+    ========================================= */
+
+    .reward-modal {
+
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 99999;
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        rgba(0, 0, 0, 0.82);
+
+      backdrop-filter:
+        blur(5px);
+
+    }
+
+
+    .reward-modal.show {
+
+      display: flex;
+
+      animation:
+        modalFadeIn 0.25s ease;
+
+    }
+
+
+    @keyframes modalFadeIn {
+
+      from {
+
+        opacity: 0;
+
+      }
+
+      to {
+
+        opacity: 1;
+
+      }
+
+    }
+
+
+    /* =========================================
+       MODAL BOX
+    ========================================= */
+
+    .reward-modal-box {
+
+      position: relative;
+
+      width: min(
+        420px,
+        94vw
+      );
+
+      min-height: 560px;
+
+      overflow: hidden;
+
+      border:
+        1px solid #e50914;
+
+      border-radius: 18px;
+
+      background:
+
+        linear-gradient(
+          rgba(0, 0, 0, 0.48),
+          rgba(0, 0, 0, 0.88)
+        ),
+
+        url("../images/reward-bg.png");
+
+      background-size: cover;
+
+      background-position:
+        center;
+
+      box-shadow:
+
+        0 0 25px
+        rgba(229, 9, 20, 0.45),
+
+        0 20px 70px
+        rgba(0, 0, 0, 0.8);
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding:
+        35px 25px;
+
+      box-sizing: border-box;
+
+      text-align: center;
+
+      animation:
+        rewardPopup 0.35s
+        cubic-bezier(
+          0.17,
+          0.67,
+          0.35,
+          1.25
+        );
+
+    }
+
+
+    @keyframes rewardPopup {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          scale(0.75)
+          translateY(30px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          scale(1)
+          translateY(0);
+
+      }
+
+    }
+
+
+    /* =========================================
+       DARK OVERLAY INSIDE MODAL
+    ========================================= */
+
+    .reward-modal-box::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+
+        radial-gradient(
+          circle at center,
+          rgba(229, 9, 20, 0.12),
+          rgba(0, 0, 0, 0.78)
+        );
+
+      z-index: 0;
+
+    }
+
+
+    .reward-modal-content {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 100%;
+
+    }
+
+
+    /* =========================================
+       CLOSE BUTTON
+    ========================================= */
+
+    .reward-close {
+
+      position: absolute;
+
+      top: 12px;
+
+      right: 15px;
+
+      z-index: 5;
+
+      width: 38px;
+
+      height: 38px;
+
+      border: none;
+
+      border-radius: 50%;
+
+      background:
+        rgba(0, 0, 0, 0.55);
+
+      color: white;
+
+      font-size: 25px;
+
+      cursor: pointer;
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .reward-close:hover {
+
+      background:
+        #e50914;
+
+      transform:
+        rotate(90deg);
+
+    }
+
+
+    /* =========================================
+       SUCCESS ICON
+    ========================================= */
+
+    .reward-success-icon {
+
+      width: 82px;
+
+      height: 82px;
+
+      margin:
+        0 auto 20px;
+
+      border-radius: 50%;
+
+      background:
+        #22c55e;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      box-shadow:
+
+        0 0 25px
+        rgba(34, 197, 94, 0.55);
+
+      animation:
+        successPop 0.5s
+        0.2s both;
+
+    }
+
+
+    .reward-success-icon i {
+
+      color: white;
+
+      font-size: 42px;
+
+    }
+
+
+    @keyframes successPop {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          scale(0.3);
+
+      }
+
+      70% {
+
+        transform:
+          scale(1.15);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          scale(1);
+
+      }
+
+    }
+
+
+    /* =========================================
+       MODAL TEXT
+    ========================================= */
+
+    .reward-modal-title {
+
+      margin: 0;
+
+      font-size: 29px;
+
+      font-weight: 900;
+
+      color: white;
+
+      text-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.9);
+
+    }
+
+
+    .reward-modal-subtitle {
+
+      margin:
+        12px 0 5px;
+
+      color: #ddd;
+
+      font-size: 16px;
+
+    }
+
+
+    .reward-amount {
+
+      margin: 0;
+
+      font-size: 68px;
+
+      line-height: 1;
+
+      font-weight: 900;
+
+      color: #ffd700;
+
+      text-shadow:
+
+        0 0 12px
+        rgba(255, 215, 0, 0.35),
+
+        0 3px 8px
+        rgba(0, 0, 0, 0.8);
+
+    }
+
+
+    .reward-points-label {
+
+      margin-top: 8px;
+
+      color: white;
+
+      font-size: 20px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* =========================================
+       TOTAL POINTS
+    ========================================= */
+
+    .reward-total-box {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      width: 100%;
+
+      box-sizing: border-box;
+
+      margin-top: 28px;
+
+      padding:
+        15px 18px;
+
+      border:
+        1px solid #444;
+
+      border-radius: 10px;
+
+      background:
+        rgba(15, 15, 15, 0.88);
+
+      box-shadow:
+        inset 0 0 15px
+        rgba(255, 255, 255, 0.02);
+
+    }
+
+
+    .reward-total-left {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      color: white;
+
+      font-size: 15px;
+
+    }
+
+
+    .reward-total-left i {
+
+      color: #ffd700;
+
+      font-size: 20px;
+
+    }
+
+
+    .reward-total-value {
+
+      color: #ffd700;
+
+      font-size: 21px;
+
+      font-weight: bold;
+
+    }
+
+
+    /* =========================================
+       OKAY BUTTON
+    ========================================= */
+
+    .reward-ok-button {
+
+      width: 100%;
+
+      margin-top: 14px;
+
+      padding: 14px;
+
+      border: none;
+
+      border-radius: 8px;
+
+      background:
+        #e50914;
+
+      color: white;
+
+      font-size: 17px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 5px 15px
+        rgba(229, 9, 20, 0.25);
+
+      transition:
+        0.2s ease;
+
+    }
+
+
+    .reward-ok-button:hover {
+
+      background:
+        #ff1722;
+
+      transform:
+        translateY(-1px);
+
+      box-shadow:
+        0 7px 20px
+        rgba(229, 9, 20, 0.4);
+
+    }
+
+
+    /* =========================================
+       ERROR MODAL
+    ========================================= */
+
+    .reward-error-box {
+
+      border-color:
+        #e50914;
+
+    }
+
+
+    .reward-error-icon {
+
+      width: 70px;
+
+      height: 70px;
+
+      margin:
+        0 auto 18px;
+
+      border-radius: 50%;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background:
+        #e50914;
+
+      box-shadow:
+        0 0 20px
+        rgba(229, 9, 20, 0.45);
+
+    }
+
+
+    .reward-error-icon i {
+
+      font-size: 32px;
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
 
     @media (max-width: 700px) {
 
       .login-rewards {
-        grid-template-columns: repeat(4, 1fr);
+
+        grid-template-columns:
+          repeat(4, 1fr);
+
       }
 
     }
 
+
     @media (max-width: 450px) {
 
       .tasks-page {
+
         padding-left: 15px;
+
         padding-right: 15px;
+
       }
+
 
       .tasks-header h1 {
+
         font-size: 27px;
+
       }
 
+
       .login-rewards {
-        grid-template-columns: repeat(2, 1fr);
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+      }
+
+
+      .reward-modal {
+
+        padding: 12px;
+
+      }
+
+
+      .reward-modal-box {
+
+        min-height: 530px;
+
+        padding:
+          30px 20px;
+
+        border-radius: 15px;
+
+      }
+
+
+      .reward-success-icon {
+
+        width: 70px;
+
+        height: 70px;
+
+      }
+
+
+      .reward-success-icon i {
+
+        font-size: 35px;
+
+      }
+
+
+      .reward-modal-title {
+
+        font-size: 25px;
+
+      }
+
+
+      .reward-amount {
+
+        font-size: 60px;
+
       }
 
     }
@@ -197,141 +1038,271 @@
 
 </head>
 
+
 <body>
+
+
+  <!-- =========================================
+       TASKS PAGE
+  ========================================= -->
 
   <main class="tasks-page">
 
-    <a href="index.html" class="back-button">
+
+    <a
+      href="index.html"
+      class="back-button">
+
       <i class="fas fa-arrow-left"></i>
+
       Back
+
     </a>
 
 
-    <!-- ================================= -->
-    <!-- TASK HEADER -->
-    <!-- ================================= -->
+    <!-- =========================================
+         HEADER
+    ========================================= -->
 
     <div class="tasks-header">
 
-      <h1>🎯 METFLIX TASKS</h1>
+      <h1>
+        🎯 METFLIX TASKS
+      </h1>
+
 
       <div class="points-box">
 
         <i class="fas fa-star"></i>
 
-        <span>Your Points:</span>
+        <span>
+          Your Points:
+        </span>
 
-        <strong id="points">0</strong>
+        <strong id="points">
+          0
+        </strong>
 
       </div>
 
     </div>
 
 
-    <!-- ================================= -->
-    <!-- WATCH ADS -->
-    <!-- ================================= -->
+    <!-- =========================================
+         WATCH ADS
+    ========================================= -->
 
     <section class="task-card">
+
 
       <div class="task-title">
 
         <i class="fas fa-video"></i>
 
-        <h2>Watch Ads</h2>
+        <h2>
+          Watch Ads
+        </h2>
 
       </div>
 
+
       <p class="task-description">
 
-        Watch available advertisements and earn points.
+        Watch available advertisements
+        and earn points.
 
       </p>
+
 
       <div class="reward-info">
 
         Reward:
-        <strong>+10 Points</strong>
+
+        <strong>
+          +10 Points
+        </strong>
 
       </div>
+
 
       <button
         id="watchAdsBtn"
         class="task-button">
 
         <i class="fas fa-play"></i>
+
         WATCH ADS
 
       </button>
 
+
     </section>
 
 
-    <!-- ================================= -->
-    <!-- 7 DAY LOGIN REWARD -->
-    <!-- ================================= -->
+    <!-- =========================================
+         7 DAY LOGIN REWARD
+    ========================================= -->
 
-    <section class="task-card">
+    <section
+      class="task-card daily-reward-card">
+
 
       <div class="task-title">
 
         <i class="fas fa-calendar-check"></i>
 
-        <h2>7-Day Login Reward</h2>
+        <h2>
+          7-Day Login Reward
+        </h2>
 
       </div>
 
+
       <p class="task-description">
 
-        Login every day and claim your daily reward.
-        Complete all 7 days to receive the biggest reward.
+        Login every day and claim your
+        daily reward.
+        Complete all 7 days to receive
+        the biggest reward.
 
       </p>
 
 
       <div class="login-rewards">
 
-        <div class="reward-day" id="day1">
-          <div class="day">DAY 1</div>
-          <div class="reward">+10</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day1">
+
+          <div class="day">
+            DAY 1
+          </div>
+
+          <div class="reward">
+            +10
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day2">
-          <div class="day">DAY 2</div>
-          <div class="reward">+15</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day2">
+
+          <div class="day">
+            DAY 2
+          </div>
+
+          <div class="reward">
+            +15
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day3">
-          <div class="day">DAY 3</div>
-          <div class="reward">+20</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day3">
+
+          <div class="day">
+            DAY 3
+          </div>
+
+          <div class="reward">
+            +20
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day4">
-          <div class="day">DAY 4</div>
-          <div class="reward">+25</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day4">
+
+          <div class="day">
+            DAY 4
+          </div>
+
+          <div class="reward">
+            +25
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day5">
-          <div class="day">DAY 5</div>
-          <div class="reward">+30</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day5">
+
+          <div class="day">
+            DAY 5
+          </div>
+
+          <div class="reward">
+            +30
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day6">
-          <div class="day">DAY 6</div>
-          <div class="reward">+40</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day6">
+
+          <div class="day">
+            DAY 6
+          </div>
+
+          <div class="reward">
+            +40
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
 
-        <div class="reward-day" id="day7">
-          <div class="day">DAY 7</div>
-          <div class="reward">+100</div>
-          <div class="status">🔒</div>
+
+        <div
+          class="reward-day"
+          id="day7">
+
+          <div class="day">
+            DAY 7
+          </div>
+
+          <div class="reward">
+            +100
+          </div>
+
+          <div class="status">
+            🔒
+          </div>
+
         </div>
+
 
       </div>
 
@@ -357,16 +1328,206 @@
 
       </button>
 
+
     </section>
+
 
   </main>
 
 
-  <!-- ================================= -->
-  <!-- FIREBASE -->
-  <!-- ================================= -->
+  <!-- =========================================
+       SUCCESS REWARD MODAL
+  ========================================= -->
+
+  <div
+    id="rewardModal"
+    class="reward-modal">
+
+
+    <div
+      class="reward-modal-box">
+
+
+      <button
+        id="rewardClose"
+        class="reward-close"
+        aria-label="Close">
+
+        ×
+
+      </button>
+
+
+      <div
+        class="reward-modal-content">
+
+
+        <!-- SUCCESS -->
+
+        <div
+          class="reward-success-icon">
+
+          <i class="fas fa-check"></i>
+
+        </div>
+
+
+        <h2
+          class="reward-modal-title">
+
+          REWARD CLAIMED!
+
+        </h2>
+
+
+        <p
+          class="reward-modal-subtitle">
+
+          You have received
+
+        </p>
+
+
+        <div
+          id="rewardAmount"
+          class="reward-amount">
+
+          +10
+
+        </div>
+
+
+        <div
+          class="reward-points-label">
+
+          POINTS
+
+        </div>
+
+
+        <div
+          class="reward-total-box">
+
+
+          <div
+            class="reward-total-left">
+
+            <i class="fas fa-star"></i>
+
+            <span>
+              Total Points
+            </span>
+
+          </div>
+
+
+          <strong
+            id="rewardTotalPoints"
+            class="reward-total-value">
+
+            0
+
+          </strong>
+
+
+        </div>
+
+
+        <button
+          id="rewardOkay"
+          class="reward-ok-button">
+
+          OKAY
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =========================================
+       ERROR MODAL
+  ========================================= -->
+
+  <div
+    id="errorModal"
+    class="reward-modal">
+
+
+    <div
+      class="reward-modal-box reward-error-box">
+
+
+      <button
+        id="errorClose"
+        class="reward-close"
+        aria-label="Close">
+
+        ×
+
+      </button>
+
+
+      <div
+        class="reward-modal-content">
+
+
+        <div
+          class="reward-error-icon">
+
+          <i class="fas fa-exclamation"></i>
+
+        </div>
+
+
+        <h2
+          id="errorTitle"
+          class="reward-modal-title">
+
+          Unable to Claim Reward
+
+        </h2>
+
+
+        <p
+          id="errorMessage"
+          class="reward-modal-subtitle">
+
+          Something went wrong.
+
+        </p>
+
+
+        <button
+          id="errorOkay"
+          class="reward-ok-button">
+
+          OKAY
+
+        </button>
+
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- =========================================
+       FIREBASE
+  ========================================= -->
 
   <script type="module">
+
 
     import {
       auth,
@@ -385,28 +1546,102 @@
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
-    // =================================
-    // ELEMENTS
-    // =================================
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
 
     const pointsElement =
-      document.getElementById("points");
+      document.getElementById(
+        "points"
+      );
+
 
     const claimButton =
-      document.getElementById("claimRewardBtn");
+      document.getElementById(
+        "claimRewardBtn"
+      );
+
 
     const todayRewardElement =
-      document.getElementById("todayReward");
+      document.getElementById(
+        "todayReward"
+      );
+
 
     const watchAdsButton =
-      document.getElementById("watchAdsBtn");
+      document.getElementById(
+        "watchAdsBtn"
+      );
 
 
-    // =================================
-    // REWARDS
-    // =================================
+    const rewardModal =
+      document.getElementById(
+        "rewardModal"
+      );
+
+
+    const rewardClose =
+      document.getElementById(
+        "rewardClose"
+      );
+
+
+    const rewardOkay =
+      document.getElementById(
+        "rewardOkay"
+      );
+
+
+    const rewardAmount =
+      document.getElementById(
+        "rewardAmount"
+      );
+
+
+    const rewardTotalPoints =
+      document.getElementById(
+        "rewardTotalPoints"
+      );
+
+
+    const errorModal =
+      document.getElementById(
+        "errorModal"
+      );
+
+
+    const errorClose =
+      document.getElementById(
+        "errorClose"
+      );
+
+
+    const errorOkay =
+      document.getElementById(
+        "errorOkay"
+      );
+
+
+    const errorTitle =
+      document.getElementById(
+        "errorTitle"
+      );
+
+
+    const errorMessage =
+      document.getElementById(
+        "errorMessage"
+      );
+
+
+    /* =========================================
+       REWARDS
+    ========================================= */
+
 
     const rewards = [
+
       10,
       15,
       20,
@@ -414,21 +1649,27 @@
       30,
       40,
       100
+
     ];
 
 
-    let currentUser = null;
+    let currentUser =
+      null;
 
 
-    // =================================
-    // TODAY
-    // =================================
+    /* =========================================
+       TODAY
+    ========================================= */
+
 
     function getToday() {
 
-      const date = new Date();
+      const date =
+        new Date();
+
 
       return (
+
         date.getFullYear() +
         "-" +
         String(
@@ -438,18 +1679,173 @@
         String(
           date.getDate()
         ).padStart(2, "0")
+
       );
 
     }
 
 
-    // =================================
-    // LOGIN CHECK
-    // =================================
+    /* =========================================
+       SHOW SUCCESS MODAL
+    ========================================= */
+
+
+    function showRewardModal(
+      reward,
+      totalPoints
+    ) {
+
+
+      rewardAmount.textContent =
+        "+" + reward;
+
+
+      rewardTotalPoints.textContent =
+        Number(totalPoints).toLocaleString();
+
+
+      rewardModal.classList.add(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    /* =========================================
+       CLOSE SUCCESS MODAL
+    ========================================= */
+
+
+    function closeRewardModal() {
+
+      rewardModal.classList.remove(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+    rewardClose.addEventListener(
+      "click",
+      closeRewardModal
+    );
+
+
+    rewardOkay.addEventListener(
+      "click",
+      closeRewardModal
+    );
+
+
+    rewardModal.addEventListener(
+      "click",
+      (event) => {
+
+        if (
+          event.target ===
+          rewardModal
+        ) {
+
+          closeRewardModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       ERROR MODAL
+    ========================================= */
+
+
+    function showErrorModal(
+      title,
+      message
+    ) {
+
+      errorTitle.textContent =
+        title ||
+        "Unable to Claim Reward";
+
+
+      errorMessage.textContent =
+        message ||
+        "Something went wrong.";
+
+
+      errorModal.classList.add(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+    function closeErrorModal() {
+
+      errorModal.classList.remove(
+        "show"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+    errorClose.addEventListener(
+      "click",
+      closeErrorModal
+    );
+
+
+    errorOkay.addEventListener(
+      "click",
+      closeErrorModal
+    );
+
+
+    errorModal.addEventListener(
+      "click",
+      (event) => {
+
+        if (
+          event.target ===
+          errorModal
+        ) {
+
+          closeErrorModal();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       LOGIN CHECK
+    ========================================= */
+
 
     onAuthStateChanged(
+
       auth,
+
       async (user) => {
+
 
         if (!user) {
 
@@ -461,21 +1857,26 @@
         }
 
 
-        currentUser = user;
+        currentUser =
+          user;
+
 
         await loadUserData();
 
       }
+
     );
 
 
-    // =================================
-    // LOAD USER DATA
-    // =================================
+    /* =========================================
+       LOAD USER DATA
+    ========================================= */
+
 
     async function loadUserData() {
 
       try {
+
 
         const userRef =
           doc(
@@ -486,17 +1887,23 @@
 
 
         const snap =
-          await getDoc(userRef);
+          await getDoc(
+            userRef
+          );
 
 
         if (!snap.exists()) {
 
-          pointsElement.textContent = "0";
+
+          pointsElement.textContent =
+            "0";
+
 
           updateRewardDisplay(
             1,
             ""
           );
+
 
           return;
 
@@ -520,11 +1927,12 @@
 
 
         const lastReward =
-          data.lastLoginReward || "";
+          data.lastLoginReward ||
+          "";
 
 
         pointsElement.textContent =
-          points;
+          points.toLocaleString();
 
 
         updateRewardDisplay(
@@ -535,24 +1943,28 @@
 
       } catch (error) {
 
+
         console.error(
           "TASK LOAD ERROR:",
           error
         );
+
 
       }
 
     }
 
 
-    // =================================
-    // DISPLAY REWARD
-    // =================================
+    /* =========================================
+       DISPLAY REWARD
+    ========================================= */
+
 
     function updateRewardDisplay(
       rewardDay,
       lastReward
     ) {
+
 
       const today =
         getToday();
@@ -564,13 +1976,15 @@
         i++
       ) {
 
+
         const element =
           document.getElementById(
             "day" + i
           );
 
 
-        if (!element) continue;
+        if (!element)
+          continue;
 
 
         const status =
@@ -585,14 +1999,19 @@
         );
 
 
-        if (i < rewardDay) {
+        if (
+          i < rewardDay
+        ) {
+
 
           element.classList.add(
             "claimed"
           );
 
+
           status.textContent =
             "✓";
+
 
         }
 
@@ -600,16 +2019,20 @@
           i === rewardDay
         ) {
 
+
           element.classList.add(
             "active"
           );
 
+
           status.textContent =
             "🎁";
+
 
         }
 
         else {
+
 
           status.textContent =
             "🔒";
@@ -622,7 +2045,8 @@
       const reward =
         rewards[
           rewardDay - 1
-        ] || rewards[0];
+        ] ||
+        rewards[0];
 
 
       todayRewardElement.textContent =
@@ -632,21 +2056,27 @@
 
 
       if (
-        lastReward === today
+        lastReward ===
+        today
       ) {
+
 
         claimButton.disabled =
           true;
 
+
         claimButton.innerHTML =
           '<i class="fas fa-check"></i> REWARD CLAIMED TODAY';
+
 
       }
 
       else {
 
+
         claimButton.disabled =
           false;
+
 
         claimButton.innerHTML =
           '<i class="fas fa-gift"></i> CLAIM DAILY REWARD';
@@ -656,13 +2086,17 @@
     }
 
 
-    // =================================
-    // SECURE DAILY REWARD
-    // =================================
+    /* =========================================
+       SECURE DAILY REWARD
+    ========================================= */
+
 
     claimButton.addEventListener(
+
       "click",
+
       async () => {
+
 
         if (!currentUser) {
 
@@ -681,76 +2115,172 @@
 
         try {
 
-          /*
-           * IMPORTANT:
-           *
-           * The browser does NOT modify
-           * the user's points anymore.
-           *
-           * The request goes to our
-           * server-side reward endpoint.
-           */
+
+          /* -------------------------------------
+             GET FIREBASE ID TOKEN
+          ------------------------------------- */
+
 
           const token =
-            await currentUser.getIdToken();
+            await currentUser.getIdToken(
+              true
+            );
+
+
+          /* -------------------------------------
+             SEND REQUEST
+          ------------------------------------- */
 
 
           const response =
             await fetch(
+
               "/reward-claim",
+
               {
-                method: "POST",
+
+                method:
+                  "POST",
 
                 headers: {
+
                   "Content-Type":
                     "application/json",
 
                   "Authorization":
-                    "Bearer " + token
+                    "Bearer " +
+                    token
+
                 },
 
-                body: JSON.stringify({
-                  action: "daily_reward"
-                })
+                body:
+                  JSON.stringify({
+
+                    action:
+                      "daily_reward"
+
+                  })
+
               }
+
             );
 
 
-          const result =
-            await response.json();
+          /* -------------------------------------
+             SAFELY READ SERVER RESPONSE
+          ------------------------------------- */
+
+          const responseText =
+            await response.text();
 
 
-          if (!response.ok) {
+          let result;
+
+
+          try {
+
+            result =
+              responseText
+                ? JSON.parse(
+                    responseText
+                  )
+                : {};
+
+          }
+
+          catch (jsonError) {
+
+
+            console.error(
+              "INVALID SERVER JSON:",
+              responseText
+            );
+
 
             throw new Error(
-              result.message ||
-              "Reward request failed."
+              "Server returned an invalid response."
             );
 
           }
 
 
-          if (!result.success) {
+          /* -------------------------------------
+             SERVER ERROR
+          ------------------------------------- */
+
+
+          if (
+            !response.ok
+          ) {
+
 
             throw new Error(
+
               result.message ||
+
+              (
+                response.status === 409
+                  ? "You already claimed today's reward."
+                  : "Reward request failed."
+              )
+
+            );
+
+          }
+
+
+          if (
+            !result.success
+          ) {
+
+
+            throw new Error(
+
+              result.message ||
+
               "Reward could not be processed."
+
             );
 
           }
 
 
-          alert(
-            "🎉 Reward Claimed!\n\n+" +
-            result.reward +
-            " Points"
-          );
+          /* -------------------------------------
+             GET NEW TOTAL
+          ------------------------------------- */
 
 
           await loadUserData();
 
 
-        } catch (error) {
+          const newTotal =
+            Number(
+              pointsElement.textContent
+                .replace(
+                  /,/g,
+                  ""
+                )
+            );
+
+
+          /* -------------------------------------
+             SHOW SUCCESS POPUP
+          ------------------------------------- */
+
+
+          showRewardModal(
+
+            result.reward,
+
+            newTotal
+
+          );
+
+
+        }
+
+        catch (error) {
+
 
           console.error(
             "SECURE REWARD ERROR:",
@@ -758,9 +2288,13 @@
           );
 
 
-          alert(
-            "Unable to claim reward.\n\n" +
-            error.message
+          showErrorModal(
+
+            "Unable to Claim Reward",
+
+            error.message ||
+            "Something went wrong while processing your reward."
+
           );
 
 
@@ -774,25 +2308,37 @@
         }
 
       }
+
     );
 
 
-    // =================================
-    // WATCH ADS
-    // =================================
+    /* =========================================
+       WATCH ADS
+    ========================================= */
+
 
     watchAdsButton.addEventListener(
+
       "click",
+
       () => {
 
-        alert(
+
+        showErrorModal(
+
+          "Watch Ads",
+
           "Rewarded video ads will be connected here after the approved ad network is ready."
+
         );
 
       }
+
     );
 
+
   </script>
+
 
 </body>
 
