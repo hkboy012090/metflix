@@ -1,5 +1,5 @@
 // METFLIX - Secure Server-Side Daily Reward
-// Step 3
+// Step 4 - Reward History / Transaction Records
 
 const PROJECT_ID = "metflix-e8145";
 
@@ -112,16 +112,15 @@ async function createAccessToken(
 
 
   const header = {
-
     alg: "RS256",
     typ: "JWT"
-
   };
 
 
   const claim = {
 
-    iss: serviceAccount.client_email,
+    iss:
+      serviceAccount.client_email,
 
     scope:
       "https://www.googleapis.com/auth/datastore",
@@ -401,7 +400,22 @@ async function getUser(
 
 
 // ============================================
-// UPDATE REWARD
+// CREATE RANDOM TRANSACTION ID
+// ============================================
+
+function createTransactionId() {
+
+  const randomPart =
+    crypto.randomUUID();
+
+  return `daily_${Date.now()}_${randomPart}`;
+
+}
+
+
+// ============================================
+// UPDATE REWARD + CREATE HISTORY
+// ATOMIC FIRESTORE COMMIT
 // ============================================
 
 async function updateReward(
@@ -410,7 +424,8 @@ async function updateReward(
   userDocument,
   reward,
   today,
-  nextDay
+  nextDay,
+  rewardDay
 ) {
 
   const fields =
@@ -429,16 +444,36 @@ async function updateReward(
     currentPoints + reward;
 
 
-  const documentName =
+  const userDocumentName =
     `projects/${PROJECT_ID}/databases/(default)/documents/users/${uid}`;
 
 
-  const write = {
+  // ============================================
+  // REWARD HISTORY DOCUMENT
+  // ============================================
+
+  const transactionId =
+    createTransactionId();
+
+
+  const historyDocumentName =
+    `projects/${PROJECT_ID}/databases/(default)/documents/users/${uid}/rewardHistory/${transactionId}`;
+
+
+  const claimedAt =
+    new Date().toISOString();
+
+
+  // ============================================
+  // USER UPDATE
+  // ============================================
+
+  const userUpdate = {
 
     update: {
 
       name:
-        documentName,
+        userDocumentName,
 
       fields: {
 
@@ -467,6 +502,11 @@ async function updateReward(
 
     },
 
+    // This is important.
+    // If another request changed the user document
+    // after we read it, this write fails instead
+    // of blindly overwriting the newer data.
+
     currentDocument: {
 
       updateTime:
@@ -476,6 +516,86 @@ async function updateReward(
 
   };
 
+
+  // ============================================
+  // HISTORY CREATE
+  // ============================================
+
+  const historyCreate = {
+
+    update: {
+
+      name:
+        historyDocumentName,
+
+      fields: {
+
+        type: {
+
+          stringValue:
+            "daily_login"
+
+        },
+
+        day: {
+
+          integerValue:
+            String(rewardDay)
+
+        },
+
+        reward: {
+
+          integerValue:
+            String(reward)
+
+        },
+
+        pointsBefore: {
+
+          integerValue:
+            String(currentPoints)
+
+        },
+
+        pointsAfter: {
+
+          integerValue:
+            String(newPoints)
+
+        },
+
+        claimedAt: {
+
+          timestampValue:
+            claimedAt
+
+        },
+
+        date: {
+
+          stringValue:
+            today
+
+        }
+
+      }
+
+    },
+
+    currentDocument: {
+
+      exists:
+        false
+
+    }
+
+  };
+
+
+  // ============================================
+  // ATOMIC COMMIT
+  // ============================================
 
   const response =
     await fetch(
@@ -501,7 +621,11 @@ async function updateReward(
           JSON.stringify({
 
             writes: [
-              write
+
+              userUpdate,
+
+              historyCreate
+
             ]
 
           })
@@ -513,17 +637,44 @@ async function updateReward(
 
   if (!response.ok) {
 
+    const errorText =
+      await response.text();
+
+
     console.error(
-      "FIRESTORE UPDATE ERROR:",
-      await response.text()
+      "FIRESTORE ATOMIC UPDATE ERROR:",
+      errorText
     );
 
-    return false;
+
+    return {
+
+      success:
+        false,
+
+      error:
+        errorText
+
+    };
 
   }
 
 
-  return true;
+  return {
+
+    success:
+      true,
+
+    transactionId:
+      transactionId,
+
+    pointsBefore:
+      currentPoints,
+
+    pointsAfter:
+      newPoints
+
+  };
 
 }
 
@@ -566,6 +717,10 @@ export async function onRequest(
   context
 ) {
 
+  // ============================================
+  // POST ONLY
+  // ============================================
+
   if (
     context.request.method !== "POST"
   ) {
@@ -587,9 +742,9 @@ export async function onRequest(
 
   try {
 
-    // ========================================
-    // CHECK LOGIN TOKEN
-    // ========================================
+    // ==========================================
+    // CHECK AUTHORIZATION
+    // ==========================================
 
     const authorization =
       context.request.headers.get(
@@ -625,9 +780,26 @@ export async function onRequest(
         .trim();
 
 
-    // ========================================
+    if (!idToken) {
+
+      return json(
+        {
+          success:
+            false,
+
+          message:
+            "Invalid authentication token."
+        },
+
+        401
+      );
+
+    }
+
+
+    // ==========================================
     // VERIFY FIREBASE USER
-    // ========================================
+    // ==========================================
 
     const firebaseUser =
       await verifyFirebaseToken(
@@ -639,9 +811,9 @@ export async function onRequest(
       firebaseUser.localId;
 
 
-    // ========================================
-    // SERVICE ACCOUNT SECRET
-    // ========================================
+    // ==========================================
+    // SERVICE ACCOUNT
+    // ==========================================
 
     const secret =
       context.env.FIREBASE_SERVICE_ACCOUNT;
@@ -672,9 +844,9 @@ export async function onRequest(
     }
 
 
-    // ========================================
+    // ==========================================
     // SERVER ACCESS TOKEN
-    // ========================================
+    // ==========================================
 
     const accessToken =
       await createAccessToken(
@@ -682,9 +854,9 @@ export async function onRequest(
       );
 
 
-    // ========================================
+    // ==========================================
     // LOAD USER
-    // ========================================
+    // ==========================================
 
     const userDocument =
       await getUser(
@@ -740,9 +912,9 @@ export async function onRequest(
       getToday();
 
 
-    // ========================================
+    // ==========================================
     // DUPLICATE CLAIM PROTECTION
-    // ========================================
+    // ==========================================
 
     if (
       lastReward === today
@@ -770,9 +942,9 @@ export async function onRequest(
     }
 
 
-    // ========================================
+    // ==========================================
     // CALCULATE REWARD
-    // ========================================
+    // ==========================================
 
     const reward =
       REWARDS[
@@ -786,11 +958,11 @@ export async function onRequest(
         : rewardDay + 1;
 
 
-    // ========================================
-    // UPDATE FIRESTORE
-    // ========================================
+    // ==========================================
+    // ATOMIC UPDATE + HISTORY
+    // ==========================================
 
-    const success =
+    const result =
       await updateReward(
 
         accessToken,
@@ -803,12 +975,14 @@ export async function onRequest(
 
         today,
 
-        nextDay
+        nextDay,
+
+        rewardDay
 
       );
 
 
-    if (!success) {
+    if (!result.success) {
 
       return json(
 
@@ -818,7 +992,7 @@ export async function onRequest(
             false,
 
           message:
-            "Reward could not be processed."
+            "Reward could not be processed. The account may have changed. Please try again."
 
         },
 
@@ -829,9 +1003,9 @@ export async function onRequest(
     }
 
 
-    // ========================================
+    // ==========================================
     // SUCCESS
-    // ========================================
+    // ==========================================
 
     return json(
 
@@ -848,6 +1022,15 @@ export async function onRequest(
 
         nextDay:
           nextDay,
+
+        pointsBefore:
+          result.pointsBefore,
+
+        pointsAfter:
+          result.pointsAfter,
+
+        transactionId:
+          result.transactionId,
 
         message:
           `Reward claimed successfully. +${reward} Points`
