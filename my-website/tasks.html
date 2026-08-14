@@ -292,79 +292,45 @@
       <div class="login-rewards">
 
         <div class="reward-day" id="day1">
-
           <div class="day">DAY 1</div>
-
           <div class="reward">+10</div>
-
           <div class="status">🔒</div>
-
         </div>
-
 
         <div class="reward-day" id="day2">
-
           <div class="day">DAY 2</div>
-
           <div class="reward">+15</div>
-
           <div class="status">🔒</div>
-
         </div>
-
 
         <div class="reward-day" id="day3">
-
           <div class="day">DAY 3</div>
-
           <div class="reward">+20</div>
-
           <div class="status">🔒</div>
-
         </div>
-
 
         <div class="reward-day" id="day4">
-
           <div class="day">DAY 4</div>
-
           <div class="reward">+25</div>
-
           <div class="status">🔒</div>
-
         </div>
-
 
         <div class="reward-day" id="day5">
-
           <div class="day">DAY 5</div>
-
           <div class="reward">+30</div>
-
           <div class="status">🔒</div>
-
         </div>
-
 
         <div class="reward-day" id="day6">
-
           <div class="day">DAY 6</div>
-
           <div class="reward">+40</div>
-
           <div class="status">🔒</div>
-
         </div>
 
-
         <div class="reward-day" id="day7">
-
           <div class="day">DAY 7</div>
-
           <div class="reward">+100</div>
-
           <div class="status">🔒</div>
-
         </div>
 
       </div>
@@ -415,10 +381,7 @@
 
     import {
       doc,
-      getDoc,
-      setDoc,
-      updateDoc,
-      increment
+      getDoc
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
@@ -507,7 +470,7 @@
 
 
     // =================================
-    // LOAD USER
+    // LOAD USER DATA
     // =================================
 
     async function loadUserData() {
@@ -528,28 +491,12 @@
 
         if (!snap.exists()) {
 
-          await setDoc(
-            userRef,
-            {
-              points: 0,
-              loginRewardDay: 1,
-              lastLoginReward: ""
-            },
-            {
-              merge: true
-            }
-          );
-
-
-          pointsElement.textContent =
-            "0";
-
+          pointsElement.textContent = "0";
 
           updateRewardDisplay(
             1,
             ""
           );
-
 
           return;
 
@@ -561,7 +508,9 @@
 
 
         const points =
-          Number(data.points || 0);
+          Number(
+            data.points || 0
+          );
 
 
         const rewardDay =
@@ -708,7 +657,7 @@
 
 
     // =================================
-    // CLAIM
+    // SECURE DAILY REWARD
     // =================================
 
     claimButton.addEventListener(
@@ -726,110 +675,74 @@
           true;
 
 
+        claimButton.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+
+
         try {
 
-          const userRef =
-            doc(
-              db,
-              "users",
-              currentUser.uid
+          /*
+           * IMPORTANT:
+           *
+           * The browser does NOT modify
+           * the user's points anymore.
+           *
+           * The request goes to our
+           * server-side reward endpoint.
+           */
+
+          const token =
+            await currentUser.getIdToken();
+
+
+          const response =
+            await fetch(
+              "/reward-claim",
+              {
+                method: "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+
+                  "Authorization":
+                    "Bearer " + token
+                },
+
+                body: JSON.stringify({
+                  action: "daily_reward"
+                })
+              }
             );
 
 
-          const snap =
-            await getDoc(userRef);
+          const result =
+            await response.json();
 
 
-          if (!snap.exists()) {
+          if (!response.ok) {
 
             throw new Error(
-              "User profile not found."
+              result.message ||
+              "Reward request failed."
             );
 
           }
 
 
-          const data =
-            snap.data();
+          if (!result.success) {
 
-
-          const today =
-            getToday();
-
-
-          const lastReward =
-            data.lastLoginReward || "";
-
-
-          // =============================
-          // PREVENT DOUBLE CLAIM
-          // =============================
-
-          if (
-            lastReward === today
-          ) {
-
-            alert(
-              "You already claimed today's reward."
+            throw new Error(
+              result.message ||
+              "Reward could not be processed."
             );
 
-            await loadUserData();
-
-            return;
-
           }
-
-
-          let rewardDay =
-            Number(
-              data.loginRewardDay || 1
-            );
-
-
-          // Make sure valid
-
-          if (
-            rewardDay < 1 ||
-            rewardDay > 7
-          ) {
-
-            rewardDay = 1;
-
-          }
-
-
-          const reward =
-            rewards[
-              rewardDay - 1
-            ];
-
-
-          // =============================
-          // ADD POINTS
-          // =============================
-
-          await updateDoc(
-            userRef,
-            {
-
-              points:
-                increment(reward),
-
-              lastLoginReward:
-                today,
-
-              loginRewardDay:
-                rewardDay === 7
-                  ? 1
-                  : rewardDay + 1
-
-            }
-          );
 
 
           alert(
             "🎉 Reward Claimed!\n\n+" +
-            reward +
+            result.reward +
             " Points"
           );
 
@@ -840,7 +753,7 @@
         } catch (error) {
 
           console.error(
-            "CLAIM REWARD ERROR:",
+            "SECURE REWARD ERROR:",
             error
           );
 
@@ -853,6 +766,10 @@
 
           claimButton.disabled =
             false;
+
+
+          claimButton.innerHTML =
+            '<i class="fas fa-gift"></i> CLAIM DAILY REWARD';
 
         }
 
@@ -869,12 +786,11 @@
       () => {
 
         alert(
-          "Rewarded Ads will be connected here after the AdInPlay integration is ready."
+          "Rewarded video ads will be connected here after the approved ad network is ready."
         );
 
       }
     );
-
 
   </script>
 
