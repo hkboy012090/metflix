@@ -326,16 +326,16 @@ if (registerBtn) {
             username
           );
 
-          // If we reached here,
-          // the username already exists.
+
+          // Username exists
 
           usernameAvailable =
             false;
 
+
         } catch (lookupError) {
 
-          // 404 means username does not exist.
-          // That is what we want for registration.
+          // Username does not exist
 
           usernameAvailable =
             true;
@@ -369,24 +369,71 @@ if (registerBtn) {
 
 
         // ---------------------------------------------
-        // CREATE USER PROFILE
+        // CREATE FIRESTORE USER PROFILE
         // ---------------------------------------------
 
-        await setDoc(
-          doc(
-            db,
-            "users",
-            user.uid
-          ),
-          {
-            username:
-              username,
+        try {
 
-            email:
-              email
-          }
-        );
+          await setDoc(
+            doc(
+              db,
+              "users",
+              user.uid
+            ),
+            {
+              username:
+                username,
 
+              email:
+                email
+            }
+          );
+
+
+        } catch (firestoreError) {
+
+          // -------------------------------------------
+          // IMPORTANT DEBUG INFORMATION
+          // -------------------------------------------
+
+          console.error(
+            "FIRESTORE REGISTER ERROR:",
+            firestoreError
+          );
+
+
+          console.error(
+            "FIRESTORE ERROR CODE:",
+            firestoreError.code
+          );
+
+
+          console.error(
+            "FIRESTORE ERROR MESSAGE:",
+            firestoreError.message
+          );
+
+
+          alert(
+            "FIRESTORE ERROR:\n\n" +
+            "Code: " +
+            (firestoreError.code || "unknown") +
+            "\n\n" +
+            "Message: " +
+            (firestoreError.message || "Unknown error")
+          );
+
+
+          // Do not continue registration
+
+          throw firestoreError;
+
+        }
+
+
+        // ---------------------------------------------
+        // SUCCESS
+        // ---------------------------------------------
 
         alert(
           "Registration Successful!"
@@ -408,6 +455,10 @@ if (registerBtn) {
         let message =
           error.message;
 
+
+        // ---------------------------------------------
+        // FIREBASE AUTH ERRORS
+        // ---------------------------------------------
 
         if (
           error.code ===
@@ -439,8 +490,45 @@ if (registerBtn) {
 
         }
 
+        else if (
+          error.code ===
+          "auth/operation-not-allowed"
+        ) {
 
-        alert(message);
+          message =
+            "Email/password registration is not enabled in Firebase Authentication.";
+
+        }
+
+
+        // ---------------------------------------------
+        // DO NOT SHOW DUPLICATE FIRESTORE ALERT
+        // ---------------------------------------------
+
+        if (
+          error.code ===
+          "permission-denied"
+        ) {
+
+          // The detailed Firestore alert
+          // was already shown above.
+
+          message =
+            "Firestore permission denied.";
+
+        }
+
+
+        // Only show normal error
+        // when it wasn't already shown
+        if (
+          error.code !==
+          "permission-denied"
+        ) {
+
+          alert(message);
+
+        }
 
 
         registerBtn.disabled =
