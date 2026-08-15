@@ -4,14 +4,23 @@
 <head>
 
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>METFLIX - Themes</title>
 
-  <link rel="stylesheet" href="css/home.css">
+  <link
+    rel="stylesheet"
+    href="css/home.css"
+  >
 
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
 
   <style>
 
@@ -282,6 +291,7 @@
       background: #151515;
       border: 1px solid #e50914;
       text-align: center;
+
       box-shadow:
         0 0 30px rgba(229, 9, 20, 0.3),
         0 20px 60px rgba(0, 0, 0, 0.8);
@@ -292,9 +302,11 @@
       height: 70px;
       margin: 0 auto 18px;
       border-radius: 50%;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       background: #e50914;
       font-size: 30px;
     }
@@ -321,6 +333,19 @@
       cursor: pointer;
     }
 
+    /* ================================
+       LOADING
+    ================================= */
+
+    .loading {
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ================================
+       MOBILE
+    ================================= */
+
     @media (max-width: 650px) {
 
       .themes-grid {
@@ -337,13 +362,20 @@
 
 </head>
 
+
 <body>
 
   <main class="themes-page">
 
-    <a href="index.html" class="back-button">
+    <a
+      href="index.html"
+      class="back-button"
+    >
+
       <i class="fas fa-arrow-left"></i>
+
       Back
+
     </a>
 
 
@@ -386,7 +418,8 @@
       <div
         class="theme-card classic"
         data-theme="classic-red"
-        data-price="0">
+        data-price="0"
+      >
 
         <div>
 
@@ -418,7 +451,10 @@
 
         <button
           class="theme-button owned"
-          data-action="use">
+          data-action="use"
+        >
+
+          <i class="fas fa-paint-brush"></i>
 
           USE THEME
 
@@ -432,7 +468,8 @@
       <div
         class="theme-card purple"
         data-theme="neon-purple"
-        data-price="300">
+        data-price="300"
+      >
 
         <div>
 
@@ -464,9 +501,11 @@
 
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -479,7 +518,8 @@
       <div
         class="theme-card blue"
         data-theme="cyber-blue"
-        data-price="300">
+        data-price="300"
+      >
 
         <div>
 
@@ -511,9 +551,11 @@
 
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -526,7 +568,8 @@
       <div
         class="theme-card galaxy"
         data-theme="galaxy"
-        data-price="500">
+        data-price="500"
+      >
 
         <div>
 
@@ -558,9 +601,11 @@
 
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -573,7 +618,8 @@
       <div
         class="theme-card gold"
         data-theme="gold-vip"
-        data-price="1000">
+        data-price="1000"
+      >
 
         <div>
 
@@ -605,9 +651,11 @@
 
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -624,13 +672,15 @@
 
   <div
     id="themeModal"
-    class="theme-modal">
+    class="theme-modal"
+  >
 
     <div class="theme-modal-box">
 
       <div
         id="modalIcon"
-        class="modal-icon">
+        class="modal-icon"
+      >
 
         <i class="fas fa-check"></i>
 
@@ -638,26 +688,23 @@
 
       <h2
         id="modalTitle"
-        class="modal-title">
-
+        class="modal-title"
+      >
         Theme
-
       </h2>
 
       <p
         id="modalMessage"
-        class="modal-message">
-
+        class="modal-message"
+      >
         Message
-
       </p>
 
       <button
         id="modalOkay"
-        class="modal-button">
-
+        class="modal-button"
+      >
         OKAY
-
       </button>
 
     </div>
@@ -674,15 +721,22 @@
       db
     } from "./js/firebase-config.js";
 
+
     import {
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
+
     import {
       doc,
-      getDoc
+      getDoc,
+      updateDoc
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
+
+    /* =========================================
+       VARIABLES
+    ========================================= */
 
     let currentUser = null;
 
@@ -695,6 +749,10 @@
     let selectedTheme =
       "classic-red";
 
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
 
     const pointsElement =
       document.getElementById("points");
@@ -731,15 +789,18 @@
       modalMessage.textContent =
         message;
 
+
       modalIcon.innerHTML =
         success
           ? '<i class="fas fa-check"></i>'
           : '<i class="fas fa-exclamation"></i>';
 
+
       modalIcon.style.background =
         success
           ? "#22c55e"
           : "#e50914";
+
 
       modal.classList.add("show");
 
@@ -782,7 +843,7 @@
 
 
     /* =========================================
-       LOGIN
+       AUTH
     ========================================= */
 
     onAuthStateChanged(
@@ -798,8 +859,10 @@
 
         }
 
+
         currentUser =
           user;
+
 
         await loadUserData();
 
@@ -808,7 +871,7 @@
 
 
     /* =========================================
-       LOAD USER
+       LOAD USER DATA
     ========================================= */
 
     async function loadUserData() {
@@ -822,17 +885,31 @@
             currentUser.uid
           );
 
+
         const snap =
           await getDoc(userRef);
 
+
         if (!snap.exists()) {
+
+          currentPoints = 0;
+
+          ownedThemes = [
+            "classic-red"
+          ];
+
+          selectedTheme =
+            "classic-red";
 
           pointsElement.textContent =
             "0";
 
+          updateThemeButtons();
+
           return;
 
         }
+
 
         const data =
           snap.data();
@@ -857,6 +934,19 @@
 
 
         if (
+          !ownedThemes.includes(
+            "classic-red"
+          )
+        ) {
+
+          ownedThemes.unshift(
+            "classic-red"
+          );
+
+        }
+
+
+        if (
           data.selectedTheme
         ) {
 
@@ -872,13 +962,15 @@
 
         updateThemeButtons();
 
+      }
 
-      } catch (error) {
+      catch (error) {
 
         console.error(
           "THEME LOAD ERROR:",
           error
         );
+
 
         showModal(
           "Unable to Load Themes",
@@ -892,7 +984,7 @@
 
 
     /* =========================================
-       UPDATE BUTTONS
+       UPDATE THEME BUTTONS
     ========================================= */
 
     function updateThemeButtons() {
@@ -909,10 +1001,12 @@
           const theme =
             card.dataset.theme;
 
+
           const button =
             card.querySelector(
               ".theme-button"
             );
+
 
           const status =
             card.querySelector(
@@ -931,6 +1025,7 @@
             status.textContent =
               "OWNED";
 
+
             button.dataset.action =
               "use";
 
@@ -946,7 +1041,9 @@
               button.innerHTML =
                 '<i class="fas fa-check"></i> USING';
 
-            } else {
+            }
+
+            else {
 
               button.className =
                 "theme-button owned";
@@ -958,6 +1055,22 @@
 
           }
 
+          else {
+
+            button.className =
+              "theme-button";
+
+            button.dataset.action =
+              "unlock";
+
+            button.disabled =
+              false;
+
+            button.innerHTML =
+              '<i class="fas fa-lock"></i> UNLOCK';
+
+          }
+
         }
       );
 
@@ -965,96 +1078,512 @@
 
 
     /* =========================================
-       THEME BUTTON CLICK
+       USE THEME
     ========================================= */
 
-    document.querySelectorAll(
-      ".theme-button"
-    ).forEach(
-      (button) => {
+    async function useTheme(
+      theme
+    ) {
 
-        button.addEventListener(
-          "click",
-          async () => {
+      if (!currentUser) {
 
-            const card =
-              button.closest(
-                ".theme-card"
-              );
+        showModal(
+          "Login Required",
+          "Please login to use this theme.",
+          false
+        );
 
-            const theme =
-              card.dataset.theme;
+        return;
 
-            const price =
-              Number(
-                card.dataset.price
-              );
+      }
 
 
-            const action =
-              button.dataset.action;
+      try {
 
-
-            if (
-              action === "use"
-            ) {
-
-              showModal(
-                "Theme Selected",
-                "This theme is ready to be applied to your METFLIX account.",
-                true
-              );
-
-              return;
-
-            }
-
-
-            if (
-              action !== "unlock"
-            ) {
-
-              return;
-
-            }
-
-
-            if (
-              currentPoints < price
-            ) {
-
-              showModal(
-                "Not Enough Points",
-                `You need ${price.toLocaleString()} points to unlock this theme. You currently have ${currentPoints.toLocaleString()} points.`,
-                false
-              );
-
-              return;
-
-            }
-
-
-            /*
-             * IMPORTANT:
-             *
-             * Hindi pa tayo nagse-send
-             * ng purchase request sa server.
-             *
-             * Server-side function ang
-             * susunod nating gagawin.
-             */
-
-            showModal(
-              "Theme Redemption",
-              "The secure theme redemption system will be connected next.",
-              true
-            );
-
+        await updateDoc(
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          ),
+          {
+            selectedTheme:
+              theme
           }
         );
 
+
+        selectedTheme =
+          theme;
+
+
+        updateThemeButtons();
+
+
+        const card =
+          document.querySelector(
+            `.theme-card[data-theme="${theme}"]`
+          );
+
+
+        const themeName =
+          card
+            ?.querySelector(
+              ".theme-name"
+            )
+            ?.textContent
+            ?.trim() ||
+          "Theme";
+
+
+        showModal(
+          "Theme Selected",
+          `${themeName} has been selected for your account.`,
+          true
+        );
+
       }
-    );
+
+      catch (error) {
+
+        console.error(
+          "SELECT THEME ERROR:",
+          error
+        );
+
+
+        showModal(
+          "Unable to Select Theme",
+          "The theme could not be selected. Please try again.",
+          false
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       PURCHASE THEME
+    ========================================= */
+
+    async function purchaseTheme(
+      button,
+      card
+    ) {
+
+      const themeId =
+        card.dataset.theme;
+
+
+      const price =
+        Number(
+          card.dataset.price
+        );
+
+
+      if (!currentUser) {
+
+        showModal(
+          "Login Required",
+          "Please login before unlocking a theme.",
+          false
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------
+         CHECK LOCAL STATE FIRST
+      ----------------------------------------- */
+
+      if (
+        ownedThemes.includes(
+          themeId
+        )
+      ) {
+
+        await useTheme(
+          themeId
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------
+         CHECK POINTS
+      ----------------------------------------- */
+
+      if (
+        currentPoints < price
+      ) {
+
+        showModal(
+          "Not Enough Points",
+          `You need ${price.toLocaleString()} points to unlock this theme. You currently have ${currentPoints.toLocaleString()} points.`,
+          false
+        );
+
+        return;
+
+      }
+
+
+      /* -----------------------------------------
+         DISABLE BUTTON
+      ----------------------------------------- */
+
+      button.disabled =
+        true;
+
+      button.classList.add(
+        "loading"
+      );
+
+      button.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+
+
+      try {
+
+        /* ---------------------------------------
+           GET FIREBASE ID TOKEN
+        --------------------------------------- */
+
+        const idToken =
+          await currentUser.getIdToken(
+            true
+          );
+
+
+        /* ---------------------------------------
+           SEND PURCHASE REQUEST
+        --------------------------------------- */
+
+        const response =
+          await fetch(
+            "/theme-purchase",
+            {
+
+              method:
+                "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "Authorization":
+                  `Bearer ${idToken}`
+
+              },
+
+              body:
+                JSON.stringify({
+
+                  themeId:
+                    themeId
+
+                })
+
+            }
+          );
+
+
+        /* ---------------------------------------
+           READ SERVER RESPONSE
+        --------------------------------------- */
+
+        let result;
+
+        try {
+
+          result =
+            await response.json();
+
+        }
+
+        catch {
+
+          result = {
+
+            success: false,
+
+            message:
+              "Invalid server response."
+
+          };
+
+        }
+
+
+        console.log(
+          "THEME PURCHASE RESPONSE:",
+          result
+        );
+
+
+        /* ---------------------------------------
+           SUCCESS
+        --------------------------------------- */
+
+        if (
+          response.ok &&
+          result.success
+        ) {
+
+          currentPoints =
+            Number(
+              result.remainingPoints ??
+              currentPoints - price
+            );
+
+
+          if (
+            Array.isArray(
+              result.ownedThemes
+            )
+          ) {
+
+            ownedThemes =
+              result.ownedThemes;
+
+          }
+
+          else if (
+            !ownedThemes.includes(
+              themeId
+            )
+          ) {
+
+            ownedThemes.push(
+              themeId
+            );
+
+          }
+
+
+          pointsElement.textContent =
+            currentPoints.toLocaleString();
+
+
+          updateThemeButtons();
+
+
+          const themeName =
+            card
+              .querySelector(
+                ".theme-name"
+              )
+              ?.textContent
+              ?.trim() ||
+            "Theme";
+
+
+          showModal(
+            "Theme Unlocked!",
+            `${themeName} has been successfully unlocked. ${Number(result.spentPoints || price).toLocaleString()} points were deducted. You have ${currentPoints.toLocaleString()} points remaining.`,
+            true
+          );
+
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------
+           ALREADY OWNED
+        --------------------------------------- */
+
+        if (
+          response.status === 409 &&
+          result.alreadyOwned
+        ) {
+
+          if (
+            !ownedThemes.includes(
+              themeId
+            )
+          ) {
+
+            ownedThemes.push(
+              themeId
+            );
+
+          }
+
+
+          updateThemeButtons();
+
+
+          showModal(
+            "Already Owned",
+            "You already own this theme.",
+            false
+          );
+
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------
+           NOT ENOUGH POINTS
+        --------------------------------------- */
+
+        if (
+          result.insufficientPoints
+        ) {
+
+          showModal(
+            "Not Enough Points",
+            result.message ||
+            "You do not have enough points to unlock this theme.",
+            false
+          );
+
+
+          return;
+
+        }
+
+
+        /* ---------------------------------------
+           OTHER SERVER ERROR
+        --------------------------------------- */
+
+        showModal(
+          "Theme Purchase Failed",
+          result.message ||
+          "The theme could not be unlocked. Please try again.",
+          false
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "THEME PURCHASE ERROR:",
+          error
+        );
+
+
+        showModal(
+          "Connection Error",
+          "We could not connect to the theme purchase server. Please try again.",
+          false
+        );
+
+      }
+
+      finally {
+
+        /*
+         * Re-enable only if the theme
+         * was not successfully purchased.
+         */
+
+        if (
+          !ownedThemes.includes(
+            themeId
+          )
+        ) {
+
+          button.disabled =
+            false;
+
+          button.classList.remove(
+            "loading"
+          );
+
+          button.innerHTML =
+            '<i class="fas fa-lock"></i> UNLOCK';
+
+        }
+
+      }
+
+    }
+
+
+    /* =========================================
+       BUTTON EVENTS
+    ========================================= */
+
+    document
+      .querySelectorAll(
+        ".theme-button"
+      )
+      .forEach(
+        (button) => {
+
+          button.addEventListener(
+            "click",
+            async () => {
+
+              const card =
+                button.closest(
+                  ".theme-card"
+                );
+
+
+              if (!card) {
+                return;
+              }
+
+
+              const theme =
+                card.dataset.theme;
+
+
+              const action =
+                button.dataset.action;
+
+
+              /* -----------------------------
+                 USE
+              ----------------------------- */
+
+              if (
+                action === "use"
+              ) {
+
+                await useTheme(
+                  theme
+                );
+
+                return;
+
+              }
+
+
+              /* -----------------------------
+                 UNLOCK
+              ----------------------------- */
+
+              if (
+                action === "unlock"
+              ) {
+
+                await purchaseTheme(
+                  button,
+                  card
+                );
+
+              }
+
+            }
+          );
+
+        }
+      );
 
   </script>
 
