@@ -990,3 +990,224 @@ setupProfileMenu();
 // ========================================
 
 init();
+
+
+/* =========================================
+   METFLIX GLOBAL THEMES
+   ========================================= */
+
+/* DEFAULT / CLASSIC RED */
+
+html.theme-classic-red {
+    --theme-primary: #e50914;
+    --theme-secondary: #b0060f;
+    --theme-background: #111111;
+    --theme-surface: #181818;
+    --theme-surface-2: #222222;
+    --theme-border: #333333;
+}
+
+
+/* NEON PURPLE */
+
+html.theme-neon-purple {
+    --theme-primary: #a855f7;
+    --theme-secondary: #7e22ce;
+    --theme-background: #0d0614;
+    --theme-surface: #170d20;
+    --theme-surface-2: #241033;
+    --theme-border: #5b21b6;
+}
+
+
+/* CYBER BLUE */
+
+html.theme-cyber-blue {
+    --theme-primary: #00aaff;
+    --theme-secondary: #0066aa;
+    --theme-background: #050b14;
+    --theme-surface: #0b1624;
+    --theme-surface-2: #102337;
+    --theme-border: #075985;
+}
+
+
+/* GALAXY */
+
+html.theme-galaxy {
+    --theme-primary: #8b5cf6;
+    --theme-secondary: #3b82f6;
+    --theme-background: #080812;
+    --theme-surface: #101020;
+    --theme-surface-2: #191936;
+    --theme-border: #4c1d95;
+}
+
+
+/* GOLD VIP */
+
+html.theme-gold-vip {
+    --theme-primary: #d4af37;
+    --theme-secondary: #b8860b;
+    --theme-background: #0f0d08;
+    --theme-surface: #1b170d;
+    --theme-surface-2: #29220e;
+    --theme-border: #806000;
+}
+
+
+/* =========================================
+   APPLY THEME
+   ========================================= */
+
+html[class*="theme-"] body {
+    background: var(--theme-background);
+}
+
+
+/* Bottom Navigation */
+
+html[class*="theme-"] .bottom-nav {
+    background: var(--theme-surface);
+    border-top-color: var(--theme-border);
+}
+
+
+/* Active bottom navigation */
+
+html[class*="theme-"] .bottom-nav a.active,
+html[class*="theme-"] .bottom-nav a.active i {
+    color: var(--theme-primary);
+}
+
+
+/* Menu */
+
+html[class*="theme-"] .menu-panel {
+    background: var(--theme-surface);
+    border-color: var(--theme-border);
+}
+
+
+/* Menu header */
+
+html[class*="theme-"] .menu-header {
+    background: var(--theme-surface-2);
+    border-bottom-color: var(--theme-border);
+}
+
+
+/* Menu hover */
+
+html[class*="theme-"] .menu-panel a:hover {
+    background: var(--theme-primary);
+}
+
+
+/* Profile submenu */
+
+html[class*="theme-"] .profile-submenu {
+    background: var(--theme-background);
+}
+
+
+/* Profile submenu hover */
+
+html[class*="theme-"] .profile-submenu a:hover {
+    background: var(--theme-primary);
+}
+
+
+/* Section titles */
+
+html[class*="theme-"] .row h2 {
+    color: #ffffff;
+}
+
+
+/* Footer */
+
+html[class*="theme-"] .footer {
+    background: var(--theme-surface);
+    border-top: 1px solid var(--theme-border);
+}
+
+
+/* Footer links */
+
+html[class*="theme-"] .footer-links a {
+    color: var(--theme-primary);
+}
+
+
+/* Search modal */
+
+html[class*="theme-"] .search-modal {
+    background: rgba(0, 0, 0, 0.94);
+}
+
+
+/* Search input */
+
+html[class*="theme-"] #search-input {
+    border: 1px solid var(--theme-border);
+}
+
+
+/* Server selector */
+
+html[class*="theme-"] .server-selector select {
+    border-color: var(--theme-border);
+}
+
+
+/* =========================================
+   THEME-SPECIFIC GLOW
+   ========================================= */
+
+html.theme-neon-purple .bottom-nav a.active,
+html.theme-neon-purple .bottom-nav a.active i {
+    text-shadow: 0 0 10px #a855f7;
+}
+
+
+html.theme-cyber-blue .bottom-nav a.active,
+html.theme-cyber-blue .bottom-nav a.active i {
+    text-shadow: 0 0 10px #00aaff;
+}
+
+
+html.theme-galaxy .bottom-nav a.active,
+html.theme-galaxy .bottom-nav a.active i {
+    text-shadow: 0 0 10px #8b5cf6;
+}
+
+
+html.theme-gold-vip .bottom-nav a.active,
+html.theme-gold-vip .bottom-nav a.active i {
+    text-shadow: 0 0 10px #d4af37;
+}
+
+
+/* =========================================
+   TOP 10 NUMBER
+   ========================================= */
+
+html.theme-neon-purple .top10-number {
+    -webkit-text-stroke-color: #a855f7;
+}
+
+
+html.theme-cyber-blue .top10-number {
+    -webkit-text-stroke-color: #00aaff;
+}
+
+
+html.theme-galaxy .top10-number {
+    -webkit-text-stroke-color: #8b5cf6;
+}
+
+
+html.theme-gold-vip .top10-number {
+    -webkit-text-stroke-color: #d4af37;
+}
