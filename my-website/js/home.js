@@ -445,8 +445,6 @@ async function init() {
             await fetchTrendingAnime();
 
 
-        // Banner
-
         if (movies.length > 0) {
 
             displayBanner(
@@ -460,15 +458,11 @@ async function init() {
         }
 
 
-        // Top 10
-
         displayTop10(
             movies,
             'movies-list'
         );
 
-
-        // TV
 
         displayList(
             tvShows,
@@ -476,15 +470,11 @@ async function init() {
         );
 
 
-        // Anime
-
         displayList(
             anime,
             'anime-list'
         );
 
-
-        // Android APK
 
         if (
             window.Android &&
@@ -614,7 +604,7 @@ window.toggleMenu =
 
 
 // ========================================
-// CLOSE MAIN MENU WHEN CLICKING OUTSIDE
+// CLOSE MAIN MENU OUTSIDE
 // ========================================
 
 document.addEventListener(
@@ -719,8 +709,6 @@ checkAuth(async (user) => {
                     docSnap.data();
 
 
-                // USERNAME
-
                 if (userData.username) {
 
                     menuUsername.textContent =
@@ -737,8 +725,6 @@ checkAuth(async (user) => {
                         );
                 }
 
-
-                // AVATAR
 
                 if (
                     menuAvatar &&
@@ -820,12 +806,6 @@ checkAuth(async (user) => {
 // ========================================
 // CUSTOMIZE PROFILE SUBMENU
 // ========================================
-//
-// IMPORTANT:
-// Hindi na natin iaasa sa inline onclick.
-// Direct event listener na ito.
-//
-// ========================================
 
 function setupProfileMenu() {
 
@@ -843,33 +823,26 @@ function setupProfileMenu() {
     if (!customizeButton || !submenu) {
 
         console.warn(
-            "METFLIX: Customize Profile or profileSubMenu not found."
+            "METFLIX: Profile menu not found."
         );
 
         return;
     }
 
 
-    // Remove old inline onclick behavior
-
     customizeButton.removeAttribute(
         "onclick"
     );
 
 
-    // Make sure initial state is closed
-
     submenu.classList.remove(
         "show"
     );
 
+
     submenu.style.display =
         "none";
 
-
-    // ========================================
-    // CLICK CUSTOMIZE PROFILE
-    // ========================================
 
     customizeButton.addEventListener(
         "click",
@@ -888,8 +861,6 @@ function setupProfileMenu() {
 
             if (isOpen) {
 
-                // CLOSE
-
                 submenu.classList.remove(
                     "show"
                 );
@@ -898,8 +869,6 @@ function setupProfileMenu() {
                     "none";
 
             } else {
-
-                // OPEN
 
                 submenu.classList.add(
                     "show"
@@ -912,10 +881,6 @@ function setupProfileMenu() {
         }
     );
 
-
-    // ========================================
-    // CLICK SUBMENU
-    // ========================================
 
     submenu.addEventListener(
         "click",
@@ -930,11 +895,7 @@ function setupProfileMenu() {
 
 
 // ========================================
-// TOGGLE PROFILE MENU
-// ========================================
-//
-// Kept globally available just in case
-// another part of the website uses it.
+// PROFILE MENU GLOBAL FUNCTION
 // ========================================
 
 function toggleProfileMenu() {
@@ -979,6 +940,106 @@ window.toggleProfileMenu =
 
 
 // ========================================
+// ADD THEMES TO MAIN MENU
+// ========================================
+//
+// Dahil wala na ang Themes <a> sa index.html,
+// awtomatik natin itong ginagawa dito.
+//
+// Lalabas ito sa ilalim ng Settings.
+// ========================================
+
+function setupThemesMenu() {
+
+    const menu =
+        document.getElementById(
+            "menuPanel"
+        );
+
+    if (!menu) return;
+
+
+    // Prevent duplicate Themes
+
+    if (
+        document.getElementById(
+            "themesMenuItem"
+        )
+    ) {
+
+        return;
+    }
+
+
+    // Find Settings menu item
+
+    const menuLinks =
+        menu.querySelectorAll(
+            ":scope > a"
+        );
+
+    let settingsLink =
+        null;
+
+
+    menuLinks.forEach(link => {
+
+        const span =
+            link.querySelector("span");
+
+        if (
+            span &&
+            span.textContent.trim()
+                .toLowerCase() ===
+            "settings"
+        ) {
+
+            settingsLink =
+                link;
+        }
+
+    });
+
+
+    if (!settingsLink) {
+
+        console.warn(
+            "METFLIX: Settings menu item not found."
+        );
+
+        return;
+    }
+
+
+    // Create Themes link
+
+    const themesLink =
+        document.createElement("a");
+
+    themesLink.id =
+        "themesMenuItem";
+
+    themesLink.href =
+        "theme-settings.html";
+
+
+    themesLink.innerHTML = `
+        <i class="fas fa-palette"></i>
+        <span>Themes</span>
+    `;
+
+
+    // Insert directly after Settings
+
+    settingsLink.insertAdjacentElement(
+        "afterend",
+        themesLink
+    );
+
+}
+
+
+// ========================================
 // GLOBAL FUNCTIONS
 // ========================================
 
@@ -999,10 +1060,12 @@ window.searchTMDB =
 
 
 // ========================================
-// START PROFILE MENU SETUP
+// SETUP MENUS
 // ========================================
 
 setupProfileMenu();
+
+setupThemesMenu();
 
 
 // ========================================
