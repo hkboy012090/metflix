@@ -936,3 +936,77 @@ function setupProfileMenu() {
 // Kept globally available just in case
 // another part of the website uses it.
 // ========================================
+
+function toggleProfileMenu() {
+
+    const submenu =
+        document.getElementById(
+            "profileSubMenu"
+        );
+
+    if (!submenu) return;
+
+
+    const isOpen =
+        submenu.classList.contains(
+            "show"
+        );
+
+
+    if (isOpen) {
+
+        submenu.classList.remove(
+            "show"
+        );
+
+        submenu.style.display =
+            "none";
+
+    } else {
+
+        submenu.classList.add(
+            "show"
+        );
+
+        submenu.style.display =
+            "block";
+    }
+}
+
+
+window.toggleProfileMenu =
+    toggleProfileMenu;
+
+
+// ========================================
+// GLOBAL FUNCTIONS
+// ========================================
+
+window.closeModal =
+    closeModal;
+
+window.changeServer =
+    changeServer;
+
+window.openSearchModal =
+    openSearchModal;
+
+window.closeSearchModal =
+    closeSearchModal;
+
+window.searchTMDB =
+    searchTMDB;
+
+
+// ========================================
+// START PROFILE MENU SETUP
+// ========================================
+
+setupProfileMenu();
+
+
+// ========================================
+// START HOME
+// ========================================
+
+init();
