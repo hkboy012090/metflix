@@ -14,6 +14,129 @@ let currentItem;
 
 
 // ========================================
+// FIX THEMES MENU ICON ALIGNMENT
+// ========================================
+
+function fixThemesMenuAlignment() {
+
+    if (document.getElementById("metflix-theme-menu-fix")) {
+        return;
+    }
+
+    const style = document.createElement("style");
+
+    style.id = "metflix-theme-menu-fix";
+
+    style.textContent = `
+
+        /* =====================================
+           MENU ICON ALIGNMENT
+        ===================================== */
+
+        #menuPanel a[href="themes.html"],
+        #menuPanel a[href="./themes.html"],
+        #menuPanel .themes-menu-item,
+        #menuPanel .theme-menu-item {
+
+            display: flex !important;
+
+            align-items: center !important;
+
+        }
+
+
+        /* =====================================
+           THEMES ICON
+        ===================================== */
+
+        #menuPanel a[href="themes.html"] i,
+        #menuPanel a[href="./themes.html"] i,
+        #menuPanel .themes-menu-item i,
+        #menuPanel .theme-menu-item i {
+
+            width: 28px !important;
+
+            min-width: 28px !important;
+
+            max-width: 28px !important;
+
+            height: 28px !important;
+
+            display: inline-flex !important;
+
+            align-items: center !important;
+
+            justify-content: center !important;
+
+            text-align: center !important;
+
+            margin-right: 18px !important;
+
+            font-size: 24px !important;
+
+            line-height: 1 !important;
+
+            flex-shrink: 0 !important;
+
+        }
+
+
+        /* =====================================
+           IF THEMES ICON IS A SPAN
+        ===================================== */
+
+        #menuPanel a[href="themes.html"] .menu-icon,
+        #menuPanel a[href="./themes.html"] .menu-icon,
+        #menuPanel .themes-menu-item .menu-icon,
+        #menuPanel .theme-menu-item .menu-icon {
+
+            width: 28px !important;
+
+            min-width: 28px !important;
+
+            max-width: 28px !important;
+
+            height: 28px !important;
+
+            display: inline-flex !important;
+
+            align-items: center !important;
+
+            justify-content: center !important;
+
+            text-align: center !important;
+
+            margin-right: 18px !important;
+
+            flex-shrink: 0 !important;
+
+        }
+
+
+        /* =====================================
+           FORCE THE TEXT TO START SAME PLACE
+        ===================================== */
+
+        #menuPanel a[href="themes.html"] span:last-child,
+        #menuPanel a[href="./themes.html"] span:last-child,
+        #menuPanel .themes-menu-item span:last-child,
+        #menuPanel .theme-menu-item span:last-child {
+
+            display: inline-block;
+
+        }
+
+    `;
+
+    document.head.appendChild(style);
+}
+
+
+// Run immediately
+fixThemesMenuAlignment();
+
+
+// ========================================
 // TRENDING
 // ========================================
 
@@ -45,12 +168,14 @@ async function fetchTrendingAnime() {
 
         const data = await res.json();
 
-        const filtered = data.results.filter(item =>
-            item.original_language === 'ja' &&
-            item.genre_ids.includes(16)
-        );
+        const filtered =
+            data.results.filter(item =>
+                item.original_language === 'ja' &&
+                item.genre_ids.includes(16)
+            );
 
-        allResults = allResults.concat(filtered);
+        allResults =
+            allResults.concat(filtered);
     }
 
     return allResults;
@@ -62,6 +187,8 @@ async function fetchTrendingAnime() {
 // ========================================
 
 function displayBanner(item) {
+
+    if (!item) return;
 
     document.getElementById('banner').style.backgroundImage =
         `url(${IMG_URL}${item.backdrop_path})`;
@@ -80,9 +207,13 @@ function displayList(items, containerId) {
     const container =
         document.getElementById(containerId);
 
+    if (!container) return;
+
     container.innerHTML = "";
 
     items.forEach(item => {
+
+        if (!item.poster_path) return;
 
         const img =
             document.createElement("img");
@@ -111,33 +242,48 @@ function displayTop10(items, containerId) {
     const container =
         document.getElementById(containerId);
 
+    if (!container) return;
+
     container.innerHTML = "";
 
-    items.slice(0, 10).forEach((item, index) => {
+    items
+        .slice(0, 10)
+        .forEach((item, index) => {
 
-        const card =
-            document.createElement("div");
+            if (!item.poster_path) return;
 
-        card.className =
-            "top10-item";
+            const card =
+                document.createElement("div");
 
-        card.innerHTML = `
-            <div class="top10-number">
-                ${index + 1}
-            </div>
+            card.className =
+                "top10-item";
 
-            <img
-                src="${IMG_URL}${item.poster_path}"
-                alt="${item.title || item.name}"
-            >
-        `;
+            card.innerHTML = `
 
-        card.querySelector("img").onclick =
-            () => showDetails(item);
+                <div class="top10-number">
+                    ${index + 1}
+                </div>
 
-        container.appendChild(card);
+                <img
+                    src="${IMG_URL}${item.poster_path}"
+                    alt="${item.title || item.name}"
+                >
 
-    });
+            `;
+
+            const image =
+                card.querySelector("img");
+
+            if (image) {
+
+                image.onclick =
+                    () => showDetails(item);
+
+            }
+
+            container.appendChild(card);
+
+        });
 }
 
 
@@ -162,7 +308,9 @@ function showDetails(item) {
             return;
         }
 
+
         let type;
+
 
         if (item.media_type) {
 
@@ -180,6 +328,7 @@ function showDetails(item) {
                 "tv";
         }
 
+
         window.location.href =
             `watch.html?id=${item.id}&type=${type}`;
 
@@ -193,6 +342,8 @@ function showDetails(item) {
 
 function changeServer() {
 
+    if (!currentItem) return;
+
     const server =
         document.getElementById('server').value;
 
@@ -203,24 +354,40 @@ function changeServer() {
 
     let embedURL = "";
 
+
     if (server === "vidsrc.cc") {
 
         embedURL =
             `https://vidsrc.cc/v2/embed/${type}/${currentItem.id}`;
 
-    } else if (server === "vidsrc.me") {
+    }
+
+
+    else if (server === "vidsrc.me") {
 
         embedURL =
             `https://vidsrc.net/embed/${type}/?tmdb=${currentItem.id}`;
 
-    } else if (server === "player.videasy.net") {
+    }
+
+
+    else if (server === "player.videasy.net") {
 
         embedURL =
             `https://player.videasy.net/${type}/${currentItem.id}`;
+
     }
 
-    document.getElementById('modal-video').src =
-        embedURL;
+
+    const video =
+        document.getElementById('modal-video');
+
+    if (video) {
+
+        video.src =
+            embedURL;
+
+    }
 }
 
 
@@ -230,11 +397,27 @@ function changeServer() {
 
 function closeModal() {
 
-    document.getElementById('modal').style.display =
-        'none';
+    const modal =
+        document.getElementById('modal');
 
-    document.getElementById('modal-video').src =
-        '';
+    const video =
+        document.getElementById('modal-video');
+
+
+    if (modal) {
+
+        modal.style.display =
+            'none';
+
+    }
+
+
+    if (video) {
+
+        video.src =
+            '';
+
+    }
 }
 
 
@@ -244,26 +427,72 @@ function closeModal() {
 
 function openSearchModal() {
 
-    document.getElementById('search-modal').style.display =
-        'flex';
+    const modal =
+        document.getElementById('search-modal');
 
-    document.getElementById('search-input').focus();
+    const input =
+        document.getElementById('search-input');
 
-    document.getElementById("searchBtn")
-        .classList.add("active");
+
+    if (modal) {
+
+        modal.style.display =
+            'flex';
+
+    }
+
+
+    if (input) {
+
+        input.focus();
+
+    }
+
+
+    const searchBtn =
+        document.getElementById("searchBtn");
+
+    if (searchBtn) {
+
+        searchBtn.classList.add("active");
+
+    }
 }
 
 
 function closeSearchModal() {
 
-    document.getElementById('search-modal').style.display =
-        'none';
+    const modal =
+        document.getElementById('search-modal');
 
-    document.getElementById('search-results').innerHTML =
-        '';
+    const results =
+        document.getElementById('search-results');
 
-    document.getElementById("searchBtn")
-        .classList.remove("active");
+    const searchBtn =
+        document.getElementById("searchBtn");
+
+
+    if (modal) {
+
+        modal.style.display =
+            'none';
+
+    }
+
+
+    if (results) {
+
+        results.innerHTML =
+            '';
+
+    }
+
+
+    if (searchBtn) {
+
+        searchBtn.classList.remove("active");
+
+    }
 }
 
 
@@ -273,53 +502,86 @@ function closeSearchModal() {
 
 async function searchTMDB() {
 
+    const input =
+        document.getElementById('search-input');
+
+    const results =
+        document.getElementById('search-results');
+
+
+    if (!input || !results) return;
+
+
     const query =
-        document.getElementById('search-input').value;
+        input.value;
+
 
     if (!query.trim()) {
 
-        document.getElementById('search-results')
-            .innerHTML = '';
+        results.innerHTML =
+            '';
 
         return;
+
     }
 
-    const res = await fetch(
-        `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`
-    );
 
-    const data =
-        await res.json();
+    try {
 
-    const container =
-        document.getElementById('search-results');
+        const res =
+            await fetch(
+                `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+            );
 
-    container.innerHTML = '';
 
-    data.results.forEach(item => {
+        const data =
+            await res.json();
 
-        if (!item.poster_path) return;
 
-        const img =
-            document.createElement('img');
+        results.innerHTML =
+            '';
 
-        img.src =
-            `${IMG_URL}${item.poster_path}`;
 
-        img.alt =
-            item.title || item.name;
+        data.results.forEach(item => {
 
-        img.onclick = () => {
+            if (!item.poster_path) return;
 
-            closeSearchModal();
 
-            showDetails(item);
+            const img =
+                document.createElement('img');
 
-        };
 
-        container.appendChild(img);
+            img.src =
+                `${IMG_URL}${item.poster_path}`;
 
-    });
+
+            img.alt =
+                item.title || item.name;
+
+
+            img.onclick =
+                () => {
+
+                    closeSearchModal();
+
+                    showDetails(item);
+
+                };
+
+
+            results.appendChild(img);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "TMDB SEARCH ERROR:",
+            error
+        );
+
+    }
 }
 
 
@@ -328,604 +590,3 @@ async function searchTMDB() {
 // ========================================
 
 async function init() {
-
-    try {
-
-        const movies =
-            await fetchTrending('movie');
-
-        const tvShows =
-            await fetchTrending('tv');
-
-        const anime =
-            await fetchTrendingAnime();
-
-
-        // ========================================
-        // DISPLAY HOME CONTENT
-        // ========================================
-
-        displayBanner(
-            movies[
-                Math.floor(
-                    Math.random() *
-                    movies.length
-                )
-            ]
-        );
-
-
-        displayTop10(
-            movies,
-            'movies-list'
-        );
-
-
-        displayList(
-            tvShows,
-            'tvshows-list'
-        );
-
-
-        displayList(
-            anime,
-            'anime-list'
-        );
-
-
-        // ========================================
-        // TELL ANDROID HOME IS READY
-        // ========================================
-
-        if (
-            window.Android &&
-            typeof window.Android.homeReady === "function"
-        ) {
-
-            window.Android.homeReady();
-
-        }
-
-
-    } catch (error) {
-
-        console.error(
-            "METFLIX Home loading error:",
-            error
-        );
-
-
-        // ========================================
-        // PREVENT APK FROM BEING STUCK
-        // ========================================
-
-        if (
-            window.Android &&
-            typeof window.Android.homeReady === "function"
-        ) {
-
-            window.Android.homeReady();
-
-        }
-
-    }
-}
-
-
-// Start Home
-init();
-
-
-// ========================================
-// LOGIN / LOGOUT
-// ========================================
-
-const loginBtn =
-    document.getElementById("loginBtn");
-
-const logoutBtn =
-    document.getElementById("logoutBtn");
-
-
-if (loginBtn && logoutBtn) {
-
-    checkAuth((user) => {
-
-        if (user) {
-
-            loginBtn.style.display =
-                "none";
-
-            logoutBtn.style.display =
-                "inline-block";
-
-        } else {
-
-            loginBtn.style.display =
-                "inline-block";
-
-            logoutBtn.style.display =
-                "none";
-
-        }
-
-    });
-
-
-    logoutBtn.addEventListener(
-        "click",
-        logout
-    );
-
-}
-
-
-// ========================================
-// SAVED MOVIE
-// ========================================
-
-const savedMovie =
-    sessionStorage.getItem(
-        "selectedMovie"
-    );
-
-
-checkAuth((user) => {
-
-    if (
-        user &&
-        savedMovie
-    ) {
-
-        sessionStorage.removeItem(
-            "selectedMovie"
-        );
-
-        showDetails(
-            JSON.parse(savedMovie)
-        );
-
-    }
-
-});
-
-
-// ========================================
-// MENU
-// ========================================
-
-function toggleMenu() {
-
-    const menu =
-        document.getElementById(
-            "menuPanel"
-        );
-
-    if (!menu) return;
-
-    menu.classList.toggle("show");
-}
-
-
-window.toggleMenu =
-    toggleMenu;
-
-
-document.addEventListener(
-    "click",
-    function (e) {
-
-        const menu =
-            document.getElementById(
-                "menuPanel"
-            );
-
-        if (!menu) return;
-
-        if (
-            menu.classList.contains("show") &&
-            !menu.contains(e.target) &&
-            !e.target.closest(
-                '[onclick="toggleMenu()"]'
-            )
-        ) {
-
-            menu.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-);
-
-
-// ========================================
-// 🎨 ADD THEMES TO MENU
-// ========================================
-
-function addThemesToMenu() {
-
-    const menu =
-        document.getElementById(
-            "menuPanel"
-        );
-
-    if (!menu) {
-
-        console.warn(
-            "METFLIX: menuPanel not found."
-        );
-
-        return;
-
-    }
-
-
-    // Prevent duplicate Themes item
-    if (
-        document.getElementById(
-            "themesMenuItem"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    // ========================================
-    // CREATE THEMES MENU ITEM
-    // ========================================
-
-    const themesItem =
-        document.createElement(
-            "div"
-        );
-
-
-    themesItem.id =
-        "themesMenuItem";
-
-
-    themesItem.className =
-        "menu-item";
-
-
-    themesItem.style.cursor =
-        "pointer";
-
-
-    // ========================================
-    // SAME ICON STYLE AS OTHER MENU ITEMS
-    // ========================================
-
-    themesItem.innerHTML = `
-
-        <i class="fas fa-palette"></i>
-
-        <span>
-            Themes
-        </span>
-
-    `;
-
-
-    // ========================================
-    // OPEN THEMES PAGE
-    // ========================================
-
-    themesItem.addEventListener(
-        "click",
-        function () {
-
-            window.location.href =
-                "themes.html";
-
-        }
-    );
-
-
-    // ========================================
-    // INSERT BEFORE ABOUT
-    // ========================================
-
-    const menuItems =
-        menu.children;
-
-
-    let inserted =
-        false;
-
-
-    for (
-        let i = 0;
-        i < menuItems.length;
-        i++
-    ) {
-
-        const text =
-            menuItems[i].textContent
-                .trim()
-                .toLowerCase();
-
-
-        if (
-            text === "about"
-        ) {
-
-            menu.insertBefore(
-                themesItem,
-                menuItems[i]
-            );
-
-            inserted =
-                true;
-
-            break;
-
-        }
-
-    }
-
-
-    // ========================================
-    // IF ABOUT WAS NOT FOUND
-    // ADD TO END
-    // ========================================
-
-    if (!inserted) {
-
-        menu.appendChild(
-            themesItem
-        );
-
-    }
-
-}
-
-
-// ========================================
-// USER PROFILE
-// ========================================
-
-checkAuth(async (user) => {
-
-    const menuUsername =
-        document.getElementById(
-            "menuUsername"
-        );
-
-    const menuAvatar =
-        document.getElementById(
-            "menuAvatar"
-        );
-
-
-    if (!menuUsername) return;
-
-
-    const customizeProfile =
-        document.querySelector(
-            '[onclick="toggleProfileMenu()"]'
-        );
-
-
-    const profileSubMenu =
-        document.getElementById(
-            "profileSubMenu"
-        );
-
-
-    // ========================================
-    // LOGGED IN
-    // ========================================
-
-    if (user) {
-
-        // Show Customize Profile
-        if (customizeProfile) {
-
-            customizeProfile.style.display =
-                "flex";
-
-        }
-
-
-        // Show Avatar
-        if (menuAvatar) {
-
-            menuAvatar.style.display =
-                "block";
-
-        }
-
-
-        // ========================================
-        // SHOW THEMES
-        // ========================================
-
-        addThemesToMenu();
-
-
-        try {
-
-            const docRef =
-                doc(
-                    db,
-                    "users",
-                    user.uid
-                );
-
-
-            const docSnap =
-                await getDoc(
-                    docRef
-                );
-
-
-            if (docSnap.exists()) {
-
-                const userData =
-                    docSnap.data();
-
-
-                // ========================================
-                // LOAD USERNAME
-                // ========================================
-
-                if (
-                    userData.username
-                ) {
-
-                    menuUsername.textContent =
-                        userData.username;
-
-                } else {
-
-                    menuUsername.textContent =
-                        user.displayName ||
-                        user.email.split("@")[0];
-
-                }
-
-
-                // ========================================
-                // LOAD SAVED AVATAR
-                // ========================================
-
-                if (
-                    menuAvatar &&
-                    userData.profileImage
-                ) {
-
-                    menuAvatar.src =
-                        userData.profileImage;
-
-                }
-
-
-            } else {
-
-                menuUsername.textContent =
-                    user.displayName ||
-                    user.email.split("@")[0];
-
-            }
-
-
-        } catch (e) {
-
-            console.error(
-                "Error loading user profile:",
-                e
-            );
-
-
-            menuUsername.textContent =
-                user.displayName ||
-                user.email.split("@")[0];
-
-        }
-
-
-    }
-
-    // ========================================
-    // LOGGED OUT
-    // ========================================
-
-    else {
-
-        menuUsername.textContent =
-            "Guest";
-
-
-        // Hide Avatar
-        if (menuAvatar) {
-
-            menuAvatar.style.display =
-                "none";
-
-        }
-
-
-        // Hide Customize Profile
-        if (customizeProfile) {
-
-            customizeProfile.style.display =
-                "none";
-
-        }
-
-
-        // Remove Themes
-        const themesMenuItem =
-            document.getElementById(
-                "themesMenuItem"
-            );
-
-
-        if (themesMenuItem) {
-
-            themesMenuItem.remove();
-
-        }
-
-
-        // Close submenu
-        if (profileSubMenu) {
-
-            profileSubMenu.classList.remove(
-                "show"
-            );
-
-        }
-
-    }
-
-});
-
-
-// ========================================
-// GLOBAL FUNCTIONS
-// ========================================
-
-window.closeModal =
-    closeModal;
-
-window.changeServer =
-    changeServer;
-
-window.openSearchModal =
-    openSearchModal;
-
-window.closeSearchModal =
-    closeSearchModal;
-
-window.searchTMDB =
-    searchTMDB;
-
-
-// ========================================
-// PROFILE MENU
-// ========================================
-
-function toggleProfileMenu() {
-
-    const submenu =
-        document.getElementById(
-            "profileSubMenu"
-        );
-
-    if (!submenu) return;
-
-    submenu.classList.toggle(
-        "show"
-    );
-
-}
-
-
-window.toggleProfileMenu =
-    toggleProfileMenu;
