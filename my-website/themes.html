@@ -2,15 +2,25 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>METFLIX - Themes</title>
 
-  <link rel="stylesheet" href="css/home.css">
+  <link
+    rel="stylesheet"
+    href="css/home.css"
+  >
 
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  >
 
   <style>
 
@@ -19,311 +29,601 @@
     }
 
     body {
+
       margin: 0;
+
       background: #0b0b0b;
+
       color: white;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     }
+
 
     .themes-page {
+
       max-width: 1000px;
+
       margin: auto;
-      padding: 80px 20px 50px;
+
+      padding:
+        80px
+        20px
+        50px;
+
     }
+
 
     .back-button {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
+
       color: white;
+
       text-decoration: none;
+
       margin-bottom: 25px;
+
       transition: 0.2s;
+
     }
+
 
     .back-button:hover {
+
       color: #e50914;
+
     }
+
 
     .themes-header {
+
       text-align: center;
+
       margin-bottom: 30px;
+
     }
+
 
     .themes-header h1 {
-      margin: 0 0 15px;
+
+      margin:
+        0
+        0
+        15px;
+
       font-size: 32px;
+
     }
+
 
     .themes-header p {
+
       color: #aaa;
-      margin: 0 0 20px;
+
+      margin:
+        0
+        0
+        20px;
+
     }
+
 
     .points-box {
+
       display: inline-flex;
+
       align-items: center;
+
       gap: 8px;
-      padding: 12px 22px;
+
+      padding:
+        12px
+        22px;
+
       background: #1c1c1c;
-      border: 1px solid #333;
+
+      border:
+        1px solid
+        #333;
+
       border-radius: 12px;
+
       font-size: 18px;
+
     }
+
 
     .points-box i {
+
       color: #ffd700;
+
     }
+
 
     #points {
+
       color: #ffd700;
+
       font-weight: bold;
+
     }
+
 
     .themes-grid {
+
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
       gap: 20px;
+
     }
+
 
     .theme-card {
+
       position: relative;
+
       overflow: hidden;
+
       min-height: 240px;
+
       padding: 25px;
+
       border-radius: 18px;
-      border: 1px solid #333;
+
+      border:
+        1px solid
+        #333;
+
       background: #151515;
+
       display: flex;
+
       flex-direction: column;
+
       justify-content: space-between;
-      transition: 0.25s ease;
+
+      transition:
+        0.25s ease;
+
     }
+
 
     .theme-card:hover {
-      transform: translateY(-4px);
+
+      transform:
+        translateY(-4px);
+
       border-color: #555;
+
     }
 
+
     .theme-card.classic {
+
       background:
+
         linear-gradient(
           rgba(0, 0, 0, 0.35),
           rgba(0, 0, 0, 0.85)
         ),
+
         linear-gradient(
           135deg,
           #300000,
           #111,
           #190000
         );
+
     }
 
+
     .theme-card.purple {
+
       background:
+
         linear-gradient(
           rgba(0, 0, 0, 0.35),
           rgba(0, 0, 0, 0.85)
         ),
+
         linear-gradient(
           135deg,
           #25003d,
           #100018,
           #5b00a8
         );
+
     }
 
+
     .theme-card.blue {
+
       background:
+
         linear-gradient(
           rgba(0, 0, 0, 0.35),
           rgba(0, 0, 0, 0.85)
         ),
+
         linear-gradient(
           135deg,
           #001c3d,
           #050b14,
           #0066aa
         );
+
     }
 
+
     .theme-card.galaxy {
+
       background:
+
         linear-gradient(
           rgba(0, 0, 0, 0.3),
           rgba(0, 0, 0, 0.85)
         ),
+
         radial-gradient(
           circle at 20% 20%,
           #7136a5,
           transparent 35%
         ),
+
         radial-gradient(
           circle at 80% 70%,
           #163d9b,
           transparent 40%
         ),
+
         #080812;
+
     }
 
+
     .theme-card.gold {
+
       background:
+
         linear-gradient(
           rgba(0, 0, 0, 0.3),
           rgba(0, 0, 0, 0.85)
         ),
+
         linear-gradient(
           135deg,
           #5c4300,
           #16120a,
           #b8860b
         );
+
     }
+
 
     .theme-top {
+
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       gap: 10px;
+
     }
+
 
     .theme-icon {
+
       font-size: 42px;
+
     }
+
 
     .theme-status {
-      padding: 6px 10px;
+
+      padding:
+        6px
+        10px;
+
       border-radius: 20px;
+
       font-size: 11px;
+
       font-weight: bold;
-      background: rgba(0, 0, 0, 0.55);
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.55
+        );
+
     }
+
 
     .theme-name {
-      margin: 15px 0 5px;
+
+      margin:
+        15px
+        0
+        5px;
+
       font-size: 24px;
+
       font-weight: 800;
+
     }
+
 
     .theme-price {
+
       color: #ffd700;
+
       font-weight: bold;
+
       font-size: 17px;
+
     }
+
 
     .theme-description {
+
       color: #ccc;
+
       font-size: 14px;
+
       line-height: 1.4;
-      margin: 10px 0 18px;
+
+      margin:
+        10px
+        0
+        18px;
+
     }
+
 
     .theme-button {
+
       width: 100%;
+
       padding: 13px;
+
       border: none;
+
       border-radius: 9px;
+
       background: #e50914;
+
       color: white;
+
       font-weight: bold;
+
       font-size: 15px;
+
       cursor: pointer;
+
       transition: 0.2s;
+
     }
+
 
     .theme-button:hover {
+
       background: #ff1722;
-      transform: translateY(-1px);
+
+      transform:
+        translateY(-1px);
+
     }
+
 
     .theme-button.owned {
+
       background: #333;
+
     }
+
 
     .theme-button.selected {
+
       background: #22c55e;
+
     }
+
 
     .theme-button:disabled {
+
       opacity: 0.6;
+
       cursor: not-allowed;
+
       transform: none;
+
     }
 
-    /* =========================
+
+    /* =====================================
        MODAL
-    ========================= */
+    ===================================== */
 
     .theme-modal {
+
       position: fixed;
+
       inset: 0;
+
       z-index: 99999;
+
       display: none;
+
       align-items: center;
+
       justify-content: center;
+
       padding: 20px;
-      background: rgba(0, 0, 0, 0.82);
-      backdrop-filter: blur(5px);
+
+      background:
+        rgba(
+          0,
+          0,
+          0,
+          0.82
+        );
+
+      backdrop-filter:
+        blur(5px);
+
     }
+
 
     .theme-modal.show {
+
       display: flex;
+
     }
+
 
     .theme-modal-box {
-      width: min(420px, 94vw);
-      padding: 30px 25px;
+
+      width:
+        min(
+          420px,
+          94vw
+        );
+
+      padding:
+        30px
+        25px;
+
       border-radius: 18px;
+
       background: #151515;
-      border: 1px solid #e50914;
+
+      border:
+        1px solid
+        #e50914;
+
       text-align: center;
+
       box-shadow:
-        0 0 30px rgba(229, 9, 20, 0.3),
-        0 20px 60px rgba(0, 0, 0, 0.8);
+
+        0 0 30px
+        rgba(
+          229,
+          9,
+          20,
+          0.3
+        ),
+
+        0 20px 60px
+        rgba(
+          0,
+          0,
+          0,
+          0.8
+        );
+
     }
+
 
     .modal-icon {
+
       width: 70px;
+
       height: 70px;
-      margin: 0 auto 18px;
+
+      margin:
+        0
+        auto
+        18px;
+
       border-radius: 50%;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       background: #e50914;
+
       font-size: 30px;
+
     }
+
 
     .modal-title {
-      margin: 0 0 10px;
+
+      margin:
+        0
+        0
+        10px;
+
       font-size: 24px;
+
     }
+
 
     .modal-message {
+
       color: #bbb;
+
       line-height: 1.5;
+
       margin-bottom: 20px;
+
     }
 
+
     .modal-button {
+
       width: 100%;
+
       padding: 13px;
+
       border: none;
+
       border-radius: 8px;
+
       background: #e50914;
+
       color: white;
+
       font-weight: bold;
+
       cursor: pointer;
+
     }
+
 
     @media (max-width: 650px) {
 
       .themes-grid {
+
         grid-template-columns: 1fr;
+
       }
 
+
       .themes-header h1 {
+
         font-size: 27px;
+
       }
 
     }
@@ -335,15 +635,25 @@
 
 <body>
 
+
   <main class="themes-page">
 
-    <a href="index.html" class="back-button">
+
+    <a
+      href="index.html"
+      class="back-button"
+    >
+
       <i class="fas fa-arrow-left"></i>
+
       Back
+
     </a>
 
 
-    <!-- HEADER -->
+    <!-- =====================================
+         HEADER
+    ====================================== -->
 
     <div class="themes-header">
 
@@ -354,6 +664,7 @@
       <p>
         Use your points to unlock new themes.
       </p>
+
 
       <div class="points-box">
 
@@ -372,7 +683,9 @@
     </div>
 
 
-    <!-- THEMES -->
+    <!-- =====================================
+         THEMES
+    ====================================== -->
 
     <div class="themes-grid">
 
@@ -382,7 +695,8 @@
       <div
         class="theme-card classic"
         data-theme="classic-red"
-        data-price="0">
+        data-price="0"
+      >
 
         <div>
 
@@ -398,13 +712,16 @@
 
           </div>
 
+
           <div class="theme-name">
             Classic Red
           </div>
 
+
           <div class="theme-price">
             FREE
           </div>
+
 
           <p class="theme-description">
             The original METFLIX red and black theme.
@@ -412,11 +729,14 @@
 
         </div>
 
+
         <button
           class="theme-button owned"
-          data-action="use">
+          data-action="use"
+        >
 
           <i class="fas fa-paint-brush"></i>
+
           USE THEME
 
         </button>
@@ -429,7 +749,8 @@
       <div
         class="theme-card purple"
         data-theme="neon-purple"
-        data-price="300">
+        data-price="300"
+      >
 
         <div>
 
@@ -445,13 +766,16 @@
 
           </div>
 
+
           <div class="theme-name">
             Neon Purple
           </div>
 
+
           <div class="theme-price">
             300 POINTS
           </div>
+
 
           <p class="theme-description">
             A powerful neon purple look for METFLIX.
@@ -459,11 +783,14 @@
 
         </div>
 
+
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -476,7 +803,8 @@
       <div
         class="theme-card blue"
         data-theme="cyber-blue"
-        data-price="300">
+        data-price="300"
+      >
 
         <div>
 
@@ -492,13 +820,16 @@
 
           </div>
 
+
           <div class="theme-name">
             Cyber Blue
           </div>
 
+
           <div class="theme-price">
             300 POINTS
           </div>
+
 
           <p class="theme-description">
             A futuristic blue cyber-style theme.
@@ -506,11 +837,14 @@
 
         </div>
 
+
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -523,7 +857,8 @@
       <div
         class="theme-card galaxy"
         data-theme="galaxy"
-        data-price="500">
+        data-price="500"
+      >
 
         <div>
 
@@ -539,13 +874,16 @@
 
           </div>
 
+
           <div class="theme-name">
             Galaxy
           </div>
 
+
           <div class="theme-price">
             500 POINTS
           </div>
+
 
           <p class="theme-description">
             A deep space-inspired METFLIX experience.
@@ -553,11 +891,14 @@
 
         </div>
 
+
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
@@ -570,7 +911,8 @@
       <div
         class="theme-card gold"
         data-theme="gold-vip"
-        data-price="1000">
+        data-price="1000"
+      >
 
         <div>
 
@@ -586,13 +928,16 @@
 
           </div>
 
+
           <div class="theme-name">
             Gold VIP
           </div>
 
+
           <div class="theme-price">
             1,000 POINTS
           </div>
+
 
           <p class="theme-description">
             A premium gold theme for VIP users.
@@ -600,127 +945,175 @@
 
         </div>
 
+
         <button
           class="theme-button"
-          data-action="unlock">
+          data-action="unlock"
+        >
 
           <i class="fas fa-lock"></i>
+
           UNLOCK
 
         </button>
 
       </div>
 
+
     </div>
 
   </main>
 
 
-  <!-- MODAL -->
+  <!-- =====================================
+       MODAL
+  ====================================== -->
 
   <div
     id="themeModal"
-    class="theme-modal">
+    class="theme-modal"
+  >
 
     <div class="theme-modal-box">
 
+
       <div
         id="modalIcon"
-        class="modal-icon">
+        class="modal-icon"
+      >
 
         <i class="fas fa-check"></i>
 
       </div>
 
+
       <h2
         id="modalTitle"
-        class="modal-title">
+        class="modal-title"
+      >
 
         Theme
 
       </h2>
 
+
       <p
         id="modalMessage"
-        class="modal-message">
+        class="modal-message"
+      >
 
         Message
 
       </p>
 
+
       <button
         id="modalOkay"
-        class="modal-button">
+        class="modal-button"
+      >
 
         OKAY
 
       </button>
+
 
     </div>
 
   </div>
 
 
-  <!-- FIREBASE -->
+  <!-- =====================================
+       FIREBASE
+  ====================================== -->
 
   <script type="module">
+
 
     import {
       auth,
       db
-    } from "./js/firebase-config.js";
+    }
+    from "./js/firebase-config.js";
 
 
     import {
       onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+    }
+    from
+      "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 
     import {
       doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+      getDoc,
+      updateDoc
+    }
+    from
+      "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
+
+    /* =====================================
+       STATE
+    ===================================== */
 
     let currentUser = null;
 
+
     let currentPoints = 0;
+
 
     let ownedThemes = [
       "classic-red"
     ];
 
+
     let selectedTheme =
       "classic-red";
 
 
+    /* =====================================
+       ELEMENTS
+    ===================================== */
+
     const pointsElement =
-      document.getElementById("points");
+      document.getElementById(
+        "points"
+      );
 
 
     const modal =
-      document.getElementById("themeModal");
+      document.getElementById(
+        "themeModal"
+      );
 
 
     const modalIcon =
-      document.getElementById("modalIcon");
+      document.getElementById(
+        "modalIcon"
+      );
 
 
     const modalTitle =
-      document.getElementById("modalTitle");
+      document.getElementById(
+        "modalTitle"
+      );
 
 
     const modalMessage =
-      document.getElementById("modalMessage");
+      document.getElementById(
+        "modalMessage"
+      );
 
 
     const modalOkay =
-      document.getElementById("modalOkay");
+      document.getElementById(
+        "modalOkay"
+      );
 
 
-    // ==========================================
-    // MODAL
-    // ==========================================
+    /* =====================================
+       MODAL
+    ===================================== */
 
     function showModal(
       title,
@@ -731,32 +1124,48 @@
       modalTitle.textContent =
         title;
 
+
       modalMessage.textContent =
         message;
 
+
       modalIcon.innerHTML =
         success
+
           ? '<i class="fas fa-check"></i>'
+
           : '<i class="fas fa-exclamation"></i>';
+
 
       modalIcon.style.background =
         success
+
           ? "#22c55e"
+
           : "#e50914";
 
-      modal.classList.add("show");
+
+      modal.classList.add(
+        "show"
+      );
+
 
       document.body.style.overflow =
         "hidden";
+
     }
 
 
     function closeModal() {
 
-      modal.classList.remove("show");
+      modal.classList.remove(
+        "show"
+      );
+
 
       document.body.style.overflow =
         "";
+
     }
 
 
@@ -782,9 +1191,9 @@
     );
 
 
-    // ==========================================
-    // AUTH
-    // ==========================================
+    /* =====================================
+       AUTH
+    ===================================== */
 
     onAuthStateChanged(
       auth,
@@ -810,9 +1219,9 @@
     );
 
 
-    // ==========================================
-    // LOAD USER DATA
-    // ==========================================
+    /* =====================================
+       LOAD USER DATA
+    ===================================== */
 
     async function loadUserData() {
 
@@ -846,11 +1255,19 @@
           snap.data();
 
 
+        /* -------------------------------
+           POINTS
+        -------------------------------- */
+
         currentPoints =
           Number(
             data.points || 0
           );
 
+
+        /* -------------------------------
+           OWNED THEMES
+        -------------------------------- */
 
         if (
           Array.isArray(
@@ -859,26 +1276,95 @@
         ) {
 
           ownedThemes =
-            data.ownedThemes;
+            [
+              ...new Set(
+                data.ownedThemes
+              )
+            ];
 
         }
 
 
+        /* -------------------------------
+           ALWAYS HAVE CLASSIC RED
+        -------------------------------- */
+
         if (
-          data.selectedTheme
+          !ownedThemes.includes(
+            "classic-red"
+          )
+        ) {
+
+          ownedThemes.unshift(
+            "classic-red"
+          );
+
+        }
+
+
+        /* -------------------------------
+           SELECTED THEME
+        -------------------------------- */
+
+        if (
+          typeof data.selectedTheme ===
+          "string" &&
+
+          ownedThemes.includes(
+            data.selectedTheme
+          )
         ) {
 
           selectedTheme =
             data.selectedTheme;
 
+        } else {
+
+          selectedTheme =
+            "classic-red";
+
         }
 
+
+        /* -------------------------------
+           LOCAL CACHE
+        -------------------------------- */
+
+        localStorage.setItem(
+          "metflixSelectedTheme",
+          selectedTheme
+        );
+
+
+        /* -------------------------------
+           DISPLAY POINTS
+        -------------------------------- */
 
         pointsElement.textContent =
           currentPoints.toLocaleString();
 
 
+        /* -------------------------------
+           UPDATE BUTTONS
+        -------------------------------- */
+
         updateThemeButtons();
+
+
+        console.log(
+          "THEME DATA LOADED:",
+          {
+            points:
+              currentPoints,
+
+            ownedThemes:
+              ownedThemes,
+
+            selectedTheme:
+              selectedTheme
+          }
+        );
+
 
       } catch (error) {
 
@@ -899,9 +1385,9 @@
     }
 
 
-    // ==========================================
-    // UPDATE BUTTONS
-    // ==========================================
+    /* =====================================
+       UPDATE BUTTONS
+    ===================================== */
 
     function updateThemeButtons() {
 
@@ -936,6 +1422,10 @@
             );
 
 
+          /* -------------------------------
+             OWNED
+          -------------------------------- */
+
           if (owned) {
 
             status.textContent =
@@ -946,6 +1436,14 @@
               "use";
 
 
+            button.disabled =
+              false;
+
+
+            /* -----------------------------
+               ACTIVE
+            ------------------------------ */
+
             if (
               selectedTheme ===
               theme
@@ -954,18 +1452,50 @@
               button.className =
                 "theme-button selected";
 
+
               button.innerHTML =
                 '<i class="fas fa-check"></i> USING';
 
-            } else {
+            }
+
+            /* -----------------------------
+               OWNED BUT NOT ACTIVE
+            ------------------------------ */
+
+            else {
 
               button.className =
                 "theme-button owned";
+
 
               button.innerHTML =
                 '<i class="fas fa-paint-brush"></i> USE THEME';
 
             }
+
+          }
+
+
+          /* -------------------------------
+             LOCKED
+          -------------------------------- */
+
+          else {
+
+            button.dataset.action =
+              "unlock";
+
+
+            button.className =
+              "theme-button";
+
+
+            button.disabled =
+              false;
+
+
+            button.innerHTML =
+              '<i class="fas fa-lock"></i> UNLOCK';
 
           }
 
@@ -975,9 +1505,121 @@
     }
 
 
-    // ==========================================
-    // SECURE THEME PURCHASE
-    // ==========================================
+    /* =====================================
+       SAVE SELECTED THEME
+    ===================================== */
+
+    async function saveSelectedTheme(
+      themeId
+    ) {
+
+      if (!currentUser) {
+
+        return false;
+
+      }
+
+
+      /* -------------------------------
+         SECURITY CHECK
+      -------------------------------- */
+
+      if (
+        !ownedThemes.includes(
+          themeId
+        )
+      ) {
+
+        console.error(
+          "THEME NOT OWNED:",
+          themeId
+        );
+
+
+        showModal(
+          "Theme Locked",
+          "You must unlock this theme first.",
+          false
+        );
+
+
+        return false;
+
+      }
+
+
+      try {
+
+        const userRef =
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          );
+
+
+        await updateDoc(
+          userRef,
+          {
+
+            selectedTheme:
+              themeId
+
+          }
+        );
+
+
+        selectedTheme =
+          themeId;
+
+
+        /* -------------------------------
+           LOCAL CACHE
+        -------------------------------- */
+
+        localStorage.setItem(
+          "metflixSelectedTheme",
+          themeId
+        );
+
+
+        console.log(
+          "SELECTED THEME SAVED:",
+          themeId
+        );
+
+
+        updateThemeButtons();
+
+
+        return true;
+
+
+      } catch (error) {
+
+        console.error(
+          "SAVE SELECTED THEME ERROR:",
+          error
+        );
+
+
+        showModal(
+          "Theme Error",
+          "The selected theme could not be saved to your account.",
+          false
+        );
+
+
+        return false;
+
+      }
+
+    }
+
+
+    /* =====================================
+       SECURE THEME PURCHASE
+    ===================================== */
 
     async function purchaseTheme(
       themeId
@@ -991,6 +1633,7 @@
           false
         );
 
+
         return;
 
       }
@@ -998,9 +1641,9 @@
 
       try {
 
-        // --------------------------------------
-        // GET FRESH FIREBASE ID TOKEN
-        // --------------------------------------
+        /* -------------------------------
+           FRESH FIREBASE TOKEN
+        -------------------------------- */
 
         const idToken =
           await currentUser.getIdToken(
@@ -1008,32 +1651,30 @@
           );
 
 
-        // --------------------------------------
-        // SEND ONLY THE THEME ID
-        // --------------------------------------
-        //
-        // IMPORTANT:
-        // We DO NOT send points or price.
-        //
-        // The server decides the real price.
-        //
+        /* -------------------------------
+           SECURE SERVER REQUEST
+        -------------------------------- */
 
         const response =
           await fetch(
             "/theme-purchase",
             {
 
-              method: "POST",
+              method:
+                "POST",
+
 
               headers: {
 
                 "Content-Type":
                   "application/json",
 
+
                 "Authorization":
                   `Bearer ${idToken}`
 
               },
+
 
               body:
                 JSON.stringify({
@@ -1051,27 +1692,67 @@
           await response.json();
 
 
-        // --------------------------------------
-        // SUCCESS
-        // --------------------------------------
+        console.log(
+          "THEME PURCHASE RESULT:",
+          result
+        );
+
+
+        /* =================================
+           SUCCESS
+        ================================= */
 
         if (
           response.ok &&
           result.success
         ) {
 
+          /* -----------------------------
+             UPDATE POINTS
+          ------------------------------ */
+
           currentPoints =
             Number(
-              result.remainingPoints || 0
+              result.remainingPoints ||
+              0
             );
 
 
-          ownedThemes =
+          /* -----------------------------
+             UPDATE OWNED THEMES
+          ------------------------------ */
+
+          if (
             Array.isArray(
               result.ownedThemes
             )
-              ? result.ownedThemes
-              : ownedThemes;
+          ) {
+
+            ownedThemes =
+              [
+                ...new Set(
+                  result.ownedThemes
+                )
+              ];
+
+          }
+
+
+          /* -----------------------------
+             CLASSIC ALWAYS OWNED
+          ------------------------------ */
+
+          if (
+            !ownedThemes.includes(
+              "classic-red"
+            )
+          ) {
+
+            ownedThemes.unshift(
+              "classic-red"
+            );
+
+          }
 
 
           pointsElement.textContent =
@@ -1081,9 +1762,33 @@
           updateThemeButtons();
 
 
+          /* =================================
+             AUTOMATICALLY ACTIVATE NEW THEME
+          ================================= */
+
+          const activated =
+            await saveSelectedTheme(
+              themeId
+            );
+
+
+          if (!activated) {
+
+            return;
+
+          }
+
+
+          updateThemeButtons();
+
+
+          /* -----------------------------
+             SUCCESS MODAL
+          ------------------------------ */
+
           showModal(
             "Theme Unlocked!",
-            `${themeId} has been successfully unlocked. ${Number(result.spentPoints || 0).toLocaleString()} points were deducted.`,
+            `${themeId} has been successfully unlocked and is now your active METFLIX theme. ${Number(result.spentPoints || 0).toLocaleString()} points were deducted.`,
             true
           );
 
@@ -1093,9 +1798,9 @@
         }
 
 
-        // --------------------------------------
-        // ALREADY OWNED
-        // --------------------------------------
+        /* =================================
+           ALREADY OWNED
+        ================================= */
 
         if (
           result.alreadyOwned
@@ -1107,14 +1812,15 @@
             false
           );
 
+
           return;
 
         }
 
 
-        // --------------------------------------
-        // NOT ENOUGH POINTS
-        // --------------------------------------
+        /* =================================
+           NOT ENOUGH POINTS
+        ================================= */
 
         if (
           result.insufficientPoints
@@ -1127,14 +1833,15 @@
             false
           );
 
+
           return;
 
         }
 
 
-        // --------------------------------------
-        // OTHER SERVER ERROR
-        // --------------------------------------
+        /* =================================
+           OTHER SERVER ERROR
+        ================================= */
 
         showModal(
           "Purchase Failed",
@@ -1163,9 +1870,9 @@
     }
 
 
-    // ==========================================
-    // THEME BUTTONS
-    // ==========================================
+    /* =====================================
+       THEME BUTTON EVENTS
+    ===================================== */
 
     document
       .querySelectorAll(
@@ -1185,7 +1892,9 @@
 
 
               if (!card) {
+
                 return;
+
               }
 
 
@@ -1197,28 +1906,75 @@
                 button.dataset.action;
 
 
-              // --------------------------------
-              // USE THEME
-              // --------------------------------
+              /* =================================
+                 USE THEME
+              ================================= */
 
               if (
                 action === "use"
               ) {
 
-                showModal(
-                  "Theme Selected",
-                  "This theme is ready to be applied to your METFLIX account.",
-                  true
-                );
+                /* -----------------------------
+                   ALREADY USING
+                ------------------------------ */
+
+                if (
+                  selectedTheme ===
+                  theme
+                ) {
+
+                  showModal(
+                    "Theme Active",
+                    "This is already your active METFLIX theme.",
+                    true
+                  );
+
+
+                  return;
+
+                }
+
+
+                button.disabled =
+                  true;
+
+
+                button.innerHTML =
+                  '<i class="fas fa-spinner fa-spin"></i> APPLYING...';
+
+
+                const saved =
+                  await saveSelectedTheme(
+                    theme
+                  );
+
+
+                button.disabled =
+                  false;
+
+
+                updateThemeButtons();
+
+
+                if (saved) {
+
+                  showModal(
+                    "Theme Selected",
+                    `${theme} is now your active METFLIX theme.`,
+                    true
+                  );
+
+                }
+
 
                 return;
 
               }
 
 
-              // --------------------------------
-              // UNLOCK
-              // --------------------------------
+              /* =================================
+                 UNLOCK
+              ================================= */
 
               if (
                 action === "unlock"
@@ -1226,6 +1982,7 @@
 
                 button.disabled =
                   true;
+
 
                 button.innerHTML =
                   '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
@@ -1236,8 +1993,9 @@
                 );
 
 
-                // Re-enable only if
-                // the theme is still locked.
+                /* -----------------------------
+                   RE-ENABLE IF STILL LOCKED
+                ------------------------------ */
 
                 if (
                   !ownedThemes.includes(
@@ -1248,10 +2006,14 @@
                   button.disabled =
                     false;
 
+
                   button.innerHTML =
                     '<i class="fas fa-lock"></i> UNLOCK';
 
                 }
+
+
+                updateThemeButtons();
 
               }
 
@@ -1261,7 +2023,9 @@
         }
       );
 
+
   </script>
+
 
 </body>
 
