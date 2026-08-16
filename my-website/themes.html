@@ -2,25 +2,15 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>METFLIX - Themes</title>
 
-  <link
-    rel="stylesheet"
-    href="css/home.css"
-  >
+  <link rel="stylesheet" href="css/home.css">
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  >
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <style>
 
@@ -89,10 +79,6 @@
       color: #ffd700;
       font-weight: bold;
     }
-
-    /* ================================
-       THEMES GRID
-    ================================= */
 
     .themes-grid {
       display: grid;
@@ -264,9 +250,9 @@
       transform: none;
     }
 
-    /* ================================
+    /* =========================
        MODAL
-    ================================= */
+    ========================= */
 
     .theme-modal {
       position: fixed;
@@ -291,7 +277,6 @@
       background: #151515;
       border: 1px solid #e50914;
       text-align: center;
-
       box-shadow:
         0 0 30px rgba(229, 9, 20, 0.3),
         0 20px 60px rgba(0, 0, 0, 0.8);
@@ -302,11 +287,9 @@
       height: 70px;
       margin: 0 auto 18px;
       border-radius: 50%;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       background: #e50914;
       font-size: 30px;
     }
@@ -333,19 +316,6 @@
       cursor: pointer;
     }
 
-    /* ================================
-       LOADING
-    ================================= */
-
-    .loading {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    /* ================================
-       MOBILE
-    ================================= */
-
     @media (max-width: 650px) {
 
       .themes-grid {
@@ -367,15 +337,9 @@
 
   <main class="themes-page">
 
-    <a
-      href="index.html"
-      class="back-button"
-    >
-
+    <a href="index.html" class="back-button">
       <i class="fas fa-arrow-left"></i>
-
       Back
-
     </a>
 
 
@@ -418,8 +382,7 @@
       <div
         class="theme-card classic"
         data-theme="classic-red"
-        data-price="0"
-      >
+        data-price="0">
 
         <div>
 
@@ -451,11 +414,9 @@
 
         <button
           class="theme-button owned"
-          data-action="use"
-        >
+          data-action="use">
 
           <i class="fas fa-paint-brush"></i>
-
           USE THEME
 
         </button>
@@ -468,8 +429,7 @@
       <div
         class="theme-card purple"
         data-theme="neon-purple"
-        data-price="300"
-      >
+        data-price="300">
 
         <div>
 
@@ -501,11 +461,9 @@
 
         <button
           class="theme-button"
-          data-action="unlock"
-        >
+          data-action="unlock">
 
           <i class="fas fa-lock"></i>
-
           UNLOCK
 
         </button>
@@ -518,8 +476,7 @@
       <div
         class="theme-card blue"
         data-theme="cyber-blue"
-        data-price="300"
-      >
+        data-price="300">
 
         <div>
 
@@ -551,11 +508,9 @@
 
         <button
           class="theme-button"
-          data-action="unlock"
-        >
+          data-action="unlock">
 
           <i class="fas fa-lock"></i>
-
           UNLOCK
 
         </button>
@@ -568,8 +523,7 @@
       <div
         class="theme-card galaxy"
         data-theme="galaxy"
-        data-price="500"
-      >
+        data-price="500">
 
         <div>
 
@@ -601,11 +555,9 @@
 
         <button
           class="theme-button"
-          data-action="unlock"
-        >
+          data-action="unlock">
 
           <i class="fas fa-lock"></i>
-
           UNLOCK
 
         </button>
@@ -618,8 +570,7 @@
       <div
         class="theme-card gold"
         data-theme="gold-vip"
-        data-price="1000"
-      >
+        data-price="1000">
 
         <div>
 
@@ -651,17 +602,14 @@
 
         <button
           class="theme-button"
-          data-action="unlock"
-        >
+          data-action="unlock">
 
           <i class="fas fa-lock"></i>
-
           UNLOCK
 
         </button>
 
       </div>
-
 
     </div>
 
@@ -672,15 +620,13 @@
 
   <div
     id="themeModal"
-    class="theme-modal"
-  >
+    class="theme-modal">
 
     <div class="theme-modal-box">
 
       <div
         id="modalIcon"
-        class="modal-icon"
-      >
+        class="modal-icon">
 
         <i class="fas fa-check"></i>
 
@@ -688,23 +634,26 @@
 
       <h2
         id="modalTitle"
-        class="modal-title"
-      >
+        class="modal-title">
+
         Theme
+
       </h2>
 
       <p
         id="modalMessage"
-        class="modal-message"
-      >
+        class="modal-message">
+
         Message
+
       </p>
 
       <button
         id="modalOkay"
-        class="modal-button"
-      >
+        class="modal-button">
+
         OKAY
+
       </button>
 
     </div>
@@ -729,14 +678,9 @@
 
     import {
       doc,
-      getDoc,
-      updateDoc
+      getDoc
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-
-    /* =========================================
-       VARIABLES
-    ========================================= */
 
     let currentUser = null;
 
@@ -750,32 +694,33 @@
       "classic-red";
 
 
-    /* =========================================
-       ELEMENTS
-    ========================================= */
-
     const pointsElement =
       document.getElementById("points");
+
 
     const modal =
       document.getElementById("themeModal");
 
+
     const modalIcon =
       document.getElementById("modalIcon");
+
 
     const modalTitle =
       document.getElementById("modalTitle");
 
+
     const modalMessage =
       document.getElementById("modalMessage");
+
 
     const modalOkay =
       document.getElementById("modalOkay");
 
 
-    /* =========================================
-       MODAL
-    ========================================= */
+    // ==========================================
+    // MODAL
+    // ==========================================
 
     function showModal(
       title,
@@ -789,24 +734,20 @@
       modalMessage.textContent =
         message;
 
-
       modalIcon.innerHTML =
         success
           ? '<i class="fas fa-check"></i>'
           : '<i class="fas fa-exclamation"></i>';
-
 
       modalIcon.style.background =
         success
           ? "#22c55e"
           : "#e50914";
 
-
       modal.classList.add("show");
 
       document.body.style.overflow =
         "hidden";
-
     }
 
 
@@ -816,7 +757,6 @@
 
       document.body.style.overflow =
         "";
-
     }
 
 
@@ -842,9 +782,9 @@
     );
 
 
-    /* =========================================
-       AUTH
-    ========================================= */
+    // ==========================================
+    // AUTH
+    // ==========================================
 
     onAuthStateChanged(
       auth,
@@ -870,9 +810,9 @@
     );
 
 
-    /* =========================================
-       LOAD USER DATA
-    ========================================= */
+    // ==========================================
+    // LOAD USER DATA
+    // ==========================================
 
     async function loadUserData() {
 
@@ -887,24 +827,15 @@
 
 
         const snap =
-          await getDoc(userRef);
+          await getDoc(
+            userRef
+          );
 
 
         if (!snap.exists()) {
 
-          currentPoints = 0;
-
-          ownedThemes = [
-            "classic-red"
-          ];
-
-          selectedTheme =
-            "classic-red";
-
           pointsElement.textContent =
             "0";
-
-          updateThemeButtons();
 
           return;
 
@@ -934,19 +865,6 @@
 
 
         if (
-          !ownedThemes.includes(
-            "classic-red"
-          )
-        ) {
-
-          ownedThemes.unshift(
-            "classic-red"
-          );
-
-        }
-
-
-        if (
           data.selectedTheme
         ) {
 
@@ -962,9 +880,7 @@
 
         updateThemeButtons();
 
-      }
-
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "THEME LOAD ERROR:",
@@ -983,9 +899,9 @@
     }
 
 
-    /* =========================================
-       UPDATE THEME BUTTONS
-    ========================================= */
+    // ==========================================
+    // UPDATE BUTTONS
+    // ==========================================
 
     function updateThemeButtons() {
 
@@ -1041,9 +957,7 @@
               button.innerHTML =
                 '<i class="fas fa-check"></i> USING';
 
-            }
-
-            else {
+            } else {
 
               button.className =
                 "theme-button owned";
@@ -1055,132 +969,19 @@
 
           }
 
-          else {
-
-            button.className =
-              "theme-button";
-
-            button.dataset.action =
-              "unlock";
-
-            button.disabled =
-              false;
-
-            button.innerHTML =
-              '<i class="fas fa-lock"></i> UNLOCK';
-
-          }
-
         }
       );
 
     }
 
 
-    /* =========================================
-       USE THEME
-    ========================================= */
-
-    async function useTheme(
-      theme
-    ) {
-
-      if (!currentUser) {
-
-        showModal(
-          "Login Required",
-          "Please login to use this theme.",
-          false
-        );
-
-        return;
-
-      }
-
-
-      try {
-
-        await updateDoc(
-          doc(
-            db,
-            "users",
-            currentUser.uid
-          ),
-          {
-            selectedTheme:
-              theme
-          }
-        );
-
-
-        selectedTheme =
-          theme;
-
-
-        updateThemeButtons();
-
-
-        const card =
-          document.querySelector(
-            `.theme-card[data-theme="${theme}"]`
-          );
-
-
-        const themeName =
-          card
-            ?.querySelector(
-              ".theme-name"
-            )
-            ?.textContent
-            ?.trim() ||
-          "Theme";
-
-
-        showModal(
-          "Theme Selected",
-          `${themeName} has been selected for your account.`,
-          true
-        );
-
-      }
-
-      catch (error) {
-
-        console.error(
-          "SELECT THEME ERROR:",
-          error
-        );
-
-
-        showModal(
-          "Unable to Select Theme",
-          "The theme could not be selected. Please try again.",
-          false
-        );
-
-      }
-
-    }
-
-
-    /* =========================================
-       PURCHASE THEME
-    ========================================= */
+    // ==========================================
+    // SECURE THEME PURCHASE
+    // ==========================================
 
     async function purchaseTheme(
-      button,
-      card
+      themeId
     ) {
-
-      const themeId =
-        card.dataset.theme;
-
-
-      const price =
-        Number(
-          card.dataset.price
-        );
-
 
       if (!currentUser) {
 
@@ -1195,64 +996,11 @@
       }
 
 
-      /* -----------------------------------------
-         CHECK LOCAL STATE FIRST
-      ----------------------------------------- */
-
-      if (
-        ownedThemes.includes(
-          themeId
-        )
-      ) {
-
-        await useTheme(
-          themeId
-        );
-
-        return;
-
-      }
-
-
-      /* -----------------------------------------
-         CHECK POINTS
-      ----------------------------------------- */
-
-      if (
-        currentPoints < price
-      ) {
-
-        showModal(
-          "Not Enough Points",
-          `You need ${price.toLocaleString()} points to unlock this theme. You currently have ${currentPoints.toLocaleString()} points.`,
-          false
-        );
-
-        return;
-
-      }
-
-
-      /* -----------------------------------------
-         DISABLE BUTTON
-      ----------------------------------------- */
-
-      button.disabled =
-        true;
-
-      button.classList.add(
-        "loading"
-      );
-
-      button.innerHTML =
-        '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
-
-
       try {
 
-        /* ---------------------------------------
-           GET FIREBASE ID TOKEN
-        --------------------------------------- */
+        // --------------------------------------
+        // GET FRESH FIREBASE ID TOKEN
+        // --------------------------------------
 
         const idToken =
           await currentUser.getIdToken(
@@ -1260,17 +1008,22 @@
           );
 
 
-        /* ---------------------------------------
-           SEND PURCHASE REQUEST
-        --------------------------------------- */
+        // --------------------------------------
+        // SEND ONLY THE THEME ID
+        // --------------------------------------
+        //
+        // IMPORTANT:
+        // We DO NOT send points or price.
+        //
+        // The server decides the real price.
+        //
 
         const response =
           await fetch(
             "/theme-purchase",
             {
 
-              method:
-                "POST",
+              method: "POST",
 
               headers: {
 
@@ -1294,42 +1047,13 @@
           );
 
 
-        /* ---------------------------------------
-           READ SERVER RESPONSE
-        --------------------------------------- */
-
-        let result;
-
-        try {
-
-          result =
-            await response.json();
-
-        }
-
-        catch {
-
-          result = {
-
-            success: false,
-
-            message:
-              "Invalid server response."
-
-          };
-
-        }
+        const result =
+          await response.json();
 
 
-        console.log(
-          "THEME PURCHASE RESPONSE:",
-          result
-        );
-
-
-        /* ---------------------------------------
-           SUCCESS
-        --------------------------------------- */
+        // --------------------------------------
+        // SUCCESS
+        // --------------------------------------
 
         if (
           response.ok &&
@@ -1338,33 +1062,16 @@
 
           currentPoints =
             Number(
-              result.remainingPoints ??
-              currentPoints - price
+              result.remainingPoints || 0
             );
 
 
-          if (
+          ownedThemes =
             Array.isArray(
               result.ownedThemes
             )
-          ) {
-
-            ownedThemes =
-              result.ownedThemes;
-
-          }
-
-          else if (
-            !ownedThemes.includes(
-              themeId
-            )
-          ) {
-
-            ownedThemes.push(
-              themeId
-            );
-
-          }
+              ? result.ownedThemes
+              : ownedThemes;
 
 
           pointsElement.textContent =
@@ -1374,19 +1081,9 @@
           updateThemeButtons();
 
 
-          const themeName =
-            card
-              .querySelector(
-                ".theme-name"
-              )
-              ?.textContent
-              ?.trim() ||
-            "Theme";
-
-
           showModal(
             "Theme Unlocked!",
-            `${themeName} has been successfully unlocked. ${Number(result.spentPoints || price).toLocaleString()} points were deducted. You have ${currentPoints.toLocaleString()} points remaining.`,
+            `${themeId} has been successfully unlocked. ${Number(result.spentPoints || 0).toLocaleString()} points were deducted.`,
             true
           );
 
@@ -1396,30 +1093,13 @@
         }
 
 
-        /* ---------------------------------------
-           ALREADY OWNED
-        --------------------------------------- */
+        // --------------------------------------
+        // ALREADY OWNED
+        // --------------------------------------
 
         if (
-          response.status === 409 &&
           result.alreadyOwned
         ) {
-
-          if (
-            !ownedThemes.includes(
-              themeId
-            )
-          ) {
-
-            ownedThemes.push(
-              themeId
-            );
-
-          }
-
-
-          updateThemeButtons();
-
 
           showModal(
             "Already Owned",
@@ -1427,15 +1107,14 @@
             false
           );
 
-
           return;
 
         }
 
 
-        /* ---------------------------------------
-           NOT ENOUGH POINTS
-        --------------------------------------- */
+        // --------------------------------------
+        // NOT ENOUGH POINTS
+        // --------------------------------------
 
         if (
           result.insufficientPoints
@@ -1444,30 +1123,28 @@
           showModal(
             "Not Enough Points",
             result.message ||
-            "You do not have enough points to unlock this theme.",
+              "You do not have enough points to unlock this theme.",
             false
           );
-
 
           return;
 
         }
 
 
-        /* ---------------------------------------
-           OTHER SERVER ERROR
-        --------------------------------------- */
+        // --------------------------------------
+        // OTHER SERVER ERROR
+        // --------------------------------------
 
         showModal(
-          "Theme Purchase Failed",
+          "Purchase Failed",
           result.message ||
-          "The theme could not be unlocked. Please try again.",
+            "The theme could not be unlocked.",
           false
         );
 
-      }
 
-      catch (error) {
+      } catch (error) {
 
         console.error(
           "THEME PURCHASE ERROR:",
@@ -1477,45 +1154,18 @@
 
         showModal(
           "Connection Error",
-          "We could not connect to the theme purchase server. Please try again.",
+          "Unable to connect to the secure theme purchase server.",
           false
         );
-
-      }
-
-      finally {
-
-        /*
-         * Re-enable only if the theme
-         * was not successfully purchased.
-         */
-
-        if (
-          !ownedThemes.includes(
-            themeId
-          )
-        ) {
-
-          button.disabled =
-            false;
-
-          button.classList.remove(
-            "loading"
-          );
-
-          button.innerHTML =
-            '<i class="fas fa-lock"></i> UNLOCK';
-
-        }
 
       }
 
     }
 
 
-    /* =========================================
-       BUTTON EVENTS
-    ========================================= */
+    // ==========================================
+    // THEME BUTTONS
+    // ==========================================
 
     document
       .querySelectorAll(
@@ -1547,16 +1197,18 @@
                 button.dataset.action;
 
 
-              /* -----------------------------
-                 USE
-              ----------------------------- */
+              // --------------------------------
+              // USE THEME
+              // --------------------------------
 
               if (
                 action === "use"
               ) {
 
-                await useTheme(
-                  theme
+                showModal(
+                  "Theme Selected",
+                  "This theme is ready to be applied to your METFLIX account.",
+                  true
                 );
 
                 return;
@@ -1564,18 +1216,42 @@
               }
 
 
-              /* -----------------------------
-                 UNLOCK
-              ----------------------------- */
+              // --------------------------------
+              // UNLOCK
+              // --------------------------------
 
               if (
                 action === "unlock"
               ) {
 
+                button.disabled =
+                  true;
+
+                button.innerHTML =
+                  '<i class="fas fa-spinner fa-spin"></i> PROCESSING...';
+
+
                 await purchaseTheme(
-                  button,
-                  card
+                  theme
                 );
+
+
+                // Re-enable only if
+                // the theme is still locked.
+
+                if (
+                  !ownedThemes.includes(
+                    theme
+                  )
+                ) {
+
+                  button.disabled =
+                    false;
+
+                  button.innerHTML =
+                    '<i class="fas fa-lock"></i> UNLOCK';
+
+                }
 
               }
 
