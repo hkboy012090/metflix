@@ -709,6 +709,7 @@ checkAuth(async (user) => {
                     docSnap.data();
 
 
+                // USERNAME
                 if (userData.username) {
 
                     menuUsername.textContent =
@@ -726,6 +727,7 @@ checkAuth(async (user) => {
                 }
 
 
+                // AVATAR
                 if (
                     menuAvatar &&
                     userData.profileImage
@@ -940,103 +942,20 @@ window.toggleProfileMenu =
 
 
 // ========================================
-// ADD THEMES TO MAIN MENU
+// MAIN MENU THEMES
 // ========================================
+// IMPORTANT:
 //
-// Dahil wala na ang Themes <a> sa index.html,
-// awtomatik natin itong ginagawa dito.
+// Walang automatic na pag-create dito.
+// Ang Themes sa main menu ay dapat nasa HTML.
 //
-// Lalabas ito sa ilalim ng Settings.
+// URL:
+// https://metflix-973.pages.dev/themes
+//
+// Ang Theme Settings naman ay mananatili
+// sa loob ng Customize Profile.
+//
 // ========================================
-
-function setupThemesMenu() {
-
-    const menu =
-        document.getElementById(
-            "menuPanel"
-        );
-
-    if (!menu) return;
-
-
-    // Prevent duplicate Themes
-
-    if (
-        document.getElementById(
-            "themesMenuItem"
-        )
-    ) {
-
-        return;
-    }
-
-
-    // Find Settings menu item
-
-    const menuLinks =
-        menu.querySelectorAll(
-            ":scope > a"
-        );
-
-    let settingsLink =
-        null;
-
-
-    menuLinks.forEach(link => {
-
-        const span =
-            link.querySelector("span");
-
-        if (
-            span &&
-            span.textContent.trim()
-                .toLowerCase() ===
-            "settings"
-        ) {
-
-            settingsLink =
-                link;
-        }
-
-    });
-
-
-    if (!settingsLink) {
-
-        console.warn(
-            "METFLIX: Settings menu item not found."
-        );
-
-        return;
-    }
-
-
-    // Create Themes link
-
-    const themesLink =
-        document.createElement("a");
-
-    themesLink.id =
-        "themesMenuItem";
-
-    themesLink.href =
-        "theme-settings.html";
-
-
-    themesLink.innerHTML = `
-        <i class="fas fa-palette"></i>
-        <span>Themes</span>
-    `;
-
-
-    // Insert directly after Settings
-
-    settingsLink.insertAdjacentElement(
-        "afterend",
-        themesLink
-    );
-
-}
 
 
 // ========================================
@@ -1060,12 +979,10 @@ window.searchTMDB =
 
 
 // ========================================
-// SETUP MENUS
+// SETUP PROFILE MENU
 // ========================================
 
 setupProfileMenu();
-
-setupThemesMenu();
 
 
 // ========================================
