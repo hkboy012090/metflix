@@ -2,15 +2,15 @@ import { logout, checkAuth } from "./auth.js";
 import { auth, db } from "./firebase-config.js";
 
 import {
-    doc,
-    getDoc
+  doc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const API_KEY = "85d06918f5f2d578fd2048c5841b6ee2";
-const BASE_URL = "https://api.themoviedb.org/3";
-const IMG_URL = "https://image.tmdb.org/t/p/original";
+const API_KEY = '85d06918f5f2d578fd2048c5841b6ee2';
+const BASE_URL = 'https://api.themoviedb.org/3';
+const IMG_URL = 'https://image.tmdb.org/t/p/original';
 
-let currentItem = null;
+let currentItem;
 
 
 // ========================================
@@ -45,13 +45,15 @@ async function fetchTrendingAnime() {
 
         const data = await res.json();
 
-        const filtered = (data.results || []).filter(item =>
-            item.original_language === "ja" &&
-            Array.isArray(item.genre_ids) &&
-            item.genre_ids.includes(16)
-        );
+        const filtered =
+            (data.results || []).filter(item =>
+                item.original_language === 'ja' &&
+                item.genre_ids &&
+                item.genre_ids.includes(16)
+            );
 
-        allResults = allResults.concat(filtered);
+        allResults =
+            allResults.concat(filtered);
     }
 
     return allResults;
@@ -67,10 +69,10 @@ function displayBanner(item) {
     if (!item) return;
 
     const banner =
-        document.getElementById("banner");
+        document.getElementById('banner');
 
-    const bannerTitle =
-        document.getElementById("banner-title");
+    const title =
+        document.getElementById('banner-title');
 
     if (banner && item.backdrop_path) {
 
@@ -78,9 +80,9 @@ function displayBanner(item) {
             `url(${IMG_URL}${item.backdrop_path})`;
     }
 
-    if (bannerTitle) {
+    if (title) {
 
-        bannerTitle.textContent =
+        title.textContent =
             item.title || item.name || "";
     }
 }
@@ -112,8 +114,6 @@ function displayList(items, containerId) {
         img.alt =
             item.title || item.name || "";
 
-        img.loading = "lazy";
-
         img.onclick = () =>
             showDetails(item);
 
@@ -136,40 +136,40 @@ function displayTop10(items, containerId) {
 
     container.innerHTML = "";
 
-    items.slice(0, 10).forEach((item, index) => {
+    items
+        .filter(item => item.poster_path)
+        .slice(0, 10)
+        .forEach((item, index) => {
 
-        if (!item.poster_path) return;
+            const card =
+                document.createElement("div");
 
-        const card =
-            document.createElement("div");
+            card.className =
+                "top10-item";
 
-        card.className =
-            "top10-item";
+            card.innerHTML = `
+                <div class="top10-number">
+                    ${index + 1}
+                </div>
 
-        card.innerHTML = `
-            <div class="top10-number">
-                ${index + 1}
-            </div>
+                <img
+                    src="${IMG_URL}${item.poster_path}"
+                    alt="${item.title || item.name || ''}"
+                >
+            `;
 
-            <img
-                src="${IMG_URL}${item.poster_path}"
-                alt="${item.title || item.name || ""}"
-                loading="lazy"
-            >
-        `;
+            const image =
+                card.querySelector("img");
 
-        const image =
-            card.querySelector("img");
+            if (image) {
 
-        if (image) {
+                image.onclick = () =>
+                    showDetails(item);
+            }
 
-            image.onclick = () =>
-                showDetails(item);
-        }
+            container.appendChild(card);
 
-        container.appendChild(card);
-
-    });
+        });
 }
 
 
@@ -178,8 +178,6 @@ function displayTop10(items, containerId) {
 // ========================================
 
 function showDetails(item) {
-
-    currentItem = item;
 
     checkAuth((user) => {
 
@@ -230,14 +228,12 @@ function changeServer() {
     if (!currentItem) return;
 
     const serverElement =
-        document.getElementById("server");
+        document.getElementById('server');
 
     const videoElement =
-        document.getElementById("modal-video");
+        document.getElementById('modal-video');
 
-    if (!serverElement || !videoElement) {
-        return;
-    }
+    if (!serverElement || !videoElement) return;
 
     const server =
         serverElement.value;
@@ -277,21 +273,21 @@ function changeServer() {
 function closeModal() {
 
     const modal =
-        document.getElementById("modal");
+        document.getElementById('modal');
 
     const video =
-        document.getElementById("modal-video");
+        document.getElementById('modal-video');
 
     if (modal) {
 
         modal.style.display =
-            "none";
+            'none';
     }
 
     if (video) {
 
         video.src =
-            "";
+            '';
     }
 }
 
@@ -302,63 +298,59 @@ function closeModal() {
 
 function openSearchModal() {
 
-    const modal =
-        document.getElementById("search-modal");
+    const searchModal =
+        document.getElementById('search-modal');
 
-    const input =
-        document.getElementById("search-input");
+    const searchInput =
+        document.getElementById('search-input');
 
     const searchBtn =
         document.getElementById("searchBtn");
 
-    if (modal) {
+    if (searchModal) {
 
-        modal.style.display =
-            "flex";
+        searchModal.style.display =
+            'flex';
     }
 
-    if (input) {
+    if (searchInput) {
 
-        input.focus();
+        searchInput.focus();
     }
 
     if (searchBtn) {
 
-        searchBtn.classList.add(
-            "active"
-        );
+        searchBtn.classList.add("active");
     }
 }
 
 
 function closeSearchModal() {
 
-    const modal =
-        document.getElementById("search-modal");
+    const searchModal =
+        document.getElementById('search-modal');
 
-    const results =
-        document.getElementById("search-results");
+    const searchResults =
+        document.getElementById('search-results');
 
     const searchBtn =
         document.getElementById("searchBtn");
 
-    if (modal) {
+    if (searchModal) {
 
-        modal.style.display =
-            "none";
+        searchModal.style.display =
+            'none';
     }
 
-    if (results) {
+    if (searchResults) {
 
-        results.innerHTML =
-            "";
+        searchResults.innerHTML =
+            '';
     }
 
     if (searchBtn) {
 
-        searchBtn.classList.remove(
-            "active"
-        );
+        searchBtn.classList.remove("active");
     }
 }
 
@@ -370,22 +362,20 @@ function closeSearchModal() {
 async function searchTMDB() {
 
     const input =
-        document.getElementById("search-input");
+        document.getElementById('search-input');
 
-    const container =
-        document.getElementById("search-results");
+    const results =
+        document.getElementById('search-results');
 
-    if (!input || !container) {
-        return;
-    }
+    if (!input || !results) return;
 
     const query =
-        input.value.trim();
+        input.value;
 
-    if (!query) {
+    if (!query.trim()) {
 
-        container.innerHTML =
-            "";
+        results.innerHTML =
+            '';
 
         return;
     }
@@ -400,31 +390,21 @@ async function searchTMDB() {
         const data =
             await res.json();
 
-        container.innerHTML =
-            "";
+        results.innerHTML =
+            '';
 
         (data.results || []).forEach(item => {
 
             if (!item.poster_path) return;
 
-            if (
-                item.media_type !== "movie" &&
-                item.media_type !== "tv"
-            ) {
-                return;
-            }
-
             const img =
-                document.createElement("img");
+                document.createElement('img');
 
             img.src =
                 `${IMG_URL}${item.poster_path}`;
 
             img.alt =
                 item.title || item.name || "";
-
-            img.loading =
-                "lazy";
 
             img.onclick = () => {
 
@@ -433,17 +413,16 @@ async function searchTMDB() {
                 showDetails(item);
             };
 
-            container.appendChild(img);
+            results.appendChild(img);
 
         });
 
     } catch (error) {
 
         console.error(
-            "TMDB SEARCH ERROR:",
+            "SEARCH ERROR:",
             error
         );
-
     }
 }
 
@@ -457,18 +436,16 @@ async function init() {
     try {
 
         const movies =
-            await fetchTrending("movie");
+            await fetchTrending('movie');
 
         const tvShows =
-            await fetchTrending("tv");
+            await fetchTrending('tv');
 
         const anime =
             await fetchTrendingAnime();
 
 
-        // ========================================
-        // BANNER
-        // ========================================
+        // Banner
 
         if (movies.length > 0) {
 
@@ -483,44 +460,35 @@ async function init() {
         }
 
 
-        // ========================================
-        // TOP 10
-        // ========================================
+        // Top 10
 
         displayTop10(
             movies,
-            "movies-list"
+            'movies-list'
         );
 
 
-        // ========================================
         // TV
-        // ========================================
 
         displayList(
             tvShows,
-            "tvshows-list"
+            'tvshows-list'
         );
 
 
-        // ========================================
-        // ANIME
-        // ========================================
+        // Anime
 
         displayList(
             anime,
-            "anime-list"
+            'anime-list'
         );
 
 
-        // ========================================
-        // ANDROID READY
-        // ========================================
+        // Android APK
 
         if (
             window.Android &&
-            typeof window.Android.homeReady ===
-            "function"
+            typeof window.Android.homeReady === "function"
         ) {
 
             window.Android.homeReady();
@@ -536,21 +504,13 @@ async function init() {
 
         if (
             window.Android &&
-            typeof window.Android.homeReady ===
-            "function"
+            typeof window.Android.homeReady === "function"
         ) {
 
             window.Android.homeReady();
         }
     }
 }
-
-
-// ========================================
-// START HOME
-// ========================================
-
-init();
 
 
 // ========================================
@@ -586,7 +546,6 @@ if (loginBtn && logoutBtn) {
         }
 
     });
-
 
     logoutBtn.addEventListener(
         "click",
@@ -632,7 +591,7 @@ checkAuth((user) => {
 
 
 // ========================================
-// MENU
+// MAIN MENU
 // ========================================
 
 function toggleMenu() {
@@ -655,159 +614,35 @@ window.toggleMenu =
 
 
 // ========================================
-// PROFILE SUBMENU
-// ========================================
-
-function toggleProfileMenu() {
-
-    const submenu =
-        document.getElementById(
-            "profileSubMenu"
-        );
-
-    if (!submenu) return;
-
-    submenu.classList.toggle(
-        "show"
-    );
-}
-
-
-window.toggleProfileMenu =
-    toggleProfileMenu;
-
-
-// ========================================
-// MENU CLICK HANDLING
+// CLOSE MAIN MENU WHEN CLICKING OUTSIDE
 // ========================================
 
 document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+    "click",
+    function (event) {
 
         const menu =
             document.getElementById(
                 "menuPanel"
             );
 
-        const profileButton =
-            document.querySelector(
-                '[onclick="toggleProfileMenu()"]'
+        if (!menu) return;
+
+        const menuButton =
+            event.target.closest(
+                '.bottom-nav a[onclick*="toggleMenu"]'
             );
 
-        const profileSubMenu =
-            document.getElementById(
-                "profileSubMenu"
-            );
+        if (
+            menu.classList.contains("show") &&
+            !menu.contains(event.target) &&
+            !menuButton
+        ) {
 
-
-        // ========================================
-        // PROFILE BUTTON
-        // ========================================
-
-        if (profileButton) {
-
-            /*
-             * Remove inline onclick.
-             *
-             * This prevents the function
-             * from being executed twice.
-             */
-
-            profileButton.removeAttribute(
-                "onclick"
-            );
-
-
-            profileButton.addEventListener(
-                "click",
-                (event) => {
-
-                    event.preventDefault();
-
-                    event.stopPropagation();
-
-                    if (!profileSubMenu) {
-                        return;
-                    }
-
-                    profileSubMenu.classList.toggle(
-                        "show"
-                    );
-
-                }
+            menu.classList.remove(
+                "show"
             );
         }
-
-
-        // ========================================
-        // SUBMENU
-        // ========================================
-
-        if (profileSubMenu) {
-
-            profileSubMenu.addEventListener(
-                "click",
-                (event) => {
-
-                    /*
-                     * Allow submenu links to work,
-                     * but prevent the menu itself
-                     * from being treated as an
-                     * outside click.
-                     */
-
-                    event.stopPropagation();
-
-                }
-            );
-        }
-
-
-        // ========================================
-        // MENU OUTSIDE CLICK
-        // ========================================
-
-        document.addEventListener(
-            "click",
-            (event) => {
-
-                if (!menu) return;
-
-                if (
-                    !menu.classList.contains(
-                        "show"
-                    )
-                ) {
-                    return;
-                }
-
-
-                /*
-                 * If click is outside menu,
-                 * close menu.
-                 */
-
-                if (
-                    !menu.contains(
-                        event.target
-                    )
-                ) {
-
-                    menu.classList.remove(
-                        "show"
-                    );
-
-                    if (profileSubMenu) {
-
-                        profileSubMenu.classList.remove(
-                            "show"
-                        );
-                    }
-                }
-
-            }
-        );
 
     }
 );
@@ -829,22 +664,18 @@ checkAuth(async (user) => {
             "menuAvatar"
         );
 
-
-    if (!menuUsername) {
-        return;
-    }
-
-
     const customizeProfile =
         document.querySelector(
             '[onclick="toggleProfileMenu()"]'
         );
 
-
     const profileSubMenu =
         document.getElementById(
             "profileSubMenu"
         );
+
+
+    if (!menuUsername) return;
 
 
     // ========================================
@@ -876,7 +707,6 @@ checkAuth(async (user) => {
                     user.uid
                 );
 
-
             const docSnap =
                 await getDoc(
                     docRef
@@ -889,9 +719,7 @@ checkAuth(async (user) => {
                     docSnap.data();
 
 
-                // ========================================
                 // USERNAME
-                // ========================================
 
                 if (userData.username) {
 
@@ -902,14 +730,15 @@ checkAuth(async (user) => {
 
                     menuUsername.textContent =
                         user.displayName ||
-                        user.email?.split("@")[0] ||
-                        "User";
+                        (
+                            user.email
+                                ? user.email.split("@")[0]
+                                : "User"
+                        );
                 }
 
 
-                // ========================================
                 // AVATAR
-                // ========================================
 
                 if (
                     menuAvatar &&
@@ -924,8 +753,11 @@ checkAuth(async (user) => {
 
                 menuUsername.textContent =
                     user.displayName ||
-                    user.email?.split("@")[0] ||
-                    "User";
+                    (
+                        user.email
+                            ? user.email.split("@")[0]
+                            : "User"
+                    );
             }
 
         } catch (error) {
@@ -937,16 +769,21 @@ checkAuth(async (user) => {
 
             menuUsername.textContent =
                 user.displayName ||
-                user.email?.split("@")[0] ||
-                "User";
+                (
+                    user.email
+                        ? user.email.split("@")[0]
+                        : "User"
+                );
         }
 
+    }
 
-    } else {
 
-        // ========================================
-        // LOGGED OUT
-        // ========================================
+    // ========================================
+    // LOGGED OUT
+    // ========================================
+
+    else {
 
         menuUsername.textContent =
             "Guest";
@@ -971,6 +808,9 @@ checkAuth(async (user) => {
             profileSubMenu.classList.remove(
                 "show"
             );
+
+            profileSubMenu.style.display =
+                "none";
         }
     }
 
@@ -978,47 +818,121 @@ checkAuth(async (user) => {
 
 
 // ========================================
-// GLOBAL FUNCTIONS
+// CUSTOMIZE PROFILE SUBMENU
+// ========================================
+//
+// IMPORTANT:
+// Hindi na natin iaasa sa inline onclick.
+// Direct event listener na ito.
+//
 // ========================================
 
-window.closeModal =
-    closeModal;
+function setupProfileMenu() {
 
-window.changeServer =
-    changeServer;
+    const customizeButton =
+        document.querySelector(
+            '[onclick="toggleProfileMenu()"]'
+        );
 
-window.openSearchModal =
-    openSearchModal;
+    const submenu =
+        document.getElementById(
+            "profileSubMenu"
+        );
 
-window.closeSearchModal =
-    closeSearchModal;
 
-window.searchTMDB =
-    searchTMDB;
+    if (!customizeButton || !submenu) {
+
+        console.warn(
+            "METFLIX: Customize Profile or profileSubMenu not found."
+        );
+
+        return;
+    }
+
+
+    // Remove old inline onclick behavior
+
+    customizeButton.removeAttribute(
+        "onclick"
+    );
+
+
+    // Make sure initial state is closed
+
+    submenu.classList.remove(
+        "show"
+    );
+
+    submenu.style.display =
+        "none";
+
+
+    // ========================================
+    // CLICK CUSTOMIZE PROFILE
+    // ========================================
+
+    customizeButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            const isOpen =
+                submenu.classList.contains(
+                    "show"
+                );
+
+
+            if (isOpen) {
+
+                // CLOSE
+
+                submenu.classList.remove(
+                    "show"
+                );
+
+                submenu.style.display =
+                    "none";
+
+            } else {
+
+                // OPEN
+
+                submenu.classList.add(
+                    "show"
+                );
+
+                submenu.style.display =
+                    "block";
+            }
+
+        }
+    );
+
+
+    // ========================================
+    // CLICK SUBMENU
+    // ========================================
+
+    submenu.addEventListener(
+        "click",
+        function (event) {
+
+            event.stopPropagation();
+
+        }
+    );
+
+}
 
 
 // ========================================
-// PROTECT PROFILE SUBMENU
+// TOGGLE PROFILE MENU
 // ========================================
-
-/*
- * Because the HTML currently has:
- *
- * <a href="#" onclick="toggleProfileMenu()">
- *
- * we remove the inline onclick once
- * the DOM is ready and replace it with
- * a proper event listener above.
- *
- * This prevents "#" from jumping the page
- * and prevents double-toggle problems.
- */
-
-
+//
+// Kept globally available just in case
+// another part of the website uses it.
 // ========================================
-// FINAL LOG
-// ========================================
-
-console.log(
-    "METFLIX HOME.JS LOADED"
-);
