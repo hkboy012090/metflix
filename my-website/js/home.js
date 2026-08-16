@@ -596,16 +596,13 @@ function addThemesToMenu() {
         "pointer";
 
 
+    // ========================================
+    // SAME ICON STYLE AS OTHER MENU ITEMS
+    // ========================================
+
     themesItem.innerHTML = `
 
-        <i
-            class="fas fa-palette"
-            style="
-                width: 28px;
-                font-size: 24px;
-                margin-right: 18px;
-            "
-        ></i>
+        <i class="fas fa-palette"></i>
 
         <span>
             Themes
@@ -745,7 +742,7 @@ checkAuth(async (user) => {
 
 
         // ========================================
-        // 🎨 SHOW THEMES
+        // SHOW THEMES
         // ========================================
 
         addThemesToMenu();
@@ -862,10 +859,7 @@ checkAuth(async (user) => {
         }
 
 
-        // ========================================
-        // REMOVE THEMES WHEN LOGGED OUT
-        // ========================================
-
+        // Remove Themes
         const themesMenuItem =
             document.getElementById(
                 "themesMenuItem"
