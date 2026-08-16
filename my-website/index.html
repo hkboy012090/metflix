@@ -1,15 +1,12 @@
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>My Website</title>
 
   <link rel="stylesheet" href="css/home.css">
   <link rel="preload" href="css/home.css" as="style">
   <link rel="preload" href="js/home.js" as="script">
-
   <link rel="manifest" href="manifest.json">
 
   <link
@@ -23,9 +20,7 @@
   <script type="module" src="js/auto-logout.js"></script>
 </head>
 
-
 <body>
-
 
   <!-- ========================================
        NAVBAR
@@ -41,16 +36,11 @@
 
     <div class="nav-links">
 
-      <a
-        href="login.html"
-        id="loginBtn"
-      >
+      <a href="login.html" id="loginBtn">
         Login
       </a>
 
-      <button
-        id="logoutBtn"
-      >
+      <button id="logoutBtn">
         Logout
       </button>
 
@@ -59,20 +49,15 @@
   </div>
 
 
-
   <!-- ========================================
        BANNER
   ========================================= -->
 
-  <div
-    class="banner"
-    id="banner"
-  >
+  <div class="banner" id="banner">
 
     <h1 id="banner-title"></h1>
 
   </div>
-
 
 
   <!-- ========================================
@@ -87,15 +72,14 @@
 
     <div
       class="top10-list"
-      id="movies-list"
-    ></div>
+      id="movies-list">
+    </div>
 
   </div>
 
 
-
   <!-- ========================================
-       TRENDING TV
+       TRENDING TV SHOWS
   ========================================= -->
 
   <div class="row">
@@ -106,11 +90,10 @@
 
     <div
       class="list"
-      id="tvshows-list"
-    ></div>
+      id="tvshows-list">
+    </div>
 
   </div>
-
 
 
   <!-- ========================================
@@ -125,11 +108,10 @@
 
     <div
       class="list"
-      id="anime-list"
-    ></div>
+      id="anime-list">
+    </div>
 
   </div>
-
 
 
   <!-- ========================================
@@ -151,7 +133,6 @@
         &times;
       </span>
 
-
       <div class="modal-body">
 
         <img
@@ -166,15 +147,14 @@
 
           <div
             class="stars"
-            id="modal-rating"
-          ></div>
+            id="modal-rating">
+          </div>
 
           <p id="modal-description"></p>
 
         </div>
 
       </div>
-
 
 
       <!-- SERVER SELECTOR -->
@@ -212,13 +192,12 @@
         width="100%"
         height="315"
         frameborder="0"
-        allowfullscreen
-      ></iframe>
+        allowfullscreen>
+      </iframe>
 
     </div>
 
   </div>
-
 
 
   <!-- ========================================
@@ -238,22 +217,19 @@
       &times;
     </span>
 
-
     <input
       type="text"
       id="search-input"
       placeholder="Search for a movie or show..."
       oninput="searchTMDB()"
-    >
-
+    />
 
     <div
       class="results"
-      id="search-results"
-    ></div>
+      id="search-results">
+    </div>
 
   </div>
-
 
 
   <!-- ========================================
@@ -289,15 +265,11 @@
   </footer>
 
 
-
   <!-- ========================================
        BOTTOM NAVIGATION
   ========================================= -->
 
   <div class="bottom-nav">
-
-
-    <!-- HOME -->
 
     <a
       href="index.html"
@@ -312,9 +284,6 @@
 
     </a>
 
-
-
-    <!-- SEARCH -->
 
     <a
       href="#"
@@ -331,9 +300,6 @@
     </a>
 
 
-
-    <!-- VIVAMAX -->
-
     <a href="vivamax.html">
 
       <i class="fas fa-fire"></i>
@@ -344,9 +310,6 @@
 
     </a>
 
-
-
-    <!-- MOVIES -->
 
     <a href="index.html">
 
@@ -359,9 +322,6 @@
     </a>
 
 
-
-    <!-- LIVE TV -->
-
     <a href="live-tv.html">
 
       <i class="fas fa-tv"></i>
@@ -372,9 +332,6 @@
 
     </a>
 
-
-
-    <!-- MENU -->
 
     <a
       href="#"
@@ -392,7 +349,6 @@
   </div>
 
 
-
   <!-- ========================================
        MENU PANEL
   ========================================= -->
@@ -405,10 +361,9 @@
 
     <!-- ======================================
          MENU HEADER
-    ======================================= -->
+    ====================================== -->
 
     <div class="menu-header">
-
 
       <img
         src="menu-logo.png"
@@ -418,7 +373,6 @@
 
 
       <div class="user-info">
-
 
         <img
           id="menuAvatar"
@@ -460,10 +414,9 @@
     </div>
 
 
-
     <!-- ======================================
          CUSTOMIZE PROFILE
-    ======================================= -->
+    ====================================== -->
 
     <a
       href="#"
@@ -481,18 +434,16 @@
     </a>
 
 
-
     <!-- ======================================
-         PROFILE SUBMENU
-    ======================================= -->
+         CUSTOMIZE PROFILE SUBMENU
+
+         THEMES IS NOT HERE
+    ====================================== -->
 
     <div
       id="profileSubMenu"
       class="profile-submenu"
     >
-
-
-      <!-- CHANGE AVATAR -->
 
       <a href="change-avatar.html">
 
@@ -505,9 +456,6 @@
       </a>
 
 
-
-      <!-- CHANGE USERNAME -->
-
       <a href="change-username.html">
 
         <i class="fas fa-user-edit"></i>
@@ -518,9 +466,6 @@
 
       </a>
 
-
-
-      <!-- CHANGE EMAIL -->
 
       <a href="change-email.html">
 
@@ -533,9 +478,6 @@
       </a>
 
 
-
-      <!-- CHANGE PASSWORD -->
-
       <a href="./change-password.html">
 
         <i class="fas fa-lock"></i>
@@ -546,34 +488,12 @@
 
       </a>
 
-
-
-      <!-- ==================================
-           THEMES
-           
-           IMPORTANT:
-           Diretso sa /themes
-           Hindi theme-settings.html
-      =================================== -->
-
-      <a href="/themes">
-
-        <i class="fas fa-palette"></i>
-
-        <span>
-          Themes
-        </span>
-
-      </a>
-
-
     </div>
-
 
 
     <!-- ======================================
          TASKS
-    ======================================= -->
+    ====================================== -->
 
     <a href="tasks.html">
 
@@ -586,10 +506,9 @@
     </a>
 
 
-
     <!-- ======================================
          MOVIES
-    ======================================= -->
+    ====================================== -->
 
     <a href="#">
 
@@ -602,10 +521,9 @@
     </a>
 
 
-
     <!-- ======================================
          SETTINGS
-    ======================================= -->
+    ====================================== -->
 
     <a href="#">
 
@@ -618,10 +536,28 @@
     </a>
 
 
+    <!-- ======================================
+         THEMES
+
+         ITO NA ANG TAMANG LOCATION
+         NASA BABA NG SETTINGS
+         AT LABAS NG PROFILE SUBMENU
+    ====================================== -->
+
+    <a href="https://metflix-973.pages.dev/themes">
+
+      <i class="fas fa-palette"></i>
+
+      <span>
+        Themes
+      </span>
+
+    </a>
+
 
     <!-- ======================================
          ABOUT
-    ======================================= -->
+    ====================================== -->
 
     <a href="#">
 
@@ -637,7 +573,6 @@
   </div>
 
 
-
   <!-- ========================================
        MENU OVERLAY
   ========================================= -->
@@ -645,9 +580,8 @@
   <div
     id="menuOverlay"
     class="menu-overlay"
-    onclick="toggleMenu()"
-  ></div>
-
+    onclick="toggleMenu()">
+  </div>
 
 
   <!-- ========================================
@@ -665,6 +599,7 @@
 
     var l = window,
         j = "d72f9d3a335d8f742131dbf44b195f9e",
+
         b = [
           ["siteId", 513-800*840+753+106+5983530],
           ["minBid", 0],
@@ -674,65 +609,65 @@
           ["defaultPerDay", 0],
           ["topmostLayer", "auto"]
         ],
+
         q = [
           "d3d3LmJldHRlcmFkc3lzdGVtLmNvbS9qSElTTy9neGhUS20vdHphYnV0b19jYWxlbmRhci5taW4uanM=",
           "ZDJrazBvM2ZyN2VkMDEuY2xvdWRmcm9udC5uZXQva2FwaHJvZGl0ZS5taW4uanM="
         ],
+
         u = -1,
         m,
-        y;
+        y,
 
-
-    var g = function(){
-
-      clearTimeout(y);
-
-      u++;
-
-      if(
-        q[u] &&
-        !(1810021086000 < (new Date).getTime() && 1 < u)
-      ){
-
-        m = l.document.createElement("script");
-
-        m.type = "text/javascript";
-
-        m.async = true;
-
-        var w =
-          l.document.getElementsByTagName("script")[0];
-
-        m.src =
-          "https://" + atob(q[u]);
-
-        m.crossOrigin =
-          "anonymous";
-
-        m.onerror =
-          g;
-
-        m.onload = function(){
+        g = function(){
 
           clearTimeout(y);
 
-          l[
-            j.slice(0,16) +
-            j.slice(0,16)
-          ] || g();
+          u++;
+
+          if(
+            q[u] &&
+            !(1810021086000 < (new Date).getTime() && 1 < u)
+          ){
+
+            m = l.document.createElement("script");
+
+            m.type = "text/javascript";
+
+            m.async = !0;
+
+            var w =
+              l.document.getElementsByTagName("script")[0];
+
+            m.src =
+              "https://" + atob(q[u]);
+
+            m.crossOrigin =
+              "anonymous";
+
+            m.onerror =
+              g;
+
+            m.onload =
+              function(){
+
+                clearTimeout(y);
+
+                l[
+                  j.slice(0,16) +
+                  j.slice(0,16)
+                ] || g();
+
+              };
+
+            y =
+              setTimeout(g, 5E3);
+
+            w.parentNode.insertBefore(m,w);
+
+          }
 
         };
-
-        y = setTimeout(g, 5000);
-
-        w.parentNode.insertBefore(
-          m,
-          w
-        );
-
-      }
-
-    };
 
 
     if(!l[j]){
@@ -756,17 +691,15 @@
   </script>
 
 
-
   <!-- ========================================
-       PRESENCE
+       FIREBASE PRESENCE
   ========================================= -->
 
   <script
     type="module"
-    src="js/presence.js"
-  ></script>
+    src="js/presence.js">
+  </script>
 
 
 </body>
-
 </html>
