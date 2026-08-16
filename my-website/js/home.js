@@ -18,6 +18,7 @@ let currentItem;
 // ========================================
 
 async function fetchTrending(type) {
+
     const res = await fetch(
         `${BASE_URL}/trending/${type}/week?api_key=${API_KEY}`
     );
@@ -36,7 +37,6 @@ async function fetchTrendingAnime() {
 
     let allResults = [];
 
-    // Fetch from multiple pages
     for (let page = 1; page <= 3; page++) {
 
         const res = await fetch(
@@ -77,19 +77,24 @@ function displayBanner(item) {
 
 function displayList(items, containerId) {
 
-    const container = document.getElementById(containerId);
+    const container =
+        document.getElementById(containerId);
 
     container.innerHTML = "";
 
     items.forEach(item => {
 
-        const img = document.createElement("img");
+        const img =
+            document.createElement("img");
 
-        img.src = `${IMG_URL}${item.poster_path}`;
+        img.src =
+            `${IMG_URL}${item.poster_path}`;
 
-        img.alt = item.title || item.name;
+        img.alt =
+            item.title || item.name;
 
-        img.onclick = () => showDetails(item);
+        img.onclick =
+            () => showDetails(item);
 
         container.appendChild(img);
 
@@ -103,18 +108,23 @@ function displayList(items, containerId) {
 
 function displayTop10(items, containerId) {
 
-    const container = document.getElementById(containerId);
+    const container =
+        document.getElementById(containerId);
 
     container.innerHTML = "";
 
     items.slice(0, 10).forEach((item, index) => {
 
-        const card = document.createElement("div");
+        const card =
+            document.createElement("div");
 
-        card.className = "top10-item";
+        card.className =
+            "top10-item";
 
         card.innerHTML = `
-            <div class="top10-number">${index + 1}</div>
+            <div class="top10-number">
+                ${index + 1}
+            </div>
 
             <img
                 src="${IMG_URL}${item.poster_path}"
@@ -146,7 +156,8 @@ function showDetails(item) {
                 JSON.stringify(item)
             );
 
-            window.location.href = "login.html";
+            window.location.href =
+                "login.html";
 
             return;
         }
@@ -155,15 +166,18 @@ function showDetails(item) {
 
         if (item.media_type) {
 
-            type = item.media_type;
+            type =
+                item.media_type;
 
         } else if (item.title) {
 
-            type = "movie";
+            type =
+                "movie";
 
         } else {
 
-            type = "tv";
+            type =
+                "tv";
         }
 
         window.location.href =
@@ -274,7 +288,8 @@ async function searchTMDB() {
         `${BASE_URL}/search/multi?api_key=${API_KEY}&query=${query}`
     );
 
-    const data = await res.json();
+    const data =
+        await res.json();
 
     const container =
         document.getElementById('search-results');
@@ -299,6 +314,7 @@ async function searchTMDB() {
             closeSearchModal();
 
             showDetails(item);
+
         };
 
         container.appendChild(img);
@@ -315,15 +331,12 @@ async function init() {
 
     try {
 
-        // Get movies
         const movies =
             await fetchTrending('movie');
 
-        // Get TV shows
         const tvShows =
             await fetchTrending('tv');
 
-        // Get anime
         const anime =
             await fetchTrendingAnime();
 
@@ -333,18 +346,26 @@ async function init() {
         // ========================================
 
         displayBanner(
-            movies[Math.floor(Math.random() * movies.length)]
+            movies[
+                Math.floor(
+                    Math.random() *
+                    movies.length
+                )
+            ]
         );
+
 
         displayTop10(
             movies,
             'movies-list'
         );
 
+
         displayList(
             tvShows,
             'tvshows-list'
         );
+
 
         displayList(
             anime,
@@ -353,8 +374,7 @@ async function init() {
 
 
         // ========================================
-        // IMPORTANT:
-        // TELL ANDROID THAT HOME IS READY
+        // TELL ANDROID HOME IS READY
         // ========================================
 
         if (
@@ -363,6 +383,7 @@ async function init() {
         ) {
 
             window.Android.homeReady();
+
         }
 
 
@@ -384,6 +405,7 @@ async function init() {
         ) {
 
             window.Android.homeReady();
+
         }
 
     }
@@ -424,14 +446,17 @@ if (loginBtn && logoutBtn) {
 
             logoutBtn.style.display =
                 "none";
+
         }
 
     });
+
 
     logoutBtn.addEventListener(
         "click",
         logout
     );
+
 }
 
 
@@ -440,12 +465,17 @@ if (loginBtn && logoutBtn) {
 // ========================================
 
 const savedMovie =
-    sessionStorage.getItem("selectedMovie");
+    sessionStorage.getItem(
+        "selectedMovie"
+    );
 
 
 checkAuth((user) => {
 
-    if (user && savedMovie) {
+    if (
+        user &&
+        savedMovie
+    ) {
 
         sessionStorage.removeItem(
             "selectedMovie"
@@ -454,6 +484,7 @@ checkAuth((user) => {
         showDetails(
             JSON.parse(savedMovie)
         );
+
     }
 
 });
@@ -465,8 +496,14 @@ checkAuth((user) => {
 
 function toggleMenu() {
 
-    document.getElementById("menuPanel")
-        .classList.toggle("show");
+    const menu =
+        document.getElementById(
+            "menuPanel"
+        );
+
+    if (!menu) return;
+
+    menu.classList.toggle("show");
 }
 
 
@@ -479,7 +516,11 @@ document.addEventListener(
     function (e) {
 
         const menu =
-            document.getElementById("menuPanel");
+            document.getElementById(
+                "menuPanel"
+            );
+
+        if (!menu) return;
 
         if (
             menu.classList.contains("show") &&
@@ -489,11 +530,162 @@ document.addEventListener(
             )
         ) {
 
-            menu.classList.remove("show");
+            menu.classList.remove(
+                "show"
+            );
+
         }
 
     }
 );
+
+
+// ========================================
+// 🎨 ADD THEMES TO MENU
+// ========================================
+
+function addThemesToMenu() {
+
+    const menu =
+        document.getElementById(
+            "menuPanel"
+        );
+
+    if (!menu) {
+
+        console.warn(
+            "METFLIX: menuPanel not found."
+        );
+
+        return;
+
+    }
+
+
+    // Prevent duplicate Themes item
+    if (
+        document.getElementById(
+            "themesMenuItem"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    // ========================================
+    // CREATE THEMES MENU ITEM
+    // ========================================
+
+    const themesItem =
+        document.createElement(
+            "div"
+        );
+
+
+    themesItem.id =
+        "themesMenuItem";
+
+
+    themesItem.className =
+        "menu-item";
+
+
+    themesItem.style.cursor =
+        "pointer";
+
+
+    themesItem.innerHTML = `
+
+        <i
+            class="fas fa-palette"
+            style="
+                width: 28px;
+                font-size: 24px;
+                margin-right: 18px;
+            "
+        ></i>
+
+        <span>
+            Themes
+        </span>
+
+    `;
+
+
+    // ========================================
+    // OPEN THEMES PAGE
+    // ========================================
+
+    themesItem.addEventListener(
+        "click",
+        function () {
+
+            window.location.href =
+                "themes.html";
+
+        }
+    );
+
+
+    // ========================================
+    // INSERT BEFORE ABOUT
+    // ========================================
+
+    const menuItems =
+        menu.children;
+
+
+    let inserted =
+        false;
+
+
+    for (
+        let i = 0;
+        i < menuItems.length;
+        i++
+    ) {
+
+        const text =
+            menuItems[i].textContent
+                .trim()
+                .toLowerCase();
+
+
+        if (
+            text === "about"
+        ) {
+
+            menu.insertBefore(
+                themesItem,
+                menuItems[i]
+            );
+
+            inserted =
+                true;
+
+            break;
+
+        }
+
+    }
+
+
+    // ========================================
+    // IF ABOUT WAS NOT FOUND
+    // ADD TO END
+    // ========================================
+
+    if (!inserted) {
+
+        menu.appendChild(
+            themesItem
+        );
+
+    }
+
+}
 
 
 // ========================================
@@ -503,10 +695,14 @@ document.addEventListener(
 checkAuth(async (user) => {
 
     const menuUsername =
-        document.getElementById("menuUsername");
+        document.getElementById(
+            "menuUsername"
+        );
 
     const menuAvatar =
-        document.getElementById("menuAvatar");
+        document.getElementById(
+            "menuAvatar"
+        );
 
 
     if (!menuUsername) return;
@@ -535,6 +731,7 @@ checkAuth(async (user) => {
 
             customizeProfile.style.display =
                 "flex";
+
         }
 
 
@@ -543,16 +740,31 @@ checkAuth(async (user) => {
 
             menuAvatar.style.display =
                 "block";
+
         }
+
+
+        // ========================================
+        // 🎨 SHOW THEMES
+        // ========================================
+
+        addThemesToMenu();
 
 
         try {
 
             const docRef =
-                doc(db, "users", user.uid);
+                doc(
+                    db,
+                    "users",
+                    user.uid
+                );
+
 
             const docSnap =
-                await getDoc(docRef);
+                await getDoc(
+                    docRef
+                );
 
 
             if (docSnap.exists()) {
@@ -565,7 +777,9 @@ checkAuth(async (user) => {
                 // LOAD USERNAME
                 // ========================================
 
-                if (userData.username) {
+                if (
+                    userData.username
+                ) {
 
                     menuUsername.textContent =
                         userData.username;
@@ -575,6 +789,7 @@ checkAuth(async (user) => {
                     menuUsername.textContent =
                         user.displayName ||
                         user.email.split("@")[0];
+
                 }
 
 
@@ -589,6 +804,7 @@ checkAuth(async (user) => {
 
                     menuAvatar.src =
                         userData.profileImage;
+
                 }
 
 
@@ -597,6 +813,7 @@ checkAuth(async (user) => {
                 menuUsername.textContent =
                     user.displayName ||
                     user.email.split("@")[0];
+
             }
 
 
@@ -607,9 +824,11 @@ checkAuth(async (user) => {
                 e
             );
 
+
             menuUsername.textContent =
                 user.displayName ||
                 user.email.split("@")[0];
+
         }
 
 
@@ -630,6 +849,7 @@ checkAuth(async (user) => {
 
             menuAvatar.style.display =
                 "none";
+
         }
 
 
@@ -638,6 +858,24 @@ checkAuth(async (user) => {
 
             customizeProfile.style.display =
                 "none";
+
+        }
+
+
+        // ========================================
+        // REMOVE THEMES WHEN LOGGED OUT
+        // ========================================
+
+        const themesMenuItem =
+            document.getElementById(
+                "themesMenuItem"
+            );
+
+
+        if (themesMenuItem) {
+
+            themesMenuItem.remove();
+
         }
 
 
@@ -647,6 +885,7 @@ checkAuth(async (user) => {
             profileSubMenu.classList.remove(
                 "show"
             );
+
         }
 
     }
@@ -687,7 +926,10 @@ function toggleProfileMenu() {
 
     if (!submenu) return;
 
-    submenu.classList.toggle("show");
+    submenu.classList.toggle(
+        "show"
+    );
+
 }
 
 
