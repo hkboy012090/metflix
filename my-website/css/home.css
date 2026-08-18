@@ -1188,3 +1188,325 @@ html[data-theme] ::-webkit-scrollbar-thumb:hover {
     var(--theme-primary-hover);
 
 }
+
+/* =========================================================
+   METFLIX PURCHASED THEMES - FINAL OVERRIDE
+   ========================================================= */
+
+/* =========================
+   CLASSIC RED
+   ========================= */
+
+html[data-theme="classic-red"] {
+    --theme-primary: #e50914;
+    --theme-primary-hover: #ff1722;
+    --theme-bg: #0b0b0b;
+    --theme-bg-secondary: #111111;
+    --theme-panel: #151515;
+    --theme-panel-light: #1c1c1c;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #aaaaaa;
+    --theme-border: #333333;
+}
+
+
+/* =========================
+   NEON PURPLE
+   ========================= */
+
+html[data-theme="neon-purple"] {
+    --theme-primary: #a855f7;
+    --theme-primary-hover: #c084fc;
+    --theme-bg: #09000f;
+    --theme-bg-secondary: #12001d;
+    --theme-panel: #1a0826;
+    --theme-panel-light: #241033;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #c9b5d8;
+    --theme-border: #6d28d9;
+}
+
+
+/* =========================
+   CYBER BLUE
+   ========================= */
+
+html[data-theme="cyber-blue"] {
+    --theme-primary: #00aaff;
+    --theme-primary-hover: #38bdf8;
+    --theme-bg: #020b14;
+    --theme-bg-secondary: #051522;
+    --theme-panel: #071c2d;
+    --theme-panel-light: #0b263d;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #9ec5df;
+    --theme-border: #0066aa;
+}
+
+
+/* =========================
+   GALAXY
+   ========================= */
+
+html[data-theme="galaxy"] {
+    --theme-primary: #8b5cf6;
+    --theme-primary-hover: #a78bfa;
+    --theme-bg: #050510;
+    --theme-bg-secondary: #09091b;
+    --theme-panel: #10102a;
+    --theme-panel-light: #17173a;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #b9b5d5;
+    --theme-border: #553c9a;
+}
+
+
+/* =========================
+   GOLD VIP
+   ========================= */
+
+html[data-theme="gold-vip"] {
+    --theme-primary: #d4af37;
+    --theme-primary-hover: #f1d36b;
+    --theme-bg: #0b0903;
+    --theme-bg-secondary: #151108;
+    --theme-panel: #1c1609;
+    --theme-panel-light: #28200d;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #d8c995;
+    --theme-border: #8a6d1d;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+html[data-theme] body {
+    background: var(--theme-bg) !important;
+    color: var(--theme-text) !important;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+html[data-theme] .navbar {
+    color: var(--theme-text) !important;
+}
+
+
+/* =========================================================
+   NAV LINKS
+   ========================================================= */
+
+html[data-theme] .nav-links a {
+    color: var(--theme-text) !important;
+}
+
+html[data-theme] .nav-links a:hover {
+    color: var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+html[data-theme] .row h2,
+html[data-theme] .banner h1 {
+    color: var(--theme-text) !important;
+}
+
+
+/* =========================================================
+   MENU PANEL
+   ========================================================= */
+
+html[data-theme] .menu-panel {
+    background: var(--theme-panel) !important;
+    color: var(--theme-text) !important;
+    border-color: var(--theme-border) !important;
+}
+
+
+/* =========================================================
+   MENU HEADER
+   ========================================================= */
+
+html[data-theme] .menu-header {
+    background: var(--theme-panel-light) !important;
+    border-bottom-color: var(--theme-border) !important;
+}
+
+
+/* =========================================================
+   MENU LINKS
+   ========================================================= */
+
+html[data-theme] .menu-panel a {
+    color: var(--theme-text) !important;
+    border-bottom-color: var(--theme-border) !important;
+}
+
+html[data-theme] .menu-panel a:hover {
+    background: var(--theme-primary) !important;
+    color: #ffffff !important;
+}
+
+
+/* =========================================================
+   PROFILE SUBMENU
+   ========================================================= */
+
+html[data-theme] .profile-submenu {
+    background: var(--theme-bg-secondary) !important;
+}
+
+html[data-theme] .profile-submenu a {
+    color: var(--theme-text) !important;
+}
+
+html[data-theme] .profile-submenu a:hover {
+    background: var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   BOTTOM NAV
+   ========================================================= */
+
+html[data-theme] .bottom-nav {
+    background: var(--theme-panel) !important;
+    border-top-color: var(--theme-border) !important;
+}
+
+html[data-theme] .bottom-nav a {
+    color: var(--theme-text-secondary) !important;
+}
+
+html[data-theme] .bottom-nav a.active,
+html[data-theme] .bottom-nav a:hover,
+html[data-theme] .bottom-nav a.active i {
+    color: var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+html[data-theme] .footer {
+    background: var(--theme-bg-secondary) !important;
+    color: var(--theme-text-secondary) !important;
+}
+
+html[data-theme] .footer-links a {
+    color: var(--theme-primary) !important;
+}
+
+html[data-theme] .footer-links a:hover {
+    color: var(--theme-primary-hover) !important;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+html[data-theme] .modal {
+    background: rgba(0, 0, 0, 0.82) !important;
+}
+
+html[data-theme] .modal-content {
+    background: var(--theme-panel) !important;
+    color: var(--theme-text) !important;
+    border: 1px solid var(--theme-border) !important;
+}
+
+
+/* =========================================================
+   SEARCH MODAL
+   ========================================================= */
+
+html[data-theme] .search-modal {
+    background: rgba(0, 0, 0, 0.94) !important;
+}
+
+html[data-theme] .search-modal input {
+    background: var(--theme-panel-light) !important;
+    color: var(--theme-text) !important;
+    border: 1px solid var(--theme-border) !important;
+}
+
+html[data-theme] .search-modal input:focus {
+    outline: none;
+    border-color: var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   SERVER SELECT
+   ========================================================= */
+
+html[data-theme] .server-selector select {
+    background: var(--theme-panel-light) !important;
+    color: var(--theme-text) !important;
+    border: 1px solid var(--theme-border) !important;
+}
+
+
+/* =========================================================
+   ONLINE USER
+   ========================================================= */
+
+html[data-theme] .online-users {
+    color: var(--theme-text-secondary) !important;
+}
+
+html[data-theme] .online-users strong {
+    color: var(--theme-text) !important;
+}
+
+
+/* =========================================================
+   ONLINE DOT
+   ========================================================= */
+
+html[data-theme] .online-dot {
+    background: var(--theme-primary) !important;
+    box-shadow:
+        0 0 8px var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+html[data-theme] .close {
+    color: var(--theme-primary) !important;
+}
+
+
+/* =========================================================
+   LINKS / ACCENTS
+   ========================================================= */
+
+html[data-theme] a {
+    --theme-link-color: var(--theme-primary);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+html[data-theme] ::-webkit-scrollbar-thumb {
+    background: var(--theme-primary) !important;
+}
+
+html[data-theme] ::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-primary-hover) !important;
+}
