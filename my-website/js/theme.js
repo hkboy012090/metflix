@@ -1,16 +1,16 @@
 // ========================================
-// METFLIX GLOBAL THEME
+// METFLIX - GLOBAL THEME SYSTEM
 // ========================================
 
 import { auth, db } from "./firebase-config.js";
 
 import {
-    onAuthStateChanged
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
 
 import {
-    doc,
-    getDoc
+  doc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 
@@ -25,47 +25,38 @@ const DEFAULT_THEME = "classic-red";
 // APPLY THEME
 // ========================================
 
-function applyTheme(theme) {
+function applyMetflixTheme(theme) {
 
-    const validThemes = [
-        "classic-red",
-        "neon-purple",
-        "cyber-blue",
-        "galaxy",
-        "gold-vip"
-    ];
+  if (!theme) {
+    theme = DEFAULT_THEME;
+  }
 
-    if (!validThemes.includes(theme)) {
-        theme = DEFAULT_THEME;
-    }
+  console.log(
+    "METFLIX: Applying theme:",
+    theme
+  );
 
-    const root =
-        document.documentElement;
 
-    // Remove old theme classes
-    root.classList.remove(
-        "theme-classic-red",
-        "theme-neon-purple",
-        "theme-cyber-blue",
-        "theme-galaxy",
-        "theme-gold-vip"
-    );
+  // Apply theme to HTML
+  document.documentElement.setAttribute(
+    "data-theme",
+    theme
+  );
 
-    // Add selected theme
-    root.classList.add(
-        "theme-" + theme
-    );
 
-    // Save only as local cache
-    localStorage.setItem(
-        "metflixSelectedTheme",
-        theme
-    );
+  // Apply theme to body too
+  document.body.setAttribute(
+    "data-theme",
+    theme
+  );
 
-    console.log(
-        "METFLIX THEME APPLIED:",
-        theme
-    );
+
+  // Save locally
+  localStorage.setItem(
+    "metflixSelectedTheme",
+    theme
+  );
+
 }
 
 
@@ -75,87 +66,116 @@ function applyTheme(theme) {
 
 async function loadUserTheme(user) {
 
-    // No user = classic theme
-    if (!user) {
+  if (!user) {
 
-        applyTheme(
-            DEFAULT_THEME
-        );
+    console.log(
+      "METFLIX THEME: Guest user"
+    );
 
-        return;
+    const localTheme =
+      localStorage.getItem(
+        "metflixSelectedTheme"
+      ) || DEFAULT_THEME;
+
+    applyMetflixTheme(localTheme);
+
+    return;
+
+  }
+
+
+  try {
+
+    const userRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
+
+    const snapshot =
+      await getDoc(
+        userRef
+      );
+
+
+    if (
+      snapshot.exists()
+    ) {
+
+      const data =
+        snapshot.data();
+
+
+      let selectedTheme =
+        data.selectedTheme;
+
+
+      // Validate theme
+      const allowedThemes = [
+        "classic-red",
+        "neon-purple",
+        "cyber-blue",
+        "galaxy",
+        "gold-vip"
+      ];
+
+
+      if (
+        !allowedThemes.includes(
+          selectedTheme
+        )
+      ) {
+
+        selectedTheme =
+          DEFAULT_THEME;
+
+      }
+
+
+      console.log(
+        "METFLIX THEME FROM FIRESTORE:",
+        selectedTheme
+      );
+
+
+      applyMetflixTheme(
+        selectedTheme
+      );
+
+
+      return;
+
     }
 
 
-    try {
-
-        const userRef =
-            doc(
-                db,
-                "users",
-                user.uid
-            );
+    // No user document
+    applyMetflixTheme(
+      DEFAULT_THEME
+    );
 
 
-        const userSnap =
-            await getDoc(
-                userRef
-            );
+  } catch (error) {
+
+    console.error(
+      "METFLIX THEME LOAD ERROR:",
+      error
+    );
 
 
-        if (
-            userSnap.exists()
-        ) {
-
-            const data =
-                userSnap.data();
-
-
-            const selectedTheme =
-                data.selectedTheme;
+    // Use local saved theme if Firebase fails
+    const localTheme =
+      localStorage.getItem(
+        "metflixSelectedTheme"
+      ) || DEFAULT_THEME;
 
 
-            if (
-                typeof selectedTheme ===
-                "string"
-            ) {
+    applyMetflixTheme(
+      localTheme
+    );
 
-                applyTheme(
-                    selectedTheme
-                );
-
-                return;
-            }
-
-        }
-
-
-        // No selected theme
-        applyTheme(
-            DEFAULT_THEME
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "METFLIX THEME LOAD ERROR:",
-            error
-        );
-
-
-        // Use cached theme if Firestore fails
-        const cachedTheme =
-            localStorage.getItem(
-                "metflixSelectedTheme"
-            );
-
-
-        applyTheme(
-            cachedTheme ||
-            DEFAULT_THEME
-        );
-
-    }
+  }
 
 }
 
@@ -165,12 +185,20 @@ async function loadUserTheme(user) {
 // ========================================
 
 onAuthStateChanged(
-    auth,
-    async (user) => {
+  auth,
+  async (user) => {
 
-        await loadUserTheme(
-            user
-        );
+    await loadUserTheme(
+      user
+    );
 
-    }
+  }
 );
+
+
+// ========================================
+// GLOBAL FUNCTION
+// ========================================
+
+window.applyMetflixTheme =
+  applyMetflixTheme;
