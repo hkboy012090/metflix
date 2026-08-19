@@ -1,958 +1,355 @@
-/* ===========================
-METFLIX WATCH PAGE
-=========================== */
+/* =========================================================
+   METFLIX WATCH PAGE
+   GLOBAL THEME SYSTEM
+   ========================================================= */
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-
-background:#0b0b0b;  
-color:white;  
-font-family:Arial, Helvetica, sans-serif;  
-overflow-x:hidden;
-
-}
-
-.watch-page{
-
-width:100%;  
-min-height:100vh;
-
-}
-
-/* ===========================
-BACK BUTTON
-=========================== */
-
-.back-btn{
-
-position:fixed;  
-top:20px;  
-left:20px;  
-
-z-index:999;  
-
-background:rgba(0,0,0,.65);  
-
-backdrop-filter:blur(15px);  
-
-color:white;  
-
-border:none;  
-
-padding:12px 20px;  
-
-border-radius:50px;  
-
-cursor:pointer;  
-
-font-size:15px;  
-
-transition:.3s;
-
-}
-
-.back-btn:hover{
-
-background:#e50914;
-
-}
-
-/* ===========================
-BACKDROP
-=========================== */
-
-.backdrop{
-position:relative;
-width:100%;
-min-height:75vh;
-overflow:hidden;
-}
-
-.backdrop img{
-
-width:100%;  
-
-height:100%;  
-
-object-fit:cover;
-
-}
-
-.backdrop::before{
-
-content:"";  
-
-position:absolute;  
-
-inset:0;  
-
-background:  
-linear-gradient(  
-to top,  
-#0b0b0b 5%,  
-rgba(0,0,0,.35) 45%,  
-rgba(0,0,0,.75) 100%  
-);  
-
-z-index:1;
-
-}
-
-.backdrop-overlay{
-position:absolute;
-inset:0;
-z-index:2;
-display:flex;
-align-items:flex-end;
-padding:60px;
-}
-
-.movie-header{
-display:flex;
-align-items:flex-end;
-gap:40px;
-width:100%;
-max-width:1300px;
-margin:auto;
-}
-
-.poster-section img{
-
-width:250px;  
-
-border-radius:18px;  
-
-box-shadow:  
-0 25px 60px rgba(0,0,0,.55);
-
-}
-
-.movie-info{
-
-flex:1;  
-
-max-width:850px;
-
-}
-
-.movie-info h1{
-
-font-size:52px;  
-
-margin-bottom:18px;  
-
-line-height:1.1;
-
-}
-
-.movie-meta{
-
-display:flex;  
-
-flex-wrap:wrap;  
-
-gap:12px;  
-
-color:#cfcfcf;  
-
-margin-bottom:20px;
-
-}
-
-.movie-rating{
-
-color:#ffd54f;  
-
-font-size:20px;  
-
-margin-bottom:20px;
-
-}
-
-.genres{
-
-display:flex;  
-
-flex-wrap:wrap;  
-
-gap:10px;  
-
-margin-bottom:20px;
-
-}
-
-.genres span{
-
-background:#e50914;  
-
-padding:8px 18px;  
-
-border-radius:30px;  
-
-font-size:14px;
-
-}
-
-.player-top{
-
-display:flex;  
-
-justify-content:space-between;  
-
-align-items:center;  
-
-padding:20px 25px;  
-
-background:#202020;
-
-}
-/* ===========================
-PLAYER SECTION
-=========================== */
-
-.player-section{
-
-padding:40px 60px;
-
-}
-
-.player-card{
-
-background:#181818;  
-
-border-radius:20px;  
-
-overflow:hidden;  
-
-box-shadow:0 15px 40px rgba(0,0,0,.45);
-
-}
-
-.player-top h2{
-
-font-size:24px;
-
-}
-
-.server-box{
-
-display:flex;  
-
-align-items:center;  
-
-gap:10px;
-
-}
-
-.server-box label{
-
-color:#ccc;
-
-}
-
-.server-box select{
-
-background:#2b2b2b;  
-
-color:white;  
-
-border:none;  
-
-padding:10px 15px;  
-
-border-radius:8px;  
-
-cursor:pointer;
-
-}
-
-.video-container{
-
-position:relative;  
-
-width:100%;  
-
-padding-top:56.25%;  
-
-background:black;
-
-}
-
-.video-container iframe{
-
-position:absolute;  
-
-top:0;  
-
-left:0;  
-
-width:100%;  
-
-height:100%;
-
-}
-
-/* ===========================
-DETAILS SECTION
-=========================== */
-
-.details-section{
-
-padding:50px 60px;
-
-}
-
-.details-grid{
-
-display:grid;  
-
-grid-template-columns:repeat(4,1fr);  
-
-gap:20px;
-
-}
-
-.detail-item{
-
-background:#1b1b1b;  
-
-border-radius:15px;  
-
-padding:20px;  
-
-transition:.3s;
-
-}
-
-.detail-item:hover{
-
-transform:translateY(-5px);  
-
-background:#242424;
-
-}
-
-.detail-item h3{
-
-color:#e50914;  
-
-margin-bottom:10px;  
-
-font-size:16px;
-
-}
-
-.detail-item p{
+/* =========================
+   CLASSIC RED
+   ========================= */
 
-color:#ddd;  
+html[data-theme="classic-red"] {
+    --theme-primary: #e50914;
+    --theme-primary-hover: #ff1722;
 
-font-size:15px;  
+    --theme-bg: #0b0b0b;
+    --theme-bg-secondary: #111111;
 
-line-height:1.6;
+    --theme-panel: #151515;
+    --theme-panel-light: #1c1c1c;
 
-}
-
-/* ===========================
-SECTION TITLE
-=========================== */
-
-.section-title{
-
-padding:0 60px;  
-
-margin-bottom:20px;
-
-}
-
-.section-title h2{
-
-font-size:32px;  
-
-font-weight:bold;
+    --theme-text: #ffffff;
+    --theme-text-secondary: #aaaaaa;
 
+    --theme-border: #333333;
 }
-/* ===========================
-CAST SECTION
-=========================== */
 
-.cast-section{
-padding:20px 60px 50px;
-}
-
-.cast-list{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
-gap:20px;
-}
 
-.cast-card{
-background:#1a1a1a;
-border-radius:15px;
-overflow:hidden;
-transition:.3s;
-cursor:pointer;
-}
+/* =========================
+   NEON PURPLE
+   ========================= */
 
-.cast-card:hover{
-transform:translateY(-8px);
-}
+html[data-theme="neon-purple"] {
+    --theme-primary: #a855f7;
+    --theme-primary-hover: #c084fc;
 
-.cast-card img{
-width:100%;
-aspect-ratio:2/3;
-object-fit:cover;
-}
+    --theme-bg: #09000f;
+    --theme-bg-secondary: #12001d;
 
-.cast-info{
-padding:12px;
-}
+    --theme-panel: #1a0826;
+    --theme-panel-light: #241033;
 
-.cast-info h4{
-font-size:15px;
-margin-bottom:6px;
-}
+    --theme-text: #ffffff;
+    --theme-text-secondary: #c9b5d8;
 
-.cast-info p{
-font-size:13px;
-color:#aaa;
+    --theme-border: #6d28d9;
 }
 
-/* ===========================
-MORE LIKE THIS
-=========================== */
 
-.recommend-section{
-padding:20px 60px 60px;
-}
-
-.recommend-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
-gap:20px;
-}
+/* =========================
+   CYBER BLUE
+   ========================= */
 
-.movie-card{
-background:#1a1a1a;
-border-radius:16px;
-overflow:hidden;
-transition:.3s;
-cursor:pointer;
-}
+html[data-theme="cyber-blue"] {
+    --theme-primary: #00aaff;
+    --theme-primary-hover: #38bdf8;
 
-.movie-card:hover{
-transform:scale(1.05);
-}
+    --theme-bg: #020b14;
+    --theme-bg-secondary: #051522;
 
-.movie-card img{
-width:100%;
-aspect-ratio:2/3;
-object-fit:cover;
-}
+    --theme-panel: #071c2d;
+    --theme-panel-light: #0b263d;
 
-.movie-card .movie-name{
-padding:12px;
-font-size:15px;
-font-weight:bold;
-}
+    --theme-text: #ffffff;
+    --theme-text-secondary: #9ec5df;
 
-.movie-card .movie-score{
-padding:0 12px 12px;
-color:#ffd54f;
-font-size:14px;
+    --theme-border: #0066aa;
 }
-
-/* ===========================
-FOOTER
-=========================== */
 
-.watch-footer{
-background:#111;
-border-top:1px solid #222;
-padding:40px 20px;
-margin-top:40px;
-}
 
-.footer-content{
-text-align:center;
-}
+/* =========================
+   GALAXY
+   ========================= */
 
-.footer-logo{
-width:170px;
-margin-bottom:15px;
-}
+html[data-theme="galaxy"] {
+    --theme-primary: #8b5cf6;
+    --theme-primary-hover: #a78bfa;
 
-.footer-content p{
-color:#888;
-margin:6px 0;
-}
-/* ===========================
-MOBILE
-=========================== */
+    --theme-bg: #050510;
+    --theme-bg-secondary: #09091b;
 
-@media (max-width:900px){
+    --theme-panel: #10102a;
+    --theme-panel-light: #17173a;
 
-.backdrop{
-height:auto;
-min-height:100vh;
-}
+    --theme-text: #ffffff;
+    --theme-text-secondary: #b9b5d5;
 
-.backdrop-overlay{
-position:relative;
-padding:80px 25px 35px;
-align-items:flex-start;
+    --theme-border: #553c9a;
 }
 
-.movie-header{
-flex-direction:column;
-align-items:center;
-text-align:center;
-gap:20px;
-}
 
-.poster-section img{
-width:220px;
-}
+/* =========================
+   GOLD VIP
+   ========================= */
 
-.movie-info{
-max-width:100%;
-}
+html[data-theme="gold-vip"] {
+    --theme-primary: #d4af37;
+    --theme-primary-hover: #f1d36b;
 
-.movie-info h1{
-font-size:36px;
-}
+    --theme-bg: #0b0903;
+    --theme-bg-secondary: #151108;
 
-.movie-meta,
-.movie-rating,
-.genres{
-justify-content:center;
-}
+    --theme-panel: #1c1609;
+    --theme-panel-light: #28200d;
 
-.player-section,
-.details-section,
-.cast-section,
-.recommend-section{
-padding:25px;
-}
+    --theme-text: #ffffff;
+    --theme-text-secondary: #d8c995;
 
-.details-grid{
-grid-template-columns:repeat(2,1fr);
+    --theme-border: #8a6d1d;
 }
 
-.section-title{
-padding:0 25px;
-}
 
-.player-top{
-flex-direction:column;
-gap:15px;
-}
+/* =========================================================
+   WATCH PAGE THEME
+   ========================================================= */
 
+html[data-theme] body {
+    background: var(--theme-bg) !important;
+    color: var(--theme-text) !important;
 }
 
-/* ===========================
-MOBILE
-=========================== */
 
-@media (max-width:600px){
-
-.back-btn{
-top:12px;
-left:12px;
-padding:8px 14px;
-font-size:13px;
-}
+/* =========================
+   BACK BUTTON
+   ========================= */
 
-.backdrop{
-height:520px;
-min-height:520px;
+html[data-theme] .back-btn {
+    background: rgba(0, 0, 0, .65);
+    color: var(--theme-text);
 }
 
-.backdrop-overlay{
-position:absolute;
-inset:0;
-padding:70px 20px 20px;
-display:flex;
-align-items:flex-end;
+html[data-theme] .back-btn:hover {
+    background: var(--theme-primary);
 }
 
-.movie-header{
-width:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-text-align:center;
-gap:15px;
-}
 
-.poster-section{
-margin-bottom:5px;
-}
+/* =========================
+   BACKDROP
+   ========================= */
 
-.poster-section img{
-width:160px;
-border-radius:18px;
-box-shadow:0 12px 35px rgba(0,0,0,.6);
+html[data-theme] .backdrop::before {
+    background:
+        linear-gradient(
+            to top,
+            var(--theme-bg) 5%,
+            rgba(0,0,0,.35) 45%,
+            rgba(0,0,0,.75) 100%
+        );
 }
 
-.movie-info{
-width:100%;
-}
 
-.movie-info h1{
-font-size:30px;
-margin-bottom:10px;
-}
+/* =========================
+   MOVIE INFORMATION
+   ========================= */
 
-.movie-meta{
-justify-content:center;
-font-size:13px;
-gap:8px;
+html[data-theme] .movie-meta {
+    color: var(--theme-text-secondary);
 }
 
-.movie-rating{
-justify-content:center;
-font-size:18px;
+html[data-theme] .movie-rating {
+    color: var(--theme-primary-hover);
 }
 
-.genres{
-justify-content:center;
-}
 
-.movie-info p{
-font-size:15px;
-line-height:1.6;
-}
+/* =========================
+   GENRES
+   ========================= */
 
-.action-buttons{
-display:flex;
-flex-direction:column;
-gap:12px;
+html[data-theme] .genres span {
+    background: var(--theme-primary);
+    color: #ffffff;
 }
 
-.primary-btn,
-.secondary-btn{
-width:100%;
-}
 
-.player-section,
-.details-section,
-.cast-section,
-.recommend-section{
-padding:16px;
-}
+/* =========================
+   ACTION BUTTONS
+   ========================= */
 
-.player-card{
-border-radius:14px;
+html[data-theme] .primary-btn {
+    background: var(--theme-primary);
+    color: #ffffff;
 }
 
-.details-grid{
-grid-template-columns:1fr;
+html[data-theme] .primary-btn:hover {
+    background: var(--theme-primary-hover);
 }
 
-.cast-list{
-grid-template-columns:repeat(3,1fr);
-gap:10px;
+html[data-theme] .secondary-btn {
+    background: var(--theme-panel-light);
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
 }
 
-.recommend-grid{
-grid-template-columns:repeat(3,1fr);
-gap:10px;
+html[data-theme] .secondary-btn:hover {
+    background: var(--theme-panel);
+    border-color: var(--theme-primary);
 }
 
-.cast-info h4{
-font-size:12px;
-}
 
-.cast-info p{
-font-size:11px;
-}
+/* =========================
+   PLAYER
+   ========================= */
 
-.movie-card .movie-name{
-font-size:12px;
+html[data-theme] .player-card {
+    background: var(--theme-panel);
 }
 
-.movie-card .movie-score{
-font-size:11px;
+html[data-theme] .player-top {
+    background: var(--theme-panel-light);
 }
 
-.footer-logo{
-width:130px;
+html[data-theme] .server-box label,
+html[data-theme] .season-box label,
+html[data-theme] .episode-box label {
+    color: var(--theme-text-secondary);
 }
 
+html[data-theme] .server-box select,
+html[data-theme] .season-box select,
+html[data-theme] .episode-box select {
+    background: var(--theme-panel);
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
 }
 
-/* ===========================
-LOADING SCREEN
-=========================== */
-
-.loading-screen{
-
-position:fixed;  
-
-inset:0;  
-
-background:#0b0b0b;  
-
-display:flex;  
-
-justify-content:center;  
-
-align-items:center;  
-
-z-index:99999;
-
+html[data-theme] .server-box select:focus,
+html[data-theme] .season-box select:focus,
+html[data-theme] .episode-box select:focus {
+    outline: none;
+    border-color: var(--theme-primary);
 }
 
-.loading-content{
 
-text-align:center;
+/* =========================
+   DETAILS
+   ========================= */
 
+html[data-theme] .detail-item {
+    background: var(--theme-panel);
+    border: 1px solid var(--theme-border);
 }
-
-.loading-logo{
-
-width:220px;  
 
-margin-bottom:30px;
-
+html[data-theme] .detail-item:hover {
+    background: var(--theme-panel-light);
 }
-
-.loading-spinner{
-
-width:65px;  
-
-height:65px;  
-
-border:6px solid rgba(255,255,255,.15);  
 
-border-top:6px solid #e50914;  
-
-border-radius:50%;  
-
-margin:auto;  
-
-animation:spin 1s linear infinite;
-
+html[data-theme] .detail-item h3 {
+    color: var(--theme-primary);
 }
-
-.loading-content h2{
 
-margin-top:25px;  
-
-font-size:28px;
-
+html[data-theme] .detail-item p {
+    color: var(--theme-text-secondary);
 }
 
-.loading-content p{
 
-margin-top:10px;  
+/* =========================
+   SECTION TITLES
+   ========================= */
 
-color:#aaa;
-
+html[data-theme] .section-title h2 {
+    color: var(--theme-text);
 }
-
-@keyframes spin{
-
-0%{  
 
-    transform:rotate(0deg);  
 
-}  
+/* =========================
+   CAST
+   ========================= */
 
-100%{  
-
-    transform:rotate(360deg);  
-
+html[data-theme] .cast-card {
+    background: var(--theme-panel);
+    border: 1px solid var(--theme-border);
 }
-
-}
-
-/* ===========================
-ERROR SCREEN
-=========================== */
 
-.error-screen{
-
-position:fixed;  
-
-inset:0;  
-
-background:#0b0b0b;  
-
-display:none;  
-
-justify-content:center;  
-
-align-items:center;  
-
-z-index:99998;
-
+html[data-theme] .cast-info p {
+    color: var(--theme-text-secondary);
 }
-
-.error-content{
-
-text-align:center;  
 
-max-width:450px;  
 
-padding:30px;
+/* =========================
+   RECOMMENDATIONS
+   ========================= */
 
+html[data-theme] .movie-card {
+    background: var(--theme-panel);
+    border: 1px solid var(--theme-border);
 }
 
-.error-content i{
-
-font-size:70px;  
-
-color:#e50914;  
-
-margin-bottom:20px;
-
+html[data-theme] .movie-card .movie-score {
+    color: var(--theme-primary-hover);
 }
-
-.error-content h2{
 
-font-size:34px;  
 
-margin-bottom:15px;
+/* =========================
+   FOOTER
+   ========================= */
 
+html[data-theme] .watch-footer {
+    background: var(--theme-bg-secondary);
+    border-top-color: var(--theme-border);
 }
 
-.error-content p{
-
-color:#aaa;  
-
-margin-bottom:30px;  
-
-line-height:1.7;
-
+html[data-theme] .footer-content p {
+    color: var(--theme-text-secondary);
 }
-
-#errorHomeBtn,
-#backHomeBtn{
-
-background:#e50914;  
 
-color:white;  
 
-border:none;  
+/* =========================
+   LOADING SCREEN
+   ========================= */
 
-padding:14px 28px;  
-
-border-radius:8px;  
-
-cursor:pointer;  
-
-font-size:16px;  
-
-transition:.3s;
-
+html[data-theme] .loading-screen {
+    background: var(--theme-bg);
 }
 
-#backHomeBtn:hover{
-
-background:#b20710;
-
+html[data-theme] .loading-spinner {
+    border-top-color: var(--theme-primary);
 }
-
-/* ===========================
-ACTION BUTTONS
-=========================== */
-
-.action-buttons{
-
-display:flex;  
 
-gap:15px;  
 
-flex-wrap:wrap;  
+/* =========================
+   ERROR SCREEN
+   ========================= */
 
-margin-top:30px;
-
+html[data-theme] .error-screen {
+    background: var(--theme-bg);
 }
-
-.primary-btn{
-
-background:#e50914;  
-
-color:#fff;  
-
-border:none;  
-
-padding:14px 28px;  
-
-border-radius:10px;  
-
-font-size:16px;  
-
-cursor:pointer;  
-
-transition:.3s;
 
+html[data-theme] .error-content i {
+    color: var(--theme-primary);
 }
 
-.primary-btn:hover{
-
-background:#b20710;  
-
-transform:translateY(-2px);
-
+html[data-theme] .error-content p {
+    color: var(--theme-text-secondary);
 }
-
-.secondary-btn{
-
-background:#252525;  
-
-color:#fff;  
-
-border:none;  
-
-padding:14px 24px;  
-
-border-radius:10px;  
-
-font-size:16px;  
 
-cursor:pointer;  
-
-transition:.3s;
-
+html[data-theme] #errorHomeBtn,
+html[data-theme] #backHomeBtn {
+    background: var(--theme-primary);
+    color: #ffffff;
 }
-
-.secondary-btn:hover{
-
-background:#3a3a3a;  
-
-transform:translateY(-2px);
 
+html[data-theme] #backHomeBtn:hover {
+    background: var(--theme-primary-hover);
 }
 
-/* ===========================
-LOADING HIDE
-=========================== */
 
-.loading-screen.hide{
+/* =========================
+   GLOBAL HEADINGS
+   ========================= */
 
-opacity:0;  
-
-visibility:hidden;  
-
-pointer-events:none;  
-
-transition:.4s;
-
+html[data-theme] .movie-info h1,
+html[data-theme] .player-top h2,
+html[data-theme] .section-title h2,
+html[data-theme] .error-content h2,
+html[data-theme] .loading-content h2 {
+    color: var(--theme-text);
 }
-
-/* ===========================
-MOBILE BUTTONS
-=========================== */
-
-tama ba
