@@ -1,23 +1,54 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <title>My Website</title>
 
+  <!-- ============================= -->
+  <!-- CSS -->
+  <!-- ============================= -->
+
   <link rel="stylesheet" href="css/home.css">
+
+  <!-- ============================= -->
+  <!-- THEME SYSTEM -->
+  <!-- IMPORTANT: ONE TIME ONLY -->
+  <!-- ============================= -->
+
+  <script type="module" src="js/theme.js"></script>
+
+  <!-- ============================= -->
+  <!-- PRELOAD -->
+  <!-- ============================= -->
+
   <link rel="preload" href="css/home.css" as="style">
   <link rel="preload" href="js/home.js" as="script">
+
+  <!-- ============================= -->
+  <!-- MANIFEST -->
+  <!-- ============================= -->
+
   <link rel="manifest" href="manifest.json">
+
+  <!-- ============================= -->
+  <!-- FONT AWESOME -->
+  <!-- ============================= -->
 
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   >
 
-  <script type="module" src="js/theme.js"></script>
+  <!-- ============================= -->
+  <!-- JAVASCRIPT -->
+  <!-- ============================= -->
+
   <script type="module" src="js/home.js"></script>
   <script type="module" src="js/auto-logout.js"></script>
+
 </head>
 
 <body>
@@ -30,7 +61,7 @@
 
     <img
       src="metflixlogo.png"
-      alt="LOGO HERE"
+      alt="METFLIX"
       class="logo"
     >
 
@@ -156,6 +187,8 @@
 
       </div>
 
+
+      <!-- SERVER SELECTOR -->
 
       <div class="server-selector">
 
@@ -356,7 +389,6 @@
     class="menu-panel"
   >
 
-
     <!-- MENU HEADER -->
 
     <div class="menu-header">
@@ -413,6 +445,7 @@
 
     <a
       href="#"
+      id="customizeProfileBtn"
       onclick="toggleProfileMenu(); return false;"
     >
 
@@ -480,8 +513,6 @@
       </a>
 
 
-      <!-- ITO LANG ANG THEME SA SUBMENU -->
-
       <a href="https://metflix-973.pages.dev/theme-settings">
 
         <i class="fas fa-palette"></i>
@@ -541,10 +572,8 @@
 
 
     <!-- ============================= -->
-    <!-- MAIN THEMES -->
+    <!-- THEMES -->
     <!-- ============================= -->
-
-    <!-- ISA LANG ANG THEMES SA MAIN MENU -->
 
     <a href="https://metflix-973.pages.dev/themes">
 
@@ -699,3 +728,5 @@
 
 </body>
 </html>
+
+Inayos ko rito ang duplicate "theme.js" — isang beses na lang siya nasa "<head>". Yung "home.js", "auto-logout.js", at "presence.js" ay nananatili.
