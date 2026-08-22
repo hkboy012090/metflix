@@ -1,73 +1,472 @@
-// ========================================
-// METFLIX LIVE TV
-// CINEMA ONE PLAYER
-// ========================================
+<!DOCTYPE html>
+<html lang="en">
 
-function selectChannel(channelName) {
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    const playerModal = document.getElementById("playerModal");
-    const playerTitle = document.getElementById("playerTitle");
-    const playerStatus = document.getElementById("playerStatus");
+  <title>Live TV - METFLIX</title>
 
-    if (!playerModal) {
-        console.error("Player modal not found.");
-        return;
-    }
+  <link rel="stylesheet" href="css/live-tv.css">
 
-    playerTitle.textContent = channelName;
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-    playerStatus.textContent =
-        "Cinema One live stream is not configured yet.";
+  <!-- METFLIX GLOBAL THEME -->
+  <script src="js/theme.js"></script>
+</head>
 
-    playerModal.classList.add("show");
+<body>
 
-    document.body.style.overflow = "hidden";
-}
+  <!-- HEADER -->
 
+  <header class="live-header">
 
-// ========================================
-// CLOSE PLAYER
-// ========================================
+    <a href="index.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+    </a>
 
-function closePlayer() {
+    <div class="header-title">
+      <i class="fas fa-tv"></i>
+      <span>METFLIX LIVE TV</span>
+    </div>
 
-    const playerModal =
-        document.getElementById("playerModal");
-
-    if (!playerModal) return;
-
-    playerModal.classList.remove("show");
-
-    document.body.style.overflow = "";
-}
+  </header>
 
 
-// ========================================
-// CLICK OUTSIDE PLAYER
-// ========================================
+  <!-- PAGE -->
 
-document.addEventListener("click", function(event) {
-
-    const playerModal =
-        document.getElementById("playerModal");
-
-    if (!playerModal) return;
-
-    if (event.target === playerModal) {
-        closePlayer();
-    }
-
-});
+  <main class="live-tv-page">
 
 
-// ========================================
-// ESC KEY
-// ========================================
+    <!-- PINOY CHANNELS -->
 
-document.addEventListener("keydown", function(event) {
+    <section class="channel-section">
 
-    if (event.key === "Escape") {
-        closePlayer();
-    }
+      <h2>
+        🇵🇭 Pinoy Channels
+      </h2>
 
-});
+      <div class="channel-grid">
+
+
+        <!-- CINEMA ONE -->
+
+        <div class="channel-card"
+             onclick="selectChannel('Cinema One')">
+
+          <div class="channel-icon">
+            <i class="fas fa-film"></i>
+          </div>
+
+          <h3>Cinema One</h3>
+
+          <span class="channel-status">
+            Filipino Movies
+          </span>
+
+        </div>
+
+
+        <!-- CINEMO -->
+
+        <div class="channel-card"
+             onclick="selectChannel('Cinemo')">
+
+          <div class="channel-icon">
+            <i class="fas fa-clapperboard"></i>
+          </div>
+
+          <h3>Cinemo</h3>
+
+          <span class="channel-status">
+            Filipino Movies
+          </span>
+
+        </div>
+
+
+        <!-- ABANTE -->
+
+        <div class="channel-card"
+             onclick="selectChannel('Abante')">
+
+          <div class="channel-icon abante-logo">
+
+            <img
+              src="images/abante.jpg"
+              alt="Abante">
+
+          </div>
+
+          <h3>Abante</h3>
+
+          <span class="channel-status">
+            News
+          </span>
+
+        </div>
+
+
+        <!-- TFC -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-tv"></i>
+          </div>
+
+          <h3>TFC</h3>
+
+          <span class="channel-status">
+            Filipino Entertainment
+          </span>
+
+        </div>
+
+
+        <!-- ANC -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+
+          <h3>ANC</h3>
+
+          <span class="channel-status">
+            News
+          </span>
+
+        </div>
+
+
+        <!-- MYX -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-music"></i>
+          </div>
+
+          <h3>MYX</h3>
+
+          <span class="channel-status">
+            Music
+          </span>
+
+        </div>
+
+
+        <!-- JEEPNEY TV -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-video"></i>
+          </div>
+
+          <h3>Jeepney TV</h3>
+
+          <span class="channel-status">
+            Entertainment
+          </span>
+
+        </div>
+
+
+        <!-- TELERADYO -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-radio"></i>
+          </div>
+
+          <h3>TeleRadyo</h3>
+
+          <span class="channel-status">
+            News & Radio
+          </span>
+
+        </div>
+
+
+        <!-- MOR -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-headphones"></i>
+          </div>
+
+          <h3>MOR</h3>
+
+          <span class="channel-status">
+            Entertainment
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- INTERNATIONAL -->
+
+    <section class="channel-section">
+
+      <h2>
+        🌎 International
+      </h2>
+
+      <div class="channel-grid">
+
+
+        <!-- NEWS -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-newspaper"></i>
+          </div>
+
+          <h3>News</h3>
+
+          <span class="channel-status">
+            International News
+          </span>
+
+        </div>
+
+
+        <!-- MOVIES -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-film"></i>
+          </div>
+
+          <h3>Movies</h3>
+
+          <span class="channel-status">
+            Movies
+          </span>
+
+        </div>
+
+
+        <!-- SPORTS -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-futbol"></i>
+          </div>
+
+          <h3>Sports</h3>
+
+          <span class="channel-status">
+            Sports
+          </span>
+
+        </div>
+
+
+        <!-- ENTERTAINMENT -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-star"></i>
+          </div>
+
+          <h3>Entertainment</h3>
+
+          <span class="channel-status">
+            Entertainment
+          </span>
+
+        </div>
+
+
+        <!-- KIDS -->
+
+        <div class="channel-card">
+
+          <div class="channel-icon">
+            <i class="fas fa-child"></i>
+          </div>
+
+          <h3>Kids</h3>
+
+          <span class="channel-status">
+            Kids & Family
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- LIVE TV PLAYER MODAL -->
+
+    <div id="playerModal" class="player-modal">
+
+      <div class="player-box">
+
+
+        <!-- CLOSE BUTTON -->
+
+        <button
+          class="player-close"
+          onclick="closePlayer()">
+
+          <i class="fas fa-times"></i>
+
+        </button>
+
+
+        <!-- PLAYER HEADER -->
+
+        <div class="player-header">
+
+          <i class="fas fa-tv"></i>
+
+          <h2 id="playerTitle">
+            Live TV
+          </h2>
+
+        </div>
+
+
+        <!-- VIDEO -->
+
+        <div class="video-container">
+
+          <video
+            id="liveVideo"
+            controls
+            playsinline
+            preload="metadata">
+          </video>
+
+
+          <!-- PLACEHOLDER -->
+
+          <div
+            class="video-placeholder"
+            id="videoPlaceholder">
+
+            <i class="fas fa-tv"></i>
+
+            <p id="playerStatus">
+              Live stream will appear here.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <!-- BOTTOM NAVIGATION -->
+
+  <nav class="bottom-nav">
+
+
+    <!-- HOME -->
+
+    <a href="index.html">
+
+      <i class="fas fa-home"></i>
+
+      <span>
+        Home
+      </span>
+
+    </a>
+
+
+    <!-- SEARCH -->
+
+    <a href="#" onclick="openSearchModal()">
+
+      <i class="fas fa-search"></i>
+
+      <span>
+        Search
+      </span>
+
+    </a>
+
+
+    <!-- VIVAMAX -->
+
+    <a href="vivamax.html">
+
+      <i class="fas fa-fire"></i>
+
+      <span>
+        Vivamax
+      </span>
+
+    </a>
+
+
+    <!-- MOVIES -->
+
+    <a href="index.html">
+
+      <i class="fas fa-film"></i>
+
+      <span>
+        Movies
+      </span>
+
+    </a>
+
+
+    <!-- LIVE TV -->
+
+    <a href="live-tv.html" class="active">
+
+      <i class="fas fa-tv"></i>
+
+      <span>
+        Live TV
+      </span>
+
+    </a>
+
+
+    <!-- MENU -->
+
+    <a href="index.html">
+
+      <i class="fas fa-bars"></i>
+
+      <span>
+        Menu
+      </span>
+
+    </a>
+
+  </nav>
+
+
+
+  <!-- LIVE
