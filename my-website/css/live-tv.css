@@ -135,11 +135,45 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 }
 
 .channel-icon i {
     font-size: 30px;
     color: #e50914;
+}
+
+
+/* =========================
+   ABANTE LOGO
+========================= */
+
+.channel-icon.abante-logo {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.channel-icon.abante-logo img {
+    width: 100%;
+    height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    object-fit: contain;
+
+    display: block;
 }
 
 
@@ -244,6 +278,10 @@ html.light-mode .channel-icon {
     background: #eee;
 }
 
+html.light-mode .channel-icon.abante-logo {
+    background: #fff;
+}
+
 html.light-mode .channel-status {
     color: #666;
 }
@@ -295,6 +333,18 @@ html.light-mode .bottom-nav a.active i {
         font-size: 14px;
     }
 
+    /* ABANTE TABLET */
+
+    .channel-icon.abante-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .channel-icon.abante-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 
@@ -348,6 +398,28 @@ html.light-mode .bottom-nav a.active i {
         font-size: 10px;
     }
 
+    /* ABANTE MOBILE */
+
+    .channel-icon.abante-logo {
+        width: 55px;
+        height: 55px;
+
+        border-radius: 50%;
+
+        background: #fff;
+
+        overflow: hidden;
+    }
+
+    .channel-icon.abante-logo img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: contain;
+
+        display: block;
+    }
+
     .bottom-nav {
         height: 65px;
     }
@@ -359,25 +431,9 @@ html.light-mode .bottom-nav a.active i {
     .bottom-nav i {
         font-size: 19px;
     }
-
 }
 
-#liveVideo {
-    width: 100%;
-    height: 100%;
-    display: none;
-    background: #000;
-    object-fit: contain;
-}
 
-#liveVideo.active {
-    display: block;
-}
-
-.video-placeholder {
-    width: 100%;
-    height: 100%;
-}
 /* =========================
    LIVE TV PLAYER MODAL
 ========================= */
@@ -406,7 +462,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* PLAYER BOX */
+/* =========================
+   PLAYER BOX
+========================= */
 
 .player-box {
     position: relative;
@@ -424,7 +482,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* CLOSE BUTTON */
+/* =========================
+   CLOSE BUTTON
+========================= */
 
 .player-close {
     position: absolute;
@@ -453,7 +513,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* PLAYER HEADER */
+/* =========================
+   PLAYER HEADER
+========================= */
 
 .player-header {
     display: flex;
@@ -482,7 +544,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* VIDEO AREA */
+/* =========================
+   VIDEO AREA
+========================= */
 
 .video-container {
     position: relative;
@@ -501,7 +565,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* VIDEO */
+/* =========================
+   VIDEO
+========================= */
 
 #liveVideo {
     width: 100%;
@@ -519,7 +585,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* PLACEHOLDER */
+/* =========================
+   PLACEHOLDER
+========================= */
 
 .video-placeholder {
     position: absolute;
@@ -558,7 +626,9 @@ html.light-mode .bottom-nav a.active i {
 }
 
 
-/* MOBILE */
+/* =========================
+   PLAYER MOBILE
+========================= */
 
 @media (max-width: 480px) {
 
