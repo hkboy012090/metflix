@@ -9,8 +9,7 @@
 // ========================================
 
 const ABANTE_STREAM =
-    "https://amg19223-amg19223c12-amgplt0352.playout.now3.amagi.tv/playlist/amg19223-amg19223c12-amgplt0352/playlist.m3u8";
-
+    "https://streams.comclark.com/transcodesd/abante/playlist.m3u8";
 
 // ========================================
 // HLS INSTANCE
