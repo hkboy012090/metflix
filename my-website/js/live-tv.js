@@ -1,57 +1,12 @@
 // ========================================
 // METFLIX LIVE TV
-// ABANTE HLS PLAYER
-// ========================================
-
-
-// ========================================
-// ABANTE STREAM
+// ABANTE HLS DIAGNOSTIC PLAYER
 // ========================================
 
 const ABANTE_STREAM =
-    "https://streams.comclark.com/transcodesd/abante/playlist.m3u8";
-
-// ========================================
-// HLS INSTANCE
-// ========================================
+    "https://amg19223-amg19223c12-amgplt0352.playout.now3.amagi.tv/playlist/amg19223-amg19223c12-amgplt0352/playlist.m3u8";
 
 let hls = null;
-
-
-// ========================================
-// LOAD HLS.JS
-// ========================================
-
-function loadHlsJS() {
-
-    return new Promise((resolve, reject) => {
-
-        // Hls.js already loaded
-        if (window.Hls) {
-            resolve();
-            return;
-        }
-
-        const script = document.createElement("script");
-
-        script.src =
-            "https://cdn.jsdelivr.net/npm/hls.js@latest";
-
-        script.onload = () => {
-            console.log("HLS.js loaded.");
-            resolve();
-        };
-
-        script.onerror = () => {
-            console.error("Failed to load HLS.js.");
-            reject(new Error("HLS.js failed to load."));
-        };
-
-        document.head.appendChild(script);
-
-    });
-
-}
 
 
 // ========================================
@@ -76,21 +31,13 @@ async function selectChannel(channelName) {
         document.getElementById("videoPlaceholder");
 
 
-    if (!playerModal) {
-        console.error("Player modal not found.");
+    if (!playerModal || !video) {
+        console.error("Player elements not found.");
         return;
     }
 
 
-    if (!video) {
-        console.error("Video element not found.");
-        return;
-    }
-
-
-    // ========================================
-    // OPEN PLAYER
-    // ========================================
+    // OPEN MODAL
 
     playerTitle.textContent = channelName;
 
@@ -99,51 +46,28 @@ async function selectChannel(channelName) {
     document.body.style.overflow = "hidden";
 
 
-    // ========================================
     // STOP PREVIOUS STREAM
-    // ========================================
 
     stopStream();
 
 
-    // ========================================
-    // ABANTE
-    // ========================================
+    // ONLY ABANTE HAS STREAM
 
-    if (channelName === "Abante") {
+    if (channelName !== "Abante") {
+
+        playerStatus.textContent =
+            channelName +
+            " live stream is not configured yet.";
 
         if (placeholder) {
             placeholder.style.display = "flex";
-        }
-
-        video.classList.remove("active");
-
-        playerStatus.textContent =
-            "Connecting to Abante live stream...";
-
-
-        try {
-
-            await loadHlsJS();
-
-            playAbante(video, playerStatus, placeholder);
-
-        } catch (error) {
-
-            console.error(error);
-
-            playerStatus.textContent =
-                "Unable to load the live player.";
-
         }
 
         return;
     }
 
 
-    // ========================================
-    // OTHER CHANNELS
-    // ========================================
+    // ABANTE
 
     if (placeholder) {
         placeholder.style.display = "flex";
@@ -152,24 +76,121 @@ async function selectChannel(channelName) {
     video.classList.remove("active");
 
     playerStatus.textContent =
-        channelName + " live stream is not configured yet.";
+        "Loading Abante player...";
 
+
+    console.log("================================");
+    console.log("METFLIX ABANTE PLAYER");
+    console.log("Stream:", ABANTE_STREAM);
+    console.log("================================");
+
+
+    // LOAD HLS.JS
+
+    try {
+
+        await loadHlsJS();
+
+    } catch (error) {
+
+        console.error("HLS.JS LOAD ERROR:", error);
+
+        playerStatus.textContent =
+            "ERROR: HLS.js failed to load.";
+
+        return;
+    }
+
+
+    // START PLAYBACK
+
+    startAbante(video, playerStatus, placeholder);
 }
 
 
 // ========================================
-// PLAY ABANTE
+// LOAD HLS.JS
 // ========================================
 
-function playAbante(video, playerStatus, placeholder) {
+function loadHlsJS() {
 
-    // ========================================
-    // HLS.JS SUPPORTED
-    // ========================================
+    return new Promise((resolve, reject) => {
 
-    if (window.Hls && Hls.isSupported()) {
+        if (window.Hls) {
+
+            console.log("HLS.js already loaded.");
+
+            resolve();
+
+            return;
+        }
+
+
+        const script =
+            document.createElement("script");
+
+        script.src =
+            "https://cdn.jsdelivr.net/npm/hls.js@1";
+
+
+        script.onload = function () {
+
+            console.log(
+                "HLS.js loaded successfully."
+            );
+
+            resolve();
+
+        };
+
+
+        script.onerror = function () {
+
+            console.error(
+                "Could not load HLS.js."
+            );
+
+            reject(
+                new Error("HLS.js load failed")
+            );
+
+        };
+
+
+        document.head.appendChild(script);
+
+    });
+}
+
+
+// ========================================
+// START ABANTE
+// ========================================
+
+function startAbante(
+    video,
+    playerStatus,
+    placeholder
+) {
+
+
+    // ====================================
+    // HLS.JS
+    // ====================================
+
+    if (
+        window.Hls &&
+        Hls.isSupported()
+    ) {
+
+        console.log(
+            "HLS.js is supported."
+        );
+
 
         hls = new Hls({
+
+            debug: true,
 
             enableWorker: true,
 
@@ -180,104 +201,218 @@ function playAbante(video, playerStatus, placeholder) {
         });
 
 
-        hls.loadSource(ABANTE_STREAM);
-
         hls.attachMedia(video);
 
 
-        // ========================================
-        // MANIFEST LOADED
-        // ========================================
-
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-
-            console.log("Abante stream loaded.");
-
-            if (placeholder) {
-                placeholder.style.display = "none";
-            }
-
-            video.classList.add("active");
-
-            playerStatus.textContent =
-                "Abante Live";
-
-
-            video.play().catch(function (error) {
+        hls.on(
+            Hls.Events.MEDIA_ATTACHED,
+            function () {
 
                 console.log(
-                    "Autoplay blocked. User can press play.",
-                    error
+                    "Video element attached."
                 );
 
-            });
+                playerStatus.textContent =
+                    "Loading Abante stream...";
 
-        });
+                hls.loadSource(
+                    ABANTE_STREAM
+                );
+
+            }
+        );
 
 
-        // ========================================
+        // ====================================
+        // MANIFEST LOADED
+        // ====================================
+
+        hls.on(
+            Hls.Events.MANIFEST_PARSED,
+            function (event, data) {
+
+                console.log(
+                    "================================"
+                );
+
+                console.log(
+                    "ABANTE MANIFEST LOADED"
+                );
+
+                console.log(
+                    "Levels:",
+                    data.levels
+                );
+
+                console.log(
+                    "================================"
+                );
+
+
+                playerStatus.textContent =
+                    "Abante stream loaded. Starting video...";
+
+
+                if (placeholder) {
+                    placeholder.style.display =
+                        "none";
+                }
+
+
+                video.classList.add("active");
+
+
+                video.play()
+                    .then(function () {
+
+                        console.log(
+                            "ABANTE PLAYING"
+                        );
+
+                    })
+                    .catch(function (error) {
+
+                        console.warn(
+                            "AUTOPLAY BLOCKED:",
+                            error
+                        );
+
+                        playerStatus.textContent =
+                            "Stream loaded. Press ▶ Play.";
+
+                    });
+
+            }
+        );
+
+
+        // ====================================
+        // LEVEL LOADED
+        // ====================================
+
+        hls.on(
+            Hls.Events.LEVEL_LOADED,
+            function (event, data) {
+
+                console.log(
+                    "LEVEL LOADED:",
+                    data
+                );
+
+            }
+        );
+
+
+        // ====================================
+        // FRAGMENT LOADED
+        // ====================================
+
+        hls.on(
+            Hls.Events.FRAG_LOADED,
+            function (event, data) {
+
+                console.log(
+                    "FRAGMENT LOADED:",
+                    data.frag
+                );
+
+            }
+        );
+
+
+        // ====================================
         // HLS ERROR
-        // ========================================
+        // ====================================
 
-        hls.on(Hls.Events.ERROR, function (
-            event,
-            data
-        ) {
-
-            console.error(
-                "HLS Error:",
+        hls.on(
+            Hls.Events.ERROR,
+            function (
+                event,
                 data
-            );
+            ) {
+
+                console.error(
+                    "================================"
+                );
+
+                console.error(
+                    "HLS ERROR"
+                );
+
+                console.error(
+                    "Type:",
+                    data.type
+                );
+
+                console.error(
+                    "Details:",
+                    data.details
+                );
+
+                console.error(
+                    "Fatal:",
+                    data.fatal
+                );
+
+                console.error(
+                    "Response:",
+                    data.response
+                );
+
+                console.error(
+                    "================================"
+                );
 
 
-            if (data.fatal) {
+                // NETWORK ERROR
 
-                switch (data.type) {
+                if (
+                    data.type ===
+                    Hls.ErrorTypes.NETWORK_ERROR
+                ) {
 
-                    case Hls.ErrorTypes.NETWORK_ERROR:
+                    playerStatus.textContent =
+                        "NETWORK ERROR: Stream cannot be accessed.";
 
-                        playerStatus.textContent =
-                            "Network error. Retrying...";
-
-                        hls.startLoad();
-
-                        break;
-
-
-                    case Hls.ErrorTypes.MEDIA_ERROR:
-
-                        playerStatus.textContent =
-                            "Media error. Recovering...";
-
-                        hls.recoverMediaError();
-
-                        break;
+                    return;
+                }
 
 
-                    default:
+                // MEDIA ERROR
 
-                        playerStatus.textContent =
-                            "Unable to play Abante stream.";
+                if (
+                    data.type ===
+                    Hls.ErrorTypes.MEDIA_ERROR
+                ) {
 
-                        stopStream();
+                    playerStatus.textContent =
+                        "MEDIA ERROR: Stream format/codec problem.";
 
-                        break;
+                    return;
+                }
+
+
+                // OTHER ERROR
+
+                if (data.fatal) {
+
+                    playerStatus.textContent =
+                        "STREAM ERROR: " +
+                        data.details;
 
                 }
 
             }
-
-        });
+        );
 
 
         return;
     }
 
 
-    // ========================================
+    // ====================================
     // NATIVE HLS
-    // Safari / iOS
-    // ========================================
+    // ====================================
 
     if (
         video.canPlayType(
@@ -285,6 +420,272 @@ function playAbante(video, playerStatus, placeholder) {
         )
     ) {
 
-        video.src = ABANTE_STREAM;
+        console.log(
+            "Browser has native HLS support."
+        );
 
-       
+
+        playerStatus.textContent =
+            "Using native HLS player...";
+
+
+        video.src =
+            ABANTE_STREAM;
+
+
+        video.addEventListener(
+            "loadedmetadata",
+            function onLoaded() {
+
+                console.log(
+                    "NATIVE HLS METADATA LOADED"
+                );
+
+
+                if (placeholder) {
+                    placeholder.style.display =
+                        "none";
+                }
+
+
+                video.classList.add("active");
+
+
+                playerStatus.textContent =
+                    "Abante stream loaded.";
+
+
+                video.play()
+                    .catch(function (error) {
+
+                        console.warn(
+                            "Autoplay blocked:",
+                            error
+                        );
+
+                        playerStatus.textContent =
+                            "Stream loaded. Press ▶ Play.";
+
+                    });
+
+
+                video.removeEventListener(
+                    "loadedmetadata",
+                    onLoaded
+                );
+
+            }
+        );
+
+
+        video.addEventListener(
+            "error",
+            function () {
+
+                console.error(
+                    "NATIVE VIDEO ERROR:",
+                    video.error
+                );
+
+
+                playerStatus.textContent =
+                    "NATIVE HLS ERROR: " +
+                    getVideoError(video);
+
+            }
+        );
+
+
+        return;
+    }
+
+
+    // ====================================
+    // NOT SUPPORTED
+    // ====================================
+
+    console.error(
+        "Browser does not support HLS."
+    );
+
+
+    playerStatus.textContent =
+        "This browser does not support HLS playback.";
+
+}
+
+
+// ========================================
+// VIDEO ERROR DESCRIPTION
+// ========================================
+
+function getVideoError(video) {
+
+    if (!video.error) {
+        return "Unknown video error.";
+    }
+
+
+    switch (video.error.code) {
+
+        case 1:
+            return "MEDIA_ERR_ABORTED";
+
+        case 2:
+            return "MEDIA_ERR_NETWORK";
+
+        case 3:
+            return "MEDIA_ERR_DECODE";
+
+        case 4:
+            return "MEDIA_ERR_SRC_NOT_SUPPORTED";
+
+        default:
+            return "Unknown media error.";
+
+    }
+}
+
+
+// ========================================
+// STOP STREAM
+// ========================================
+
+function stopStream() {
+
+    const video =
+        document.getElementById("liveVideo");
+
+
+    if (hls) {
+
+        console.log(
+            "Destroying HLS instance..."
+        );
+
+        try {
+            hls.destroy();
+        } catch (error) {
+            console.error(error);
+        }
+
+        hls = null;
+    }
+
+
+    if (video) {
+
+        video.pause();
+
+        video.removeAttribute("src");
+
+        video.load();
+
+        video.classList.remove("active");
+
+    }
+
+
+    const placeholder =
+        document.getElementById(
+            "videoPlaceholder"
+        );
+
+
+    if (placeholder) {
+
+        placeholder.style.display =
+            "flex";
+
+    }
+
+}
+
+
+// ========================================
+// CLOSE PLAYER
+// ========================================
+
+function closePlayer() {
+
+    const playerModal =
+        document.getElementById("playerModal");
+
+
+    if (!playerModal) {
+        return;
+    }
+
+
+    stopStream();
+
+
+    playerModal.classList.remove("show");
+
+    document.body.style.overflow = "";
+
+
+    const playerStatus =
+        document.getElementById(
+            "playerStatus"
+        );
+
+
+    if (playerStatus) {
+
+        playerStatus.textContent =
+            "Live stream will appear here.";
+
+    }
+
+}
+
+
+// ========================================
+// CLICK OUTSIDE PLAYER
+// ========================================
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        const playerModal =
+            document.getElementById(
+                "playerModal"
+            );
+
+
+        if (!playerModal) {
+            return;
+        }
+
+
+        if (
+            event.target ===
+            playerModal
+        ) {
+
+            closePlayer();
+
+        }
+
+    }
+);
+
+
+// ========================================
+// ESC KEY
+// ========================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            closePlayer();
+
+        }
+
+    }
+);
