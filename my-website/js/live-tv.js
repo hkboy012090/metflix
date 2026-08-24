@@ -1,7 +1,6 @@
 // ========================================
 // METFLIX LIVE TV
 // DASH (.MPD) + HLS (.M3U8)
-// SHAKA PLAYER + HLS.JS
 // ========================================
 
 let shakaPlayer = null;
@@ -12,127 +11,55 @@ let currentChannel = null;
 // ========================================
 // CHANNEL STREAMS
 // ========================================
-//
-// IMPORTANT:
-// Ilagay ang CURRENT AUTHORIZED URL
-// sa bawat channel.
-// Huwag gumamit ng expired session URL.
-//
-// ========================================
 
 const STREAMS = {
 
-    // ====================================
-    // A2Z
-    // ====================================
+    // ==============================
+    // AUTHENTICATED MPD STREAMS
+    // ==============================
 
     "A2Z": {
-        type: "mpd",
-        url:http://136.239.173.2:6610/001/2/ch00000090990000001087/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BqHRrK8UUahwItHhKpXgPXKytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001176&contentid=ch00000000000000001176&videoid=ch00000090990000001087&recommendtype=0&userid=1287297673984&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=U4DB4Z0H2EXXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO
-    },
-
-
-    // ====================================
-    // GMA
-    // ====================================
-
-    "GMA": {
         type: "mpd",
         url: ""
     },
 
+    "DepEd TV": {
+        type: "mpd",
+        url: ""
+    },
 
-    // ====================================
-    // JEEPNEY TV
-    // ====================================
+    "ALLTV": {
+        type: "mpd",
+        url: ""
+    },
 
     "Jeepney TV": {
         type: "mpd",
         url: ""
     },
 
-
-    // ====================================
-    // CINEMA ONE
-    // ====================================
-
-    "Cinema One": {
+    "Cartoonito": {
         type: "mpd",
         url: ""
     },
 
-
-    // ====================================
-    // CINEMO
-    // ====================================
-
-    "Cinemo": {
+    "TV Maria": {
         type: "mpd",
         url: ""
     },
 
-
-    // ====================================
-    // ABANTE
-    // ====================================
-
-    "Abante": {
+    "Tagalized Movie Channel": {
         type: "mpd",
         url: ""
     },
 
-
-    // ====================================
-    // TFC
-    // ====================================
-
-    "TFC": {
+    "GMA": {
         type: "mpd",
         url: ""
     },
 
-
-    // ====================================
-    // ANC
-    // ====================================
-
-    "ANC": {
+    "INCTV": {
         type: "mpd",
-        url: ""
-    },
-
-
-    // ====================================
-    // MYX
-    // ====================================
-
-    "MYX": {
-        type: "mpd",
-        url: ""
-    },
-
-
-    // ====================================
-    // TELERADYO
-    // ====================================
-
-    "TeleRadyo": {
-        type: "mpd",
-        url: ""
-    },
-
-
-    // ====================================
-    // INTERNATIONAL
-    // ====================================
-
-    "BBC News Asia Pacific": {
-        type: "hls",
-        url: ""
-    },
-
-    "Arirang": {
-        type: "hls",
         url: ""
     },
 
@@ -141,24 +68,149 @@ const STREAMS = {
         url: ""
     },
 
-    "CGTN Documentaries": {
+
+    // ==============================
+    // HLS
+    // ==============================
+
+    "FilAm TV Network": {
         type: "hls",
-        url: ""
+        url: "https://streams.comclark.com/pknsd/filamtv/playlist.m3u8"
     },
 
     "Moonbug Kids": {
         type: "hls",
-        url: ""
+        url: "https://moonbug-rokuus.amagi.tv/playlist.m3u8"
+    },
+
+    "Vegas Life TV": {
+        type: "hls",
+        url: "https://streams.comclark.com/pknsd/vegaslifetv/playlist.m3u8"
+    },
+
+    "Mindanow Network TV": {
+        type: "hls",
+        url: "https://streams.comclark.com/overlay/mindanow/playlist.m3u8"
+    },
+
+    "BBC News Asia Pacific": {
+        type: "hls",
+        url: "https://cdn4.skygo.mn/live/disk1/BBC_News/HLSv3-FTA/BBC_News.m3u8"
+    },
+
+    "CLTV 36": {
+        type: "hls",
+        url: "https://live.cltv36.tv:5443/LiveApp/streams/cltvlive.m3u8"
+    },
+
+    "EWTN Asia-Pacific": {
+        type: "hls",
+        url: "https://cdn3.wowza.com/1/QmVNUVhTNTZSS3Uz/YWQ0aHpi/hls/live/playlist.m3u8"
+    },
+
+    "Arirang": {
+        type: "hls",
+        url: "https://amdlive-ch03-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8"
+    },
+
+    "Bloomberg Asia": {
+        type: "hls",
+        url: "https://www.bloomberg.com/media-manifest/streams/asia.m3u8"
+    },
+
+    "BBC World News": {
+        type: "hls",
+        url: "https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/main.m3u8"
+    },
+
+    "CGTN Documentaries": {
+        type: "hls",
+        url: "https://english-livebkali.cgtn.com/live/doccgtn_1.m3u8"
+    },
+
+    "Outdoor Channel": {
+        type: "hls",
+        url: "https://cdn-apse1-prod.tsv2.amagi.tv/linear/amg00718-outdoorchannela-outdoortvnz-samsungnz/playlist.m3u8"
+    },
+
+    "Thrillers": {
+        type: "hls",
+        url: "https://amc-rushbyamc-1-us.vizio.wurl.tv/playlist.m3u8"
+    },
+
+    "Bein Sports Xtra": {
+        type: "hls",
+        url: "https://amg01334-beinsportsllc-beinxtra-localnow-kcy6r.amagi.tv/playlist.m3u8"
+    },
+
+    "MovieSphere": {
+        type: "hls",
+        url: "https://moviesphereuk-samsunguk.amagi.tv/playlist.m3u8"
+    },
+
+    "TFC GUAM": {
+        type: "hls",
+        url: "https://tfcguam-abscbn-ono.amagi.tv/index.m3u8"
+    },
+
+    "3ABN Kids": {
+        type: "hls",
+        url: "https://3abn.bozztv.com/3abn2/Kids_live/smil:Kids_live.smil/playlist.m3u8"
+    },
+
+    "Blues TV": {
+        type: "hls",
+        url: "https://2-fss-2.streamhoster.com/pl_138/205510-3094608-1/playlist.m3u8"
+    },
+
+    "Japanim TV": {
+        type: "hls",
+        url: "https://foxkidstv.be:3369/stream/play.m3u8"
+    },
+
+    "Magic Kids": {
+        type: "hls",
+        url: "https://magicstream.ddns.net/magicstream/stream.m3u8"
+    },
+
+    "Persiana Junior": {
+        type: "hls",
+        url: "https://junhls.persiana.live/hls/stream.m3u8"
+    },
+
+    "Yahoo Finance": {
+        type: "hls",
+        url: "https://yahoo-samsung.amagi.tv/playlist.m3u8"
+    },
+
+    "EWTN Europe": {
+        type: "hls",
+        url: "https://cdn3.wowza.com/1/T2NXeHF6UGlGbHY3/WFluRldQ/hls/live/playlist.m3u8"
+    },
+
+    "CNN": {
+        type: "hls",
+        url: "https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_0_3564000.m3u8"
+    },
+
+    "Animax": {
+        type: "hls",
+        url: "http://202.57.43.60:8443/live/5748aabe4c9d661afbd7f4068248f664/125.m3u8"
+    },
+
+    "Kapamilya Channel": {
+        type: "hls",
+        url: "http://202.57.43.60:8443/live/5748aabe4c9d661afbd7f4068248f664/100.m3u8"
     }
 
 };
 
 
 // ========================================
-// GET ELEMENTS
+// ELEMENTS
 // ========================================
 
-function getElements() {
+function elements() {
 
     return {
 
@@ -188,14 +240,10 @@ function getElements() {
 
 function setStatus(message) {
 
-    const elements =
-        getElements();
+    const el = elements();
 
-    if (elements.status) {
-
-        elements.status.textContent =
-            message;
-
+    if (el.status) {
+        el.status.textContent = message;
     }
 
     console.log(
@@ -207,132 +255,44 @@ function setStatus(message) {
 
 
 // ========================================
-// OPEN PLAYER
+// STOP PLAYER
 // ========================================
 
-function openPlayer(channelName) {
+async function stopPlayer() {
 
-    const elements =
-        getElements();
-
-    if (!elements.modal) {
-
-        console.error(
-            "METFLIX: playerModal not found."
-        );
-
-        return;
-
-    }
-
-    elements.modal.style.display =
-        "flex";
-
-
-    if (elements.title) {
-
-        elements.title.textContent =
-            channelName;
-
-    }
-
-
-    if (elements.placeholder) {
-
-        elements.placeholder.style.display =
-            "flex";
-
-    }
-
-}
-
-
-// ========================================
-// STOP SHAKA / HLS / VIDEO
-// ========================================
-
-async function stopCurrentPlayer() {
-
-    const elements =
-        getElements();
-
-    const video =
-        elements.video;
-
-
-    // ====================================
-    // SHAKA
-    // ====================================
+    const el = elements();
 
     if (shakaPlayer) {
 
         try {
-
             await shakaPlayer.destroy();
-
-        } catch (error) {
-
-            console.warn(
-                "SHAKA DESTROY ERROR:",
-                error
-            );
-
+        } catch (e) {
+            console.warn(e);
         }
 
-        shakaPlayer =
-            null;
-
+        shakaPlayer = null;
     }
 
-
-    // ====================================
-    // HLS.JS
-    // ====================================
 
     if (hlsPlayer) {
 
         try {
-
             hlsPlayer.destroy();
-
-        } catch (error) {
-
-            console.warn(
-                "HLS DESTROY ERROR:",
-                error
-            );
-
+        } catch (e) {
+            console.warn(e);
         }
 
-        hlsPlayer =
-            null;
-
+        hlsPlayer = null;
     }
 
 
-    // ====================================
-    // VIDEO
-    // ====================================
+    if (el.video) {
 
-    if (video) {
+        el.video.pause();
 
-        try {
+        el.video.removeAttribute("src");
 
-            video.pause();
-
-        } catch (error) {
-
-            console.warn(
-                error
-            );
-
-        }
-
-        video.removeAttribute(
-            "src"
-        );
-
-        video.load();
+        el.video.load();
 
     }
 
@@ -346,16 +306,8 @@ async function stopCurrentPlayer() {
 async function selectChannel(channelName) {
 
     console.log(
-        "===================================="
-    );
-
-    console.log(
-        "METFLIX CHANNEL:",
+        "SELECTED:",
         channelName
-    );
-
-    console.log(
-        "===================================="
     );
 
 
@@ -363,18 +315,24 @@ async function selectChannel(channelName) {
         channelName;
 
 
-    openPlayer(
-        channelName
-    );
+    const el =
+        elements();
+
+
+    if (el.modal) {
+        el.modal.style.display = "flex";
+    }
+
+
+    if (el.title) {
+        el.title.textContent =
+            channelName;
+    }
 
 
     const stream =
         STREAMS[channelName];
 
-
-    // ====================================
-    // CHECK CONFIG
-    // ====================================
 
     if (!stream) {
 
@@ -382,64 +340,33 @@ async function selectChannel(channelName) {
             "Channel configuration not found."
         );
 
-        console.error(
-            "CHANNEL NOT FOUND:",
-            channelName
-        );
-
         return;
-
     }
 
 
-    // ====================================
-    // CHECK URL
-    // ====================================
-
     if (
         !stream.url ||
-        stream.url.trim() === "" ||
-        stream.url === "PASTE_A2Z_MPD_URL_HERE"
+        stream.url.trim() === ""
     ) {
 
         setStatus(
             "Stream URL is not configured for this channel."
         );
 
-        console.warn(
-            "STREAM URL NOT CONFIGURED:",
-            channelName
-        );
-
         return;
-
     }
 
 
-    // ====================================
-    // STOP PREVIOUS PLAYER
-    // ====================================
-
-    await stopCurrentPlayer();
+    await stopPlayer();
 
 
-    const elements =
-        getElements();
-
-
-    if (!elements.video) {
-
-        setStatus(
-            "Video element not found."
-        );
-
-        return;
-
+    if (el.placeholder) {
+        el.placeholder.style.display = "flex";
     }
 
 
     setStatus(
-        `Loading ${stream.type.toUpperCase()}...`
+        "Loading stream..."
     );
 
 
@@ -464,8 +391,7 @@ async function selectChannel(channelName) {
         else {
 
             throw new Error(
-                "Unsupported stream type: " +
-                stream.type
+                "Unsupported stream type."
             );
 
         }
@@ -475,24 +401,12 @@ async function selectChannel(channelName) {
     catch (error) {
 
         console.error(
-            "===================================="
-        );
-
-        console.error(
-            "METFLIX STREAM ERROR"
-        );
-
-        console.error(
+            "STREAM ERROR:",
             error
         );
 
-        console.error(
-            "===================================="
-        );
-
-
         setStatus(
-            "Stream failed. See browser console for the exact error."
+            "Stream failed to load."
         );
 
     }
@@ -501,66 +415,47 @@ async function selectChannel(channelName) {
 
 
 // ========================================
-// PLAY MPD
+// MPD / SHAKA
 // ========================================
 
 async function playMPD(url) {
 
-    const elements =
-        getElements();
+    const el =
+        elements();
 
-    const video =
-        elements.video;
-
-
-    // ====================================
-    // CHECK SHAKA
-    // ====================================
 
     if (
         typeof shaka === "undefined"
     ) {
 
         throw new Error(
-            "Shaka Player library was not loaded."
+            "Shaka Player is not loaded."
         );
 
     }
 
-
-    setStatus(
-        "Initializing DASH player..."
-    );
-
-
-    // ====================================
-    // BROWSER SUPPORT
-    // ====================================
 
     if (
         !shaka.Player.isBrowserSupported()
     ) {
 
         throw new Error(
-            "This browser does not support Shaka Player."
+            "Shaka Player is not supported."
         );
 
     }
 
 
-    // ====================================
-    // CREATE SHAKA
-    // ====================================
+    setStatus(
+        "Initializing DASH..."
+    );
+
 
     shakaPlayer =
         new shaka.Player(
-            video
+            el.video
         );
 
-
-    // ====================================
-    // ERROR LISTENER
-    // ====================================
 
     shakaPlayer.addEventListener(
         "error",
@@ -576,72 +471,11 @@ async function playMPD(url) {
             );
 
 
-            console.error(
-                "SHAKA ERROR CODE:",
-                error.code
-            );
-
-
-            console.error(
-                "SHAKA ERROR MESSAGE:",
-                error.message
-            );
-
-
             setStatus(
-                `MPD error ${error.code || "UNKNOWN"}: ${
-                    error.message || "Unknown error"
-                }`
+                `MPD error ${error.code || "UNKNOWN"}`
             );
 
         }
-    );
-
-
-    // ====================================
-    // NETWORK DEBUGGING
-    // ====================================
-
-    const networkingEngine =
-        shakaPlayer.getNetworkingEngine();
-
-
-    if (networkingEngine) {
-
-        networkingEngine.registerRequestFilter(
-            function(type, request) {
-
-                console.log(
-                    "SHAKA REQUEST TYPE:",
-                    type
-                );
-
-                console.log(
-                    "SHAKA REQUEST:",
-                    request.uris
-                );
-
-            }
-        );
-
-    }
-
-
-    // ====================================
-    // LOAD MPD
-    // ====================================
-
-    setStatus(
-        "Loading MPD manifest..."
-    );
-
-
-    console.log(
-        "Loading MPD:"
-    );
-
-    console.log(
-        url
     );
 
 
@@ -656,60 +490,13 @@ async function playMPD(url) {
     catch (error) {
 
         console.error(
-            "===================================="
-        );
-
-        console.error(
-            "MPD LOAD FAILED"
-        );
-
-        console.error(
-            "CODE:",
-            error.code
-        );
-
-        console.error(
-            "CATEGORY:",
-            error.category
-        );
-
-        console.error(
-            "MESSAGE:",
-            error.message
-        );
-
-        console.error(
-            "FULL ERROR:",
+            "MPD LOAD ERROR:",
             error
         );
 
-        console.error(
-            "===================================="
-        );
-
-
-        let message =
-            "MPD stream failed to load.";
-
-
-        if (error.code) {
-
-            message +=
-                ` Error code: ${error.code}.`;
-
-        }
-
-
-        if (error.message) {
-
-            message +=
-                ` ${error.message}`;
-
-        }
-
 
         setStatus(
-            message
+            `MPD stream failed to load. Error ${error.code || ""}`
         );
 
 
@@ -718,38 +505,22 @@ async function playMPD(url) {
     }
 
 
-    // ====================================
-    // MPD SUCCESS
-    // ====================================
-
     console.log(
-        "MPD MANIFEST LOADED SUCCESSFULLY"
+        "MPD LOADED"
     );
 
 
-    setStatus(
-        "MPD loaded. Starting playback..."
-    );
-
-
-    if (elements.placeholder) {
-
-        elements.placeholder.style.display =
-            "none";
-
+    if (el.placeholder) {
+        el.placeholder.style.display = "none";
     }
 
 
-    // ====================================
-    // PLAY
-    // ====================================
-
     try {
 
-        await video.play();
+        await el.video.play();
 
         setStatus(
-            "▶ LIVE STREAM PLAYING"
+            "▶ LIVE"
         );
 
     }
@@ -757,13 +528,11 @@ async function playMPD(url) {
     catch (error) {
 
         console.warn(
-            "AUTOPLAY BLOCKED:",
-            error
+            "AUTOPLAY BLOCKED"
         );
 
-
         setStatus(
-            "Stream loaded. Press Play."
+            "Stream loaded — press Play."
         );
 
     }
@@ -772,161 +541,94 @@ async function playMPD(url) {
 
 
 // ========================================
-// PLAY HLS
+// HLS / HLS.JS
 // ========================================
 
 async function playHLS(url) {
 
-    const elements =
-        getElements();
-
-    const video =
-        elements.video;
+    const el =
+        elements();
 
 
-    setStatus(
-        "Loading HLS stream..."
-    );
-
-
-    console.log(
-        "HLS URL:",
-        url
-    );
-
-
-    // ====================================
-    // NATIVE HLS
-    // ====================================
+    // Native HLS
 
     if (
-        video.canPlayType(
+        el.video.canPlayType(
             "application/vnd.apple.mpegurl"
         )
     ) {
 
-        video.src =
+        el.video.src =
             url;
 
 
-        video.addEventListener(
+        el.video.addEventListener(
             "loadedmetadata",
-            async function onLoaded() {
+            async function() {
 
-                video.removeEventListener(
-                    "loadedmetadata",
-                    onLoaded
-                );
-
-
-                if (elements.placeholder) {
-
-                    elements.placeholder.style.display =
+                if (el.placeholder) {
+                    el.placeholder.style.display =
                         "none";
-
                 }
 
 
                 try {
 
-                    await video.play();
+                    await el.video.play();
 
                     setStatus(
-                        "▶ LIVE STREAM PLAYING"
+                        "▶ LIVE"
                     );
 
                 }
 
                 catch (error) {
 
-                    console.warn(
-                        "AUTOPLAY BLOCKED:",
-                        error
-                    );
-
                     setStatus(
-                        "Stream loaded. Press Play."
+                        "Stream loaded — press Play."
                     );
 
                 }
 
+            },
+            {
+                once: true
             }
         );
 
 
-        video.addEventListener(
-            "error",
-            function() {
-
-                console.error(
-                    "NATIVE HLS ERROR:",
-                    video.error
-                );
-
-
-                setStatus(
-                    "HLS stream failed to load."
-                );
-
-            }
-        );
-
-
-        video.load();
+        el.video.load();
 
         return;
 
     }
 
 
-    // ====================================
-    // CHECK HLS.JS
-    // ====================================
+    // HLS.js
 
     if (
         typeof Hls === "undefined"
     ) {
 
         throw new Error(
-            "HLS.js library was not loaded."
+            "HLS.js is not loaded."
         );
 
     }
 
 
-    if (
-        !Hls.isSupported()
-    ) {
+    if (!Hls.isSupported()) {
 
         throw new Error(
-            "HLS is not supported by this browser."
+            "HLS is not supported."
         );
 
     }
 
 
-    setStatus(
-        "Initializing HLS.js..."
-    );
-
-
-    // ====================================
-    // CREATE HLS
-    // ====================================
-
     hlsPlayer =
-        new Hls({
+        new Hls();
 
-            enableWorker: true,
-
-            lowLatencyMode: true
-
-        });
-
-
-    // ====================================
-    // HLS ERROR
-    // ====================================
 
     hlsPlayer.on(
         Hls.Events.ERROR,
@@ -944,9 +646,7 @@ async function playHLS(url) {
             if (data.fatal) {
 
                 setStatus(
-                    `HLS fatal error: ${
-                        data.details || "Unknown error"
-                    }`
+                    "HLS stream failed."
                 );
 
             }
@@ -955,47 +655,30 @@ async function playHLS(url) {
     );
 
 
-    // ====================================
-    // HLS MANIFEST
-    // ====================================
-
     hlsPlayer.on(
         Hls.Events.MANIFEST_PARSED,
         async function() {
 
-            console.log(
-                "HLS MANIFEST LOADED"
-            );
-
-
-            if (elements.placeholder) {
-
-                elements.placeholder.style.display =
+            if (el.placeholder) {
+                el.placeholder.style.display =
                     "none";
-
             }
 
 
             try {
 
-                await video.play();
+                await el.video.play();
 
                 setStatus(
-                    "▶ LIVE STREAM PLAYING"
+                    "▶ LIVE"
                 );
 
             }
 
             catch (error) {
 
-                console.warn(
-                    "AUTOPLAY BLOCKED:",
-                    error
-                );
-
-
                 setStatus(
-                    "Stream loaded. Press Play."
+                    "Stream loaded — press Play."
                 );
 
             }
@@ -1003,10 +686,6 @@ async function playHLS(url) {
         }
     );
 
-
-    // ====================================
-    // LOAD SOURCE
-    // ====================================
 
     hlsPlayer.loadSource(
         url
@@ -1014,7 +693,7 @@ async function playHLS(url) {
 
 
     hlsPlayer.attachMedia(
-        video
+        el.video
     );
 
 }
@@ -1026,36 +705,25 @@ async function playHLS(url) {
 
 async function closePlayer() {
 
-    console.log(
-        "Closing player..."
-    );
+    await stopPlayer();
 
 
-    await stopCurrentPlayer();
+    const el =
+        elements();
 
 
-    const elements =
-        getElements();
-
-
-    if (elements.modal) {
-
-        elements.modal.style.display =
-            "none";
-
+    if (el.modal) {
+        el.modal.style.display = "none";
     }
 
 
-    if (elements.placeholder) {
-
-        elements.placeholder.style.display =
-            "flex";
-
+    if (el.placeholder) {
+        el.placeholder.style.display = "flex";
     }
 
 
     setStatus(
-        "Select a channel."
+        "Live stream will appear here."
     );
 
 
@@ -1066,20 +734,20 @@ async function closePlayer() {
 
 
 // ========================================
-// CLICK OUTSIDE MODAL
+// CLOSE WHEN CLICKING OUTSIDE
 // ========================================
 
 document.addEventListener(
     "click",
     function(event) {
 
-        const elements =
-            getElements();
+        const el =
+            elements();
 
 
         if (
-            elements.modal &&
-            event.target === elements.modal
+            el.modal &&
+            event.target === el.modal
         ) {
 
             closePlayer();
@@ -1091,20 +759,7 @@ document.addEventListener(
 
 
 // ========================================
-// SEARCH
-// ========================================
-
-function openSearchModal() {
-
-    console.log(
-        "Search clicked."
-    );
-
-}
-
-
-// ========================================
-// GLOBAL FUNCTIONS
+// GLOBAL
 // ========================================
 
 window.selectChannel =
@@ -1112,9 +767,6 @@ window.selectChannel =
 
 window.closePlayer =
     closePlayer;
-
-window.openSearchModal =
-    openSearchModal;
 
 
 // ========================================
@@ -1126,7 +778,7 @@ document.addEventListener(
     function() {
 
         console.log(
-            "===================================="
+            "================================"
         );
 
         console.log(
@@ -1134,17 +786,22 @@ document.addEventListener(
         );
 
         console.log(
-            "SHAKA:",
+            "Shaka:",
             typeof shaka !== "undefined"
         );
 
         console.log(
-            "HLS.JS:",
+            "HLS.js:",
             typeof Hls !== "undefined"
         );
 
         console.log(
-            "===================================="
+            "Channels:",
+            Object.keys(STREAMS).length
+        );
+
+        console.log(
+            "================================"
         );
 
     }
