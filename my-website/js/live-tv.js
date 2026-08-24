@@ -14,9 +14,16 @@ let currentChannel = null;
 
 const STREAMS = {
 
-    // ==============================
-    // AUTHENTICATED MPD STREAMS
-    // ==============================
+    // ====================================
+    // DASH / MPD
+    // ====================================
+    // IMPORTANT:
+    // Huwag ilagay dito ang MPD URLs na
+    // may AuthInfo / usersessionid / userid.
+    //
+    // Kapag blank, lalabas:
+    // "Stream URL is not configured..."
+    // ====================================
 
     "A2Z": {
         type: "mpd",
@@ -69,9 +76,9 @@ const STREAMS = {
     },
 
 
-    // ==============================
-    // HLS
-    // ==============================
+    // ====================================
+    // HLS / M3U8
+    // ====================================
 
     "FilAm TV Network": {
         type: "hls",
@@ -207,28 +214,18 @@ const STREAMS = {
 
 
 // ========================================
-// ELEMENTS
+// GET ELEMENTS
 // ========================================
 
-function elements() {
+function getElements() {
 
     return {
-
-        modal:
-            document.getElementById("playerModal"),
-
-        video:
-            document.getElementById("liveVideo"),
-
-        title:
-            document.getElementById("playerTitle"),
-
-        status:
-            document.getElementById("playerStatus"),
-
-        placeholder:
-            document.getElementById("videoPlaceholder")
-
+        modal: document.getElementById("playerModal"),
+        video: document.getElementById("liveVideo"),
+        title: document.getElementById("playerTitle"),
+        status: document.getElementById("playerStatus"),
+        placeholder: document.getElementById("videoPlaceholder"),
+        loading: document.getElementById("videoLoading")
     };
 
 }
@@ -240,7 +237,7 @@ function elements() {
 
 function setStatus(message) {
 
-    const el = elements();
+    const el = getElements();
 
     if (el.status) {
         el.status.textContent = message;
@@ -255,45 +252,93 @@ function setStatus(message) {
 
 
 // ========================================
+// LOADING
+// ========================================
+
+function setLoading(show) {
+
+    const el = getElements();
+
+    if (!el.loading) {
+        return;
+    }
+
+    el.loading.style.display =
+        show ? "flex" : "none";
+
+}
+
+
+// ========================================
 // STOP PLAYER
 // ========================================
 
 async function stopPlayer() {
 
-    const el = elements();
+    const el = getElements();
+
+    setLoading(false);
+
+
+    // -----------------------------
+    // Destroy Shaka
+    // -----------------------------
 
     if (shakaPlayer) {
 
         try {
             await shakaPlayer.destroy();
-        } catch (e) {
-            console.warn(e);
+        }
+
+        catch (error) {
+            console.warn(
+                "Shaka destroy error:",
+                error
+            );
         }
 
         shakaPlayer = null;
     }
 
 
+    // -----------------------------
+    // Destroy HLS.js
+    // -----------------------------
+
     if (hlsPlayer) {
 
         try {
             hlsPlayer.destroy();
-        } catch (e) {
-            console.warn(e);
+        }
+
+        catch (error) {
+            console.warn(
+                "HLS destroy error:",
+                error
+            );
         }
 
         hlsPlayer = null;
     }
 
 
+    // -----------------------------
+    // Reset video
+    // -----------------------------
+
     if (el.video) {
 
-        el.video.pause();
+        try {
+            el.video.pause();
+        }
+
+        catch (error) {
+            console.warn(error);
+        }
 
         el.video.removeAttribute("src");
 
         el.video.load();
-
     }
 
 }
@@ -306,8 +351,16 @@ async function stopPlayer() {
 async function selectChannel(channelName) {
 
     console.log(
-        "SELECTED:",
+        "================================"
+    );
+
+    console.log(
+        "SELECT CHANNEL:",
         channelName
+    );
+
+    console.log(
+        "================================"
     );
 
 
@@ -316,13 +369,21 @@ async function selectChannel(channelName) {
 
 
     const el =
-        elements();
+        getElements();
 
+
+    // -----------------------------
+    // Open modal
+    // -----------------------------
 
     if (el.modal) {
         el.modal.style.display = "flex";
     }
 
+
+    // -----------------------------
+    // Set title
+    // -----------------------------
 
     if (el.title) {
         el.title.textContent =
@@ -330,11 +391,17 @@ async function selectChannel(channelName) {
     }
 
 
+    // -----------------------------
+    // Find stream
+    // -----------------------------
+
     const stream =
         STREAMS[channelName];
 
 
     if (!stream) {
+
+        setLoading(false);
 
         setStatus(
             "Channel configuration not found."
@@ -344,10 +411,21 @@ async function selectChannel(channelName) {
     }
 
 
+    // -----------------------------
+    // Check URL
+    // -----------------------------
+
     if (
         !stream.url ||
         stream.url.trim() === ""
     ) {
+
+        setLoading(false);
+
+        if (el.placeholder) {
+            el.placeholder.style.display =
+                "flex";
+        }
 
         setStatus(
             "Stream URL is not configured for this channel."
@@ -357,18 +435,33 @@ async function selectChannel(channelName) {
     }
 
 
+    // -----------------------------
+    // Stop previous stream
+    // -----------------------------
+
     await stopPlayer();
 
 
+    // -----------------------------
+    // Show placeholder
+    // -----------------------------
+
     if (el.placeholder) {
-        el.placeholder.style.display = "flex";
+        el.placeholder.style.display =
+            "flex";
     }
 
+
+    setLoading(true);
 
     setStatus(
         "Loading stream..."
     );
 
+
+    // -----------------------------
+    // Start stream
+    // -----------------------------
 
     try {
 
@@ -391,7 +484,8 @@ async function selectChannel(channelName) {
         else {
 
             throw new Error(
-                "Unsupported stream type."
+                "Unsupported stream type: " +
+                stream.type
             );
 
         }
@@ -405,6 +499,13 @@ async function selectChannel(channelName) {
             error
         );
 
+        setLoading(false);
+
+        if (el.placeholder) {
+            el.placeholder.style.display =
+                "flex";
+        }
+
         setStatus(
             "Stream failed to load."
         );
@@ -415,14 +516,18 @@ async function selectChannel(channelName) {
 
 
 // ========================================
-// MPD / SHAKA
+// DASH / MPD
 // ========================================
 
 async function playMPD(url) {
 
     const el =
-        elements();
+        getElements();
 
+
+    // -----------------------------
+    // Check Shaka
+    // -----------------------------
 
     if (
         typeof shaka === "undefined"
@@ -435,27 +540,48 @@ async function playMPD(url) {
     }
 
 
+    // -----------------------------
+    // Browser support
+    // -----------------------------
+
     if (
         !shaka.Player.isBrowserSupported()
     ) {
 
         throw new Error(
-            "Shaka Player is not supported."
+            "DASH is not supported by this browser."
         );
 
     }
 
 
-    setStatus(
-        "Initializing DASH..."
+    console.log(
+        "Starting MPD:"
     );
 
+    console.log(
+        url
+    );
+
+
+    setStatus(
+        "Initializing DASH player..."
+    );
+
+
+    // -----------------------------
+    // Create Shaka
+    // -----------------------------
 
     shakaPlayer =
         new shaka.Player(
             el.video
         );
 
+
+    // -----------------------------
+    // Shaka error listener
+    // -----------------------------
 
     shakaPlayer.addEventListener(
         "error",
@@ -464,20 +590,25 @@ async function playMPD(url) {
             const error =
                 event.detail;
 
-
             console.error(
                 "SHAKA ERROR:",
                 error
             );
 
+            setLoading(false);
 
             setStatus(
-                `MPD error ${error.code || "UNKNOWN"}`
+                "MPD error " +
+                (error.code || "UNKNOWN")
             );
 
         }
     );
 
+
+    // -----------------------------
+    // Load MPD
+    // -----------------------------
 
     try {
 
@@ -494,26 +625,39 @@ async function playMPD(url) {
             error
         );
 
+        setLoading(false);
 
         setStatus(
-            `MPD stream failed to load. Error ${error.code || ""}`
+            "MPD stream failed to load. Error " +
+            (error.code || "UNKNOWN")
         );
-
 
         throw error;
 
     }
 
 
+    // -----------------------------
+    // Successfully loaded
+    // -----------------------------
+
     console.log(
-        "MPD LOADED"
+        "MPD LOADED SUCCESSFULLY"
     );
 
 
+    setLoading(false);
+
+
     if (el.placeholder) {
-        el.placeholder.style.display = "none";
+        el.placeholder.style.display =
+            "none";
     }
 
+
+    // -----------------------------
+    // Try autoplay
+    // -----------------------------
 
     try {
 
@@ -528,7 +672,8 @@ async function playMPD(url) {
     catch (error) {
 
         console.warn(
-            "AUTOPLAY BLOCKED"
+            "Autoplay blocked:",
+            error
         );
 
         setStatus(
@@ -541,22 +686,38 @@ async function playMPD(url) {
 
 
 // ========================================
-// HLS / HLS.JS
+// HLS / M3U8
 // ========================================
 
 async function playHLS(url) {
 
     const el =
-        elements();
+        getElements();
 
 
-    // Native HLS
+    console.log(
+        "Starting HLS:"
+    );
+
+    console.log(
+        url
+    );
+
+
+    // ====================================
+    // NATIVE HLS
+    // ====================================
 
     if (
         el.video.canPlayType(
             "application/vnd.apple.mpegurl"
         )
     ) {
+
+        console.log(
+            "Using native HLS."
+        );
+
 
         el.video.src =
             url;
@@ -565,6 +726,9 @@ async function playHLS(url) {
         el.video.addEventListener(
             "loadedmetadata",
             async function() {
+
+                setLoading(false);
+
 
                 if (el.placeholder) {
                     el.placeholder.style.display =
@@ -584,6 +748,11 @@ async function playHLS(url) {
 
                 catch (error) {
 
+                    console.warn(
+                        "Autoplay blocked:",
+                        error
+                    );
+
                     setStatus(
                         "Stream loaded — press Play."
                     );
@@ -597,14 +766,37 @@ async function playHLS(url) {
         );
 
 
+        el.video.addEventListener(
+            "error",
+            function() {
+
+                console.error(
+                    "Native HLS video error:",
+                    el.video.error
+                );
+
+                setLoading(false);
+
+                setStatus(
+                    "HLS stream failed."
+                );
+
+            },
+            {
+                once: true
+            }
+        );
+
+
         el.video.load();
 
         return;
-
     }
 
 
-    // HLS.js
+    // ====================================
+    // HLS.JS
+    // ====================================
 
     if (
         typeof Hls === "undefined"
@@ -617,7 +809,9 @@ async function playHLS(url) {
     }
 
 
-    if (!Hls.isSupported()) {
+    if (
+        !Hls.isSupported()
+    ) {
 
         throw new Error(
             "HLS is not supported."
@@ -626,9 +820,21 @@ async function playHLS(url) {
     }
 
 
-    hlsPlayer =
-        new Hls();
+    console.log(
+        "Using HLS.js."
+    );
 
+
+    hlsPlayer =
+        new Hls({
+            enableWorker: true,
+            lowLatencyMode: true
+        });
+
+
+    // ====================================
+    // HLS ERROR
+    // ====================================
 
     hlsPlayer.on(
         Hls.Events.ERROR,
@@ -645,9 +851,79 @@ async function playHLS(url) {
 
             if (data.fatal) {
 
-                setStatus(
-                    "HLS stream failed."
-                );
+                setLoading(false);
+
+
+                switch (
+                    data.type
+                ) {
+
+                    case Hls.ErrorTypes.NETWORK_ERROR:
+
+                        setStatus(
+                            "HLS network error."
+                        );
+
+                        console.log(
+                            "Trying HLS recovery..."
+                        );
+
+                        try {
+                            hlsPlayer.startLoad();
+                        }
+
+                        catch (error) {
+                            console.error(
+                                error
+                            );
+                        }
+
+                        break;
+
+
+                    case Hls.ErrorTypes.MEDIA_ERROR:
+
+                        setStatus(
+                            "HLS media error."
+                        );
+
+                        console.log(
+                            "Trying media recovery..."
+                        );
+
+                        try {
+                            hlsPlayer.recoverMediaError();
+                        }
+
+                        catch (error) {
+                            console.error(
+                                error
+                            );
+                        }
+
+                        break;
+
+
+                    default:
+
+                        setStatus(
+                            "HLS stream failed."
+                        );
+
+                        try {
+                            hlsPlayer.destroy();
+                        }
+
+                        catch (error) {
+                            console.error(
+                                error
+                            );
+                        }
+
+                        hlsPlayer = null;
+
+                        break;
+                }
 
             }
 
@@ -655,9 +931,21 @@ async function playHLS(url) {
     );
 
 
+    // ====================================
+    // MANIFEST LOADED
+    // ====================================
+
     hlsPlayer.on(
         Hls.Events.MANIFEST_PARSED,
         async function() {
+
+            console.log(
+                "HLS MANIFEST LOADED"
+            );
+
+
+            setLoading(false);
+
 
             if (el.placeholder) {
                 el.placeholder.style.display =
@@ -677,6 +965,11 @@ async function playHLS(url) {
 
             catch (error) {
 
+                console.warn(
+                    "Autoplay blocked:",
+                    error
+                );
+
                 setStatus(
                     "Stream loaded — press Play."
                 );
@@ -686,6 +979,10 @@ async function playHLS(url) {
         }
     );
 
+
+    // ====================================
+    // LOAD HLS
+    // ====================================
 
     hlsPlayer.loadSource(
         url
@@ -705,21 +1002,31 @@ async function playHLS(url) {
 
 async function closePlayer() {
 
+    console.log(
+        "Closing player..."
+    );
+
+
     await stopPlayer();
 
 
     const el =
-        elements();
+        getElements();
 
 
     if (el.modal) {
-        el.modal.style.display = "none";
+        el.modal.style.display =
+            "none";
     }
 
 
     if (el.placeholder) {
-        el.placeholder.style.display = "flex";
+        el.placeholder.style.display =
+            "flex";
     }
+
+
+    setLoading(false);
 
 
     setStatus(
@@ -734,7 +1041,7 @@ async function closePlayer() {
 
 
 // ========================================
-// CLOSE WHEN CLICKING OUTSIDE
+// CLICK OUTSIDE MODAL
 // ========================================
 
 document.addEventListener(
@@ -742,7 +1049,7 @@ document.addEventListener(
     function(event) {
 
         const el =
-            elements();
+            getElements();
 
 
         if (
@@ -759,7 +1066,38 @@ document.addEventListener(
 
 
 // ========================================
-// GLOBAL
+// ESC KEY
+// ========================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            const el =
+                getElements();
+
+
+            if (
+                el.modal &&
+                el.modal.style.display === "flex"
+            ) {
+
+                closePlayer();
+
+            }
+
+        }
+
+    }
+);
+
+
+// ========================================
+// GLOBAL FUNCTIONS
 // ========================================
 
 window.selectChannel =
@@ -770,7 +1108,7 @@ window.closePlayer =
 
 
 // ========================================
-// READY
+// PAGE READY
 // ========================================
 
 document.addEventListener(
@@ -778,11 +1116,15 @@ document.addEventListener(
     function() {
 
         console.log(
-            "================================"
+            "========================================"
         );
 
         console.log(
             "METFLIX LIVE TV READY"
+        );
+
+        console.log(
+            "========================================"
         );
 
         console.log(
@@ -801,7 +1143,7 @@ document.addEventListener(
         );
 
         console.log(
-            "================================"
+            "========================================"
         );
 
     }
