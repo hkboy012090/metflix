@@ -1,6 +1,6 @@
 // ========================================
 // METFLIX LIVE TV
-// MPEG-DASH (.mpd) + HLS (.m3u8)
+// MPD + M3U8 PLAYER
 // ========================================
 
 let currentPlayer = null;
@@ -11,77 +11,66 @@ let currentChannel = null;
 // ========================================
 // CHANNEL DATABASE
 // ========================================
-//
-// IMPORTANT:
-// Ilagay dito ang AUTHORIZED stream URLs mo.
-//
-// type:
-// "mpd" = MPEG-DASH / Shaka Player
-// "hls" = M3U8 / HLS.js
-//
-// Huwag gumamit ng expired/session URL kung
-// hindi na valid o hindi ka authorized.
-//
 
 const CHANNELS = {
 
     // ====================================
-    // MPEG-DASH CHANNELS
+    // MPEG-DASH / MPD
     // ====================================
 
     "A2Z": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_A2Z_MPD_URL_HERE"
+        url: "http://136.239.173.2:6610/001/2/ch00000090990000001087/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BqHRrK8UUahwItHhKpXgPXKytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001176&contentid=ch00000000000000001176&videoid=ch00000090990000001087&recommendtype=0&userid=1287297673984&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=U4DB4Z0H2EXXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "DepEd TV": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_DEPED_MPD_URL_HERE"
+        url: "http://136.239.158.10:6610/001/2/ch00000090990000001340/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BpqUIe1xo9fgdQj%2FdedKSTyytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001832&contentid=ch00000000000000001832&videoid=ch00000090990000001340&recommendtype=0&userid=1586131651828&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=1RR87QJ6AY2XXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "ALLTV": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_ALLTV_MPD_URL_HERE"
+        url: "http://136.239.158.10:6610/001/2/ch00000090990000001179/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2Bow35sHUcBhGBpxqddBGYEnytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001415&contentid=ch00000000000000001415&videoid=ch00000090990000001179&recommendtype=0&userid=1205050496206&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=02WMA0HI2O3AXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "Jeepney TV": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_JEEPNEY_MPD_URL_HERE"
+        url: "http://161.49.17.2:6610/001/2/ch00000090990000001250/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BpGbNnk2H5Bi8k4yR%2B9AHGFytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001546&contentid=ch00000000000000001546&videoid=ch00000090990000001250&recommendtype=0&userid=1870820485634&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=6T45HYQ6YE3XXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "Cartoonito": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_CARTOONITO_MPD_URL_HERE"
+        url: "http://161.49.17.2:6610/001/2/ch00000090990000001125/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BoZQDeIq8A03ROpfeWN75MYytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001238&contentid=ch00000000000000001238&videoid=ch00000090990000001125&recommendtype=0&userid=1642489849443&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=9X3U5ZPDLQVXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "TV Maria": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_TVMARIA_MPD_URL_HERE"
+        url: "http://136.158.97.2:6610/001/2/ch00000090990000001160/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BqJiJmfV%2B93mjmGGmqynSohytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001374&contentid=ch00000000000000001374&videoid=ch00000090990000001160&recommendtype=0&userid=1605694488407&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=G669IAJA55PXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "Tagalized Movie Channel": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_TAGALIZED_MPD_URL_HERE"
+        url: "http://136.239.159.20:6610/001/2/ch00000090990000001080/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BrHx%2Fyl86rMkFVqtHp1NtQIytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001153&contentid=ch00000000000000001153&videoid=ch00000090990000001080&recommendtype=0&userid=1123674387331&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=OWFM2G9EILPXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "GMA": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_GMA_MPD_URL_HERE"
+        url: "http://136.158.97.2:6610/001/2/ch00000090990000001093/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BoLvT86fM74ocVChyFS93HUytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001214&contentid=ch00000000000000001214&videoid=ch00000090990000001093&recommendtype=0&userid=1084724632836&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=FGE3OISG4KGXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "INCTV": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_INCTV_MPD_URL_HERE"
+        url: "http://136.239.159.18:6610/001/2/ch00000090990000001092/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2BrC5ZD%2FYbS0KSGrFVJUNIMkytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001178&contentid=ch00000000000000001178&videoid=ch00000090990000001092&recommendtype=0&userid=1760058453659&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=HILNO5G9U9IXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
     "CGTN News Live": {
         type: "mpd",
-        url: "PASTE_YOUR_AUTHORIZED_CGTN_MPD_URL_HERE"
+        url: "http://136.239.173.26:6610/001/2/ch00000090990000001146/manifest.mpd?AuthInfo=v87HD9rEhwHiAdYyrP20Tg5pgSMSITY%2FHYvvCWJRp%2Bq0bLdlQQxjquEy7BUYBE%2BOytokK1MIobcue1ImXa0ZEA%3D%3D&version=v1.0&BreakPoint=0&virtualDomain=001.live_hls.zte.com&programid=ch00000000000000001316&contentid=ch00000000000000001316&videoid=ch00000090990000001146&recommendtype=0&userid=1917967408923&boid=001&stbid=02%3A00%3A00%3A00%3A00%3A00&terminalflag=1&profilecode=&usersessionid=4ADPFTEPDLCXXX&NeedJITP=1&JITPMediaType=DASH&JITPDRMType=NO"
     },
 
 
     // ====================================
-    // HLS CHANNELS
+    // HLS / M3U8
     // ====================================
 
     "FilAm TV Network": {
@@ -114,6 +103,16 @@ const CHANNELS = {
         url: "https://live.cltv36.tv:5443/LiveApp/streams/cltvlive.m3u8"
     },
 
+    "Bilyonario News Channel": {
+        type: "hls",
+        url: "https://amg19223-amg19223c11-amgplt0352.playout.now3.amagi.tv/playlist/amg19223-amg19223c11-amgplt0352/playlist.m3u8"
+    },
+
+    "EWTN Asia-Pacific": {
+        type: "hls",
+        url: "https://cdn3.wowza.com/1/QmVNUVhTNTZSS3Uz/YWQ0aHpi/hls/live/playlist.m3u8"
+    },
+
     "Arirang": {
         type: "hls",
         url: "https://amdlive-ch03-ctnd-com.akamaized.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8"
@@ -122,6 +121,11 @@ const CHANNELS = {
     "Bloomberg Asia": {
         type: "hls",
         url: "https://www.bloomberg.com/media-manifest/streams/asia.m3u8"
+    },
+
+    "BBC World News": {
+        type: "hls",
+        url: "https://vs-hls-push-ww-live.akamaized.net/x=4/i=urn:bbc:pips:service:bbc_news_channel_hd/t=3840/v=pv14/b=5070016/main.m3u8"
     },
 
     "CGTN Documentaries": {
@@ -192,115 +196,50 @@ const CHANNELS = {
     "CNN": {
         type: "hls",
         url: "https://turnerlive.warnermediacdn.com/hls/live/586495/cnngo/cnn_slate/VIDEO_0_3564000.m3u8"
+    },
+
+    "Animax": {
+        type: "hls",
+        url: "http://202.57.43.60:8443/live/5748aabe4c9d661afbd7f4068248f664/125.m3u8"
+    },
+
+    "Kapamilya Channel": {
+        type: "hls",
+        url: "http://202.57.43.60:8443/live/5748aabe4c9d661afbd7f4068248f664/100.m3u8"
     }
 
 };
 
 
 // ========================================
-// ELEMENTS
+// GET ELEMENTS
 // ========================================
 
-function getPlayerElements() {
+function getElements() {
 
     return {
-
-        modal:
-            document.getElementById("playerModal"),
-
-        video:
-            document.getElementById("liveVideo"),
-
-        title:
-            document.getElementById("playerTitle"),
-
-        placeholder:
-            document.getElementById("videoPlaceholder"),
-
-        status:
-            document.getElementById("playerStatus"),
-
-        loading:
-            document.getElementById("videoLoading")
-
+        modal: document.getElementById("playerModal"),
+        video: document.getElementById("liveVideo"),
+        title: document.getElementById("playerTitle"),
+        placeholder: document.getElementById("videoPlaceholder"),
+        status: document.getElementById("playerStatus"),
+        loading: document.getElementById("videoLoading")
     };
 
 }
 
 
 // ========================================
-// SHOW PLAYER
+// SHOW MODAL
 // ========================================
 
 function showPlayer() {
 
-    const elements =
-        getPlayerElements();
+    const el = getElements();
 
-    if (!elements.modal) return;
-
-    elements.modal.style.display = "flex";
-
-}
-
-
-// ========================================
-// HIDE PLACEHOLDER
-// ========================================
-
-function hidePlaceholder() {
-
-    const elements =
-        getPlayerElements();
-
-    if (!elements.placeholder) return;
-
-    elements.placeholder.style.display = "none";
-
-}
-
-
-// ========================================
-// SHOW PLACEHOLDER
-// ========================================
-
-function showPlaceholder(message) {
-
-    const elements =
-        getPlayerElements();
-
-    if (elements.placeholder) {
-
-        elements.placeholder.style.display =
-            "flex";
-
+    if (el.modal) {
+        el.modal.style.display = "flex";
     }
-
-    if (elements.status) {
-
-        elements.status.textContent =
-            message;
-
-    }
-
-}
-
-
-// ========================================
-// LOADING
-// ========================================
-
-function setLoading(isLoading) {
-
-    const elements =
-        getPlayerElements();
-
-    if (!elements.loading) return;
-
-    elements.loading.style.display =
-        isLoading
-            ? "flex"
-            : "none";
 
 }
 
@@ -311,14 +250,92 @@ function setLoading(isLoading) {
 
 function setStatus(message) {
 
-    const elements =
-        getPlayerElements();
+    const el = getElements();
 
-    if (elements.status) {
+    if (el.status) {
+        el.status.textContent = message;
+    }
 
-        elements.status.textContent =
-            message;
+}
 
+
+// ========================================
+// PLACEHOLDER
+// ========================================
+
+function showPlaceholder(message) {
+
+    const el = getElements();
+
+    if (el.placeholder) {
+        el.placeholder.style.display = "flex";
+    }
+
+    setStatus(message);
+
+}
+
+
+function hidePlaceholder() {
+
+    const el = getElements();
+
+    if (el.placeholder) {
+        el.placeholder.style.display = "none";
+    }
+
+}
+
+
+// ========================================
+// LOADING
+// ========================================
+
+function setLoading(value) {
+
+    const el = getElements();
+
+    if (el.loading) {
+        el.loading.style.display =
+            value ? "flex" : "none";
+    }
+
+}
+
+
+// ========================================
+// DESTROY SHAKA / HLS
+// ========================================
+
+async function destroyPlayers() {
+
+    if (currentPlayer) {
+
+        try {
+            await currentPlayer.destroy();
+        } catch (error) {
+            console.error(
+                "SHAKA DESTROY ERROR:",
+                error
+            );
+        }
+
+        currentPlayer = null;
+    }
+
+
+    if (currentHls) {
+
+        try {
+            currentHls.destroy();
+        } catch (error) {
+            console.error(
+                "HLS DESTROY ERROR:",
+                error
+            );
+        }
+
+        currentHls = null;
     }
 
 }
@@ -330,110 +347,38 @@ function setStatus(message) {
 
 function resetVideo() {
 
-    const elements =
-        getPlayerElements();
+    const el = getElements();
 
-    const video =
-        elements.video;
-
-    if (!video) return;
+    if (!el.video) return;
 
     try {
-
-        video.pause();
-
+        el.video.pause();
     } catch (error) {
-
-        console.warn(
-            "VIDEO PAUSE ERROR:",
-            error
-        );
-
+        console.warn(error);
     }
 
-    video.removeAttribute("src");
+    el.video.removeAttribute("src");
 
-    video.load();
+    el.video.load();
 
 }
 
 
 // ========================================
-// DESTROY PLAYERS
-// ========================================
-
-async function destroyPlayers() {
-
-    // ====================================
-    // SHAKA
-    // ====================================
-
-    if (currentPlayer) {
-
-        try {
-
-            await currentPlayer.destroy();
-
-        } catch (error) {
-
-            console.warn(
-                "SHAKA DESTROY ERROR:",
-                error
-            );
-
-        }
-
-        currentPlayer = null;
-
-    }
-
-
-    // ====================================
-    // HLS.JS
-    // ====================================
-
-    if (currentHls) {
-
-        try {
-
-            currentHls.destroy();
-
-        } catch (error) {
-
-            console.warn(
-                "HLS DESTROY ERROR:",
-                error
-            );
-
-        }
-
-        currentHls = null;
-
-    }
-
-}
-
-
-// ========================================
-// PLAY MPEG-DASH
+// PLAY MPD
 // ========================================
 
 async function playMPD(url) {
 
-    const elements =
-        getPlayerElements();
+    const el = getElements();
 
-    const video =
-        elements.video;
+    const video = el.video;
 
     if (!video) {
-
         console.error(
             "METFLIX: liveVideo not found."
         );
-
         return;
-
     }
 
 
@@ -442,16 +387,13 @@ async function playMPD(url) {
         !shaka.Player
     ) {
 
-        setStatus(
+        setLoading(false);
+
+        showPlaceholder(
             "Shaka Player failed to load."
         );
 
-        console.error(
-            "METFLIX: Shaka Player unavailable."
-        );
-
         return;
-
     }
 
 
@@ -459,18 +401,18 @@ async function playMPD(url) {
         !shaka.Player.isBrowserSupported()
     ) {
 
-        setStatus(
+        setLoading(false);
+
+        showPlaceholder(
             "This browser does not support MPEG-DASH."
         );
 
         return;
-
     }
 
 
     console.log(
-        "METFLIX: Loading MPD:",
-        url
+        "METFLIX: Starting MPD..."
     );
 
 
@@ -482,28 +424,23 @@ async function playMPD(url) {
 
         currentPlayer.addEventListener(
             "error",
-            function (event) {
+            function(event) {
 
                 console.error(
                     "SHAKA ERROR:",
                     event.detail
                 );
 
-                const errorCode =
-                    event.detail &&
-                    event.detail.code
-                        ? event.detail.code
-                        : "UNKNOWN";
-
                 setLoading(false);
 
-                setStatus(
-                    "MPD playback error: " +
-                    errorCode
-                );
-
                 showPlaceholder(
-                    "Unable to play this MPD stream."
+                    "MPD error " +
+                    (
+                        event.detail &&
+                        event.detail.code
+                            ? event.detail.code
+                            : "UNKNOWN"
+                    )
                 );
 
             }
@@ -514,7 +451,7 @@ async function playMPD(url) {
 
 
         console.log(
-            "METFLIX: MPD loaded successfully."
+            "METFLIX: MPD loaded."
         );
 
 
@@ -527,15 +464,14 @@ async function playMPD(url) {
 
             await video.play();
 
-        } catch (playError) {
+        } catch (error) {
 
-            console.warn(
-                "AUTOPLAY BLOCKED:",
-                playError
+            console.log(
+                "Autoplay blocked. Press Play."
             );
 
             setStatus(
-                "Press the Play button to start the stream."
+                "Press Play to start the stream."
             );
 
         }
@@ -550,7 +486,7 @@ async function playMPD(url) {
         setLoading(false);
 
         showPlaceholder(
-            "MPD stream could not be loaded."
+            "MPD stream failed to load."
         );
 
     }
@@ -564,27 +500,11 @@ async function playMPD(url) {
 
 async function playHLS(url) {
 
-    const elements =
-        getPlayerElements();
+    const el = getElements();
 
-    const video =
-        elements.video;
+    const video = el.video;
 
-    if (!video) {
-
-        console.error(
-            "METFLIX: liveVideo not found."
-        );
-
-        return;
-
-    }
-
-
-    console.log(
-        "METFLIX: Loading HLS:",
-        url
-    );
+    if (!video) return;
 
 
     // ====================================
@@ -602,17 +522,16 @@ async function playHLS(url) {
         );
 
 
-        video.src =
-            url;
+        video.src = url;
 
 
         video.addEventListener(
             "loadedmetadata",
-            function onLoaded() {
+            function handler() {
 
                 video.removeEventListener(
                     "loadedmetadata",
-                    onLoaded
+                    handler
                 );
 
                 setLoading(false);
@@ -621,12 +540,7 @@ async function playHLS(url) {
 
 
                 video.play()
-                    .catch(error => {
-
-                        console.warn(
-                            "HLS AUTOPLAY BLOCKED:",
-                            error
-                        );
+                    .catch(() => {
 
                         setStatus(
                             "Press Play to start the stream."
@@ -640,7 +554,7 @@ async function playHLS(url) {
 
         video.addEventListener(
             "error",
-            function () {
+            function() {
 
                 console.error(
                     "NATIVE HLS ERROR:",
@@ -650,7 +564,7 @@ async function playHLS(url) {
                 setLoading(false);
 
                 showPlaceholder(
-                    "Unable to play this HLS stream."
+                    "HLS stream failed."
                 );
 
             },
@@ -661,7 +575,6 @@ async function playHLS(url) {
 
 
         return;
-
     }
 
 
@@ -679,12 +592,7 @@ async function playHLS(url) {
             "HLS.js failed to load."
         );
 
-        console.error(
-            "METFLIX: HLS.js unavailable."
-        );
-
         return;
-
     }
 
 
@@ -699,13 +607,9 @@ async function playHLS(url) {
 
         currentHls =
             new Hls({
-
                 enableWorker: true,
-
                 lowLatencyMode: true,
-
                 backBufferLength: 90
-
             });
 
 
@@ -716,7 +620,7 @@ async function playHLS(url) {
 
         currentHls.on(
             Hls.Events.MANIFEST_PARSED,
-            function () {
+            function() {
 
                 console.log(
                     "METFLIX: HLS manifest loaded."
@@ -729,12 +633,7 @@ async function playHLS(url) {
 
 
                 video.play()
-                    .catch(error => {
-
-                        console.warn(
-                            "HLS AUTOPLAY BLOCKED:",
-                            error
-                        );
+                    .catch(() => {
 
                         setStatus(
                             "Press Play to start the stream."
@@ -748,10 +647,7 @@ async function playHLS(url) {
 
         currentHls.on(
             Hls.Events.ERROR,
-            function (
-                event,
-                data
-            ) {
+            function(event, data) {
 
                 console.error(
                     "HLS ERROR:",
@@ -759,9 +655,7 @@ async function playHLS(url) {
                 );
 
 
-                if (
-                    data.fatal
-                ) {
+                if (data.fatal) {
 
                     setLoading(false);
 
@@ -772,16 +666,18 @@ async function playHLS(url) {
                     ) {
 
                         showPlaceholder(
-                            "Network error. The stream may be unavailable."
+                            "Network error. Stream unavailable."
                         );
 
-                    } else if (
+                    }
+
+                    else if (
                         data.type ===
                         Hls.ErrorTypes.MEDIA_ERROR
                     ) {
 
                         showPlaceholder(
-                            "Media error. Trying to recover..."
+                            "Media error. Attempting recovery..."
                         );
 
 
@@ -792,32 +688,18 @@ async function playHLS(url) {
                         } catch (error) {
 
                             console.error(
-                                "HLS RECOVERY ERROR:",
                                 error
                             );
 
                         }
 
-                    } else {
+                    }
+
+                    else {
 
                         showPlaceholder(
-                            "HLS stream could not be played."
+                            "HLS stream cannot be played."
                         );
-
-                        try {
-
-                            currentHls.destroy();
-
-                        } catch (error) {
-
-                            console.error(
-                                "HLS DESTROY ERROR:",
-                                error
-                            );
-
-                        }
-
-                        currentHls = null;
 
                     }
 
@@ -828,14 +710,13 @@ async function playHLS(url) {
 
 
         return;
-
     }
 
 
     setLoading(false);
 
     showPlaceholder(
-        "This browser does not support HLS."
+        "HLS is not supported by this browser."
     );
 
 }
@@ -848,87 +729,50 @@ async function playHLS(url) {
 async function selectChannel(channelName) {
 
     console.log(
-        "METFLIX CHANNEL SELECTED:",
+        "================================"
+    );
+
+    console.log(
+        "CHANNEL:",
         channelName
     );
 
+    console.log(
+        "================================"
+    );
 
-    const elements =
-        getPlayerElements();
 
+    const el = getElements();
 
     const channel =
         CHANNELS[channelName];
 
 
     // ====================================
-    // CHECK CHANNEL
+    // CHANNEL NOT FOUND
     // ====================================
 
     if (!channel) {
 
-        console.warn(
+        showPlayer();
+
+        if (el.title) {
+            el.title.textContent =
+                channelName;
+        }
+
+        setLoading(false);
+
+        showPlaceholder(
+            "Channel is not configured."
+        );
+
+        console.error(
             "CHANNEL NOT FOUND:",
             channelName
         );
 
-
-        showPlayer();
-
-        if (elements.title) {
-
-            elements.title.textContent =
-                channelName;
-
-        }
-
-
-        setLoading(false);
-
-        showPlaceholder(
-            "This channel is not configured yet."
-        );
-
         return;
-
-    }
-
-
-    // ====================================
-    // CHECK URL
-    // ====================================
-
-    if (
-        !channel.url ||
-        channel.url.startsWith(
-            "PASTE_YOUR_"
-        )
-    ) {
-
-        console.warn(
-            "NO STREAM URL:",
-            channelName
-        );
-
-
-        showPlayer();
-
-        if (elements.title) {
-
-            elements.title.textContent =
-                channelName;
-
-        }
-
-
-        setLoading(false);
-
-        showPlaceholder(
-            "Stream URL is not configured for this channel."
-        );
-
-        return;
-
     }
 
 
@@ -937,33 +781,30 @@ async function selectChannel(channelName) {
 
 
     // ====================================
-    // OPEN MODAL
+    // OPEN PLAYER
     // ====================================
 
     showPlayer();
 
 
-    if (elements.title) {
-
-        elements.title.textContent =
+    if (el.title) {
+        el.title.textContent =
             channelName;
-
     }
 
 
-    // ====================================
-    // RESET UI
-    // ====================================
-
     showPlaceholder(
-        "Preparing live stream..."
+        "Connecting to " +
+        channelName +
+        "..."
     );
+
 
     setLoading(true);
 
 
     // ====================================
-    // STOP PREVIOUS PLAYER
+    // STOP PREVIOUS STREAM
     // ====================================
 
     await destroyPlayers();
@@ -972,18 +813,13 @@ async function selectChannel(channelName) {
 
 
     // ====================================
-    // DETERMINE TYPE
+    // TYPE
     // ====================================
 
     const type =
         String(channel.type)
             .toLowerCase();
 
-
-    console.log(
-        "CHANNEL:",
-        channelName
-    );
 
     console.log(
         "TYPE:",
@@ -995,19 +831,13 @@ async function selectChannel(channelName) {
     // MPD
     // ====================================
 
-    if (
-        type === "mpd" ||
-        channel.url
-            .toLowerCase()
-            .includes(".mpd")
-    ) {
+    if (type === "mpd") {
 
         await playMPD(
             channel.url
         );
 
         return;
-
     }
 
 
@@ -1015,19 +845,13 @@ async function selectChannel(channelName) {
     // HLS
     // ====================================
 
-    if (
-        type === "hls" ||
-        channel.url
-            .toLowerCase()
-            .includes(".m3u8")
-    ) {
+    if (type === "hls") {
 
         await playHLS(
             channel.url
         );
 
         return;
-
     }
 
 
@@ -1038,7 +862,7 @@ async function selectChannel(channelName) {
     setLoading(false);
 
     showPlaceholder(
-        "Unsupported stream format."
+        "Unsupported stream type."
     );
 
 }
@@ -1055,8 +879,8 @@ async function closePlayer() {
     );
 
 
-    const elements =
-        getPlayerElements();
+    const el =
+        getElements();
 
 
     await destroyPlayers();
@@ -1064,43 +888,32 @@ async function closePlayer() {
     resetVideo();
 
 
-    if (elements.modal) {
-
-        elements.modal.style.display =
-            "none";
-
+    if (el.modal) {
+        el.modal.style.display = "none";
     }
 
 
-    if (elements.title) {
-
-        elements.title.textContent =
+    if (el.title) {
+        el.title.textContent =
             "Live TV";
-
     }
 
 
-    if (elements.status) {
-
-        elements.status.textContent =
+    if (el.status) {
+        el.status.textContent =
             "Select a channel to start watching.";
-
     }
 
 
-    if (elements.placeholder) {
-
-        elements.placeholder.style.display =
+    if (el.placeholder) {
+        el.placeholder.style.display =
             "flex";
-
     }
 
 
-    if (elements.loading) {
-
-        elements.loading.style.display =
+    if (el.loading) {
+        el.loading.style.display =
             "none";
-
     }
 
 
@@ -1111,37 +924,27 @@ async function closePlayer() {
 
 
 // ========================================
-// MODAL CLICK OUTSIDE
+// CLICK OUTSIDE PLAYER
 // ========================================
 
 document.addEventListener(
     "click",
-    function (event) {
+    function(event) {
 
-        const elements =
-            getPlayerElements();
-
-        const modal =
-            elements.modal;
-
-        const box =
-            document.querySelector(
-                ".player-box"
-            );
+        const el =
+            getElements();
 
 
         if (
-            !modal ||
-            modal.style.display !== "flex"
+            !el.modal ||
+            el.modal.style.display !== "flex"
         ) {
-
             return;
-
         }
 
 
         if (
-            event.target === modal
+            event.target === el.modal
         ) {
 
             closePlayer();
@@ -1153,23 +956,24 @@ document.addEventListener(
 
 
 // ========================================
-// ESC KEY
+// ESC
 // ========================================
 
 document.addEventListener(
     "keydown",
-    function (event) {
+    function(event) {
 
         if (
             event.key === "Escape"
         ) {
 
-            const elements =
-                getPlayerElements();
+            const el =
+                getElements();
+
 
             if (
-                elements.modal &&
-                elements.modal.style.display === "flex"
+                el.modal &&
+                el.modal.style.display === "flex"
             ) {
 
                 closePlayer();
@@ -1183,17 +987,13 @@ document.addEventListener(
 
 
 // ========================================
-// SEARCH PLACEHOLDER
+// SEARCH
 // ========================================
-//
-// Live TV page currently has no search modal.
-// Prevent error if button is clicked.
-//
 
 function openSearchModal() {
 
     console.log(
-        "METFLIX: Search requested."
+        "METFLIX: Search clicked."
     );
 
 }
@@ -1214,7 +1014,7 @@ window.openSearchModal =
 
 
 // ========================================
-// INITIALIZATION
+// READY
 // ========================================
 
 console.log(
@@ -1222,7 +1022,7 @@ console.log(
 );
 
 console.log(
-    "METFLIX LIVE TV PLAYER LOADED"
+    "METFLIX LIVE TV PLAYER READY"
 );
 
 console.log(
@@ -1231,6 +1031,11 @@ console.log(
 
 console.log(
     "HLS: HLS.js / Native HLS"
+);
+
+console.log(
+    "CHANNELS:",
+    Object.keys(CHANNELS).length
 );
 
 console.log(
