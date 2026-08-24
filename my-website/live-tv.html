@@ -14,11 +14,20 @@
 
   <!-- METFLIX GLOBAL THEME -->
   <script src="js/theme.js"></script>
+
+  <!-- MPEG-DASH PLAYER -->
+  <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.compiled.js"></script>
+
+  <!-- HLS PLAYER -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+
 </head>
 
 <body>
 
-  <!-- HEADER -->
+  <!-- ========================================
+       HEADER
+  ========================================= -->
 
   <header class="live-header">
 
@@ -27,19 +36,28 @@
     </a>
 
     <div class="header-title">
+
       <i class="fas fa-tv"></i>
-      <span>METFLIX LIVE TV</span>
+
+      <span>
+        METFLIX LIVE TV
+      </span>
+
     </div>
 
   </header>
 
 
-  <!-- PAGE -->
+  <!-- ========================================
+       PAGE
+  ========================================= -->
 
   <main class="live-tv-page">
 
 
-    <!-- PINOY CHANNELS -->
+    <!-- ========================================
+         PINOY CHANNELS
+    ========================================= -->
 
     <section class="channel-section">
 
@@ -52,14 +70,19 @@
 
         <!-- CINEMA ONE -->
 
-        <div class="channel-card"
-             onclick="selectChannel('Cinema One')">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Cinema One')">
 
           <div class="channel-icon">
+
             <i class="fas fa-film"></i>
+
           </div>
 
-          <h3>Cinema One</h3>
+          <h3>
+            Cinema One
+          </h3>
 
           <span class="channel-status">
             Filipino Movies
@@ -70,14 +93,19 @@
 
         <!-- CINEMO -->
 
-        <div class="channel-card"
-             onclick="selectChannel('Cinemo')">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Cinemo')">
 
           <div class="channel-icon">
+
             <i class="fas fa-clapperboard"></i>
+
           </div>
 
-          <h3>Cinemo</h3>
+          <h3>
+            Cinemo
+          </h3>
 
           <span class="channel-status">
             Filipino Movies
@@ -88,8 +116,9 @@
 
         <!-- ABANTE -->
 
-        <div class="channel-card"
-             onclick="selectChannel('Abante')">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Abante')">
 
           <div class="channel-icon abante-logo">
 
@@ -99,7 +128,9 @@
 
           </div>
 
-          <h3>Abante</h3>
+          <h3>
+            Abante
+          </h3>
 
           <span class="channel-status">
             News
@@ -110,13 +141,19 @@
 
         <!-- TFC -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('TFC')">
 
           <div class="channel-icon">
+
             <i class="fas fa-tv"></i>
+
           </div>
 
-          <h3>TFC</h3>
+          <h3>
+            TFC
+          </h3>
 
           <span class="channel-status">
             Filipino Entertainment
@@ -127,13 +164,19 @@
 
         <!-- ANC -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('ANC')">
 
           <div class="channel-icon">
+
             <i class="fas fa-newspaper"></i>
+
           </div>
 
-          <h3>ANC</h3>
+          <h3>
+            ANC
+          </h3>
 
           <span class="channel-status">
             News
@@ -144,13 +187,19 @@
 
         <!-- MYX -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('MYX')">
 
           <div class="channel-icon">
+
             <i class="fas fa-music"></i>
+
           </div>
 
-          <h3>MYX</h3>
+          <h3>
+            MYX
+          </h3>
 
           <span class="channel-status">
             Music
@@ -161,13 +210,19 @@
 
         <!-- JEEPNEY TV -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Jeepney TV')">
 
           <div class="channel-icon">
+
             <i class="fas fa-video"></i>
+
           </div>
 
-          <h3>Jeepney TV</h3>
+          <h3>
+            Jeepney TV
+          </h3>
 
           <span class="channel-status">
             Entertainment
@@ -178,13 +233,19 @@
 
         <!-- TELERADYO -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('TeleRadyo')">
 
           <div class="channel-icon">
+
             <i class="fas fa-radio"></i>
+
           </div>
 
-          <h3>TeleRadyo</h3>
+          <h3>
+            TeleRadyo
+          </h3>
 
           <span class="channel-status">
             News & Radio
@@ -195,13 +256,19 @@
 
         <!-- MOR -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('MOR')">
 
           <div class="channel-icon">
+
             <i class="fas fa-headphones"></i>
+
           </div>
 
-          <h3>MOR</h3>
+          <h3>
+            MOR
+          </h3>
 
           <span class="channel-status">
             Entertainment
@@ -209,13 +276,130 @@
 
         </div>
 
+
+        <!-- A2Z -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('A2Z')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-tv"></i>
+
+          </div>
+
+          <h3>
+            A2Z
+          </h3>
+
+          <span class="channel-status">
+            Live TV
+          </span>
+
+        </div>
+
+
+        <!-- GMA -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('GMA')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-tv"></i>
+
+          </div>
+
+          <h3>
+            GMA
+          </h3>
+
+          <span class="channel-status">
+            Live TV
+          </span>
+
+        </div>
+
+
+        <!-- TV MARIA -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('TV Maria')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-tv"></i>
+
+          </div>
+
+          <h3>
+            TV Maria
+          </h3>
+
+          <span class="channel-status">
+            Religious
+          </span>
+
+        </div>
+
+
+        <!-- DEPED TV -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('DepEd TV')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-school"></i>
+
+          </div>
+
+          <h3>
+            DepEd TV
+          </h3>
+
+          <span class="channel-status">
+            Educational
+          </span>
+
+        </div>
+
+
+        <!-- ALLTV -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('ALLTV')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-tv"></i>
+
+          </div>
+
+          <h3>
+            ALLTV
+          </h3>
+
+          <span class="channel-status">
+            Live TV
+          </span>
+
+        </div>
+
+
       </div>
 
     </section>
 
 
-
-    <!-- INTERNATIONAL -->
+    <!-- ========================================
+         INTERNATIONAL
+    ========================================= -->
 
     <section class="channel-section">
 
@@ -226,15 +410,21 @@
       <div class="channel-grid">
 
 
-        <!-- NEWS -->
+        <!-- BBC NEWS -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('BBC News Asia Pacific')">
 
           <div class="channel-icon">
+
             <i class="fas fa-newspaper"></i>
+
           </div>
 
-          <h3>News</h3>
+          <h3>
+            BBC News Asia Pacific
+          </h3>
 
           <span class="channel-status">
             International News
@@ -243,15 +433,90 @@
         </div>
 
 
-        <!-- MOVIES -->
+        <!-- BLOOMBERG -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Bloomberg Asia')">
 
           <div class="channel-icon">
-            <i class="fas fa-film"></i>
+
+            <i class="fas fa-chart-line"></i>
+
           </div>
 
-          <h3>Movies</h3>
+          <h3>
+            Bloomberg Asia
+          </h3>
+
+          <span class="channel-status">
+            Business News
+          </span>
+
+        </div>
+
+
+        <!-- CGTN -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('CGTN News Live')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-globe"></i>
+
+          </div>
+
+          <h3>
+            CGTN News Live
+          </h3>
+
+          <span class="channel-status">
+            International News
+          </span>
+
+        </div>
+
+
+        <!-- ARIRANG -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('Arirang')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-globe-asia"></i>
+
+          </div>
+
+          <h3>
+            Arirang
+          </h3>
+
+          <span class="channel-status">
+            International
+          </span>
+
+        </div>
+
+
+        <!-- MOVIES -->
+
+        <div
+          class="channel-card"
+          onclick="selectChannel('Movies')">
+
+          <div class="channel-icon">
+
+            <i class="fas fa-film"></i>
+
+          </div>
+
+          <h3>
+            Movies
+          </h3>
 
           <span class="channel-status">
             Movies
@@ -262,13 +527,19 @@
 
         <!-- SPORTS -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Sports')">
 
           <div class="channel-icon">
+
             <i class="fas fa-futbol"></i>
+
           </div>
 
-          <h3>Sports</h3>
+          <h3>
+            Sports
+          </h3>
 
           <span class="channel-status">
             Sports
@@ -279,13 +550,19 @@
 
         <!-- ENTERTAINMENT -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Entertainment')">
 
           <div class="channel-icon">
+
             <i class="fas fa-star"></i>
+
           </div>
 
-          <h3>Entertainment</h3>
+          <h3>
+            Entertainment
+          </h3>
 
           <span class="channel-status">
             Entertainment
@@ -296,13 +573,19 @@
 
         <!-- KIDS -->
 
-        <div class="channel-card">
+        <div
+          class="channel-card"
+          onclick="selectChannel('Kids')">
 
           <div class="channel-icon">
+
             <i class="fas fa-child"></i>
+
           </div>
 
-          <h3>Kids</h3>
+          <h3>
+            Kids & Family
+          </h3>
 
           <span class="channel-status">
             Kids & Family
@@ -310,26 +593,30 @@
 
         </div>
 
+
       </div>
 
     </section>
 
 
-
     <!-- ========================================
-         LIVE TV PLAYER MODAL
+         PLAYER MODAL
     ========================================= -->
 
-    <div id="playerModal" class="player-modal">
+    <div
+      id="playerModal"
+      class="player-modal">
+
 
       <div class="player-box">
 
 
-        <!-- CLOSE BUTTON -->
+        <!-- CLOSE -->
 
         <button
           class="player-close"
-          onclick="closePlayer()">
+          onclick="closePlayer()"
+          aria-label="Close player">
 
           <i class="fas fa-times"></i>
 
@@ -349,9 +636,10 @@
         </div>
 
 
-        <!-- VIDEO AREA -->
+        <!-- VIDEO -->
 
         <div class="video-container">
+
 
           <video
             id="liveVideo"
@@ -370,10 +658,27 @@
             <i class="fas fa-tv"></i>
 
             <p id="playerStatus">
-              Live stream will appear here.
+              Select a channel to start watching.
             </p>
 
           </div>
+
+
+          <!-- LOADING -->
+
+          <div
+            id="videoLoading"
+            class="video-loading"
+            style="display:none;">
+
+            <i class="fas fa-spinner fa-spin"></i>
+
+            <p>
+              Loading stream...
+            </p>
+
+          </div>
+
 
         </div>
 
@@ -382,12 +687,8 @@
 
     </div>
 
-    <!-- IMPORTANT:
-         playerModal is now properly closed above -->
-
 
   </main>
-
 
 
   <!-- ========================================
@@ -408,7 +709,9 @@
     </a>
 
 
-    <a href="#" onclick="openSearchModal()">
+    <a
+      href="#"
+      onclick="openSearchModal(); return false;">
 
       <i class="fas fa-search"></i>
 
@@ -441,7 +744,9 @@
     </a>
 
 
-    <a href="live-tv.html" class="active">
+    <a
+      href="live-tv.html"
+      class="active">
 
       <i class="fas fa-tv"></i>
 
@@ -452,7 +757,8 @@
     </a>
 
 
-    <a href="index.html">
+    <a
+      href="index.html">
 
       <i class="fas fa-bars"></i>
 
@@ -462,11 +768,13 @@
 
     </a>
 
+
   </nav>
 
 
-
-  <!-- LIVE TV JAVASCRIPT -->
+  <!-- ========================================
+       LIVE TV JAVASCRIPT
+  ========================================= -->
 
   <script src="js/live-tv.js"></script>
 
